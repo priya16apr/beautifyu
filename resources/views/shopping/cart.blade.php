@@ -23,22 +23,22 @@
 
     <section class="shop-cart spad">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="shop__cart__table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Sub Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @if($cart)
+            @if($cart)
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="shop__cart__table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Sub Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
                                     @php $total=0; @endphp
                                     @foreach($cart as $carts)
                                         <tr>
@@ -71,39 +71,48 @@
                                             <td class="cart__close"><a href="javascript:void();" onclick="deleteCart()"><span class="icon_close"></span></a></td>
                                         </tr>
                                         @php $total+=$carts->sub_total; @endphp
-                                    @endforeach
-                                @endif
+                                    @endforeach                              
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <!-- <div class="discount__content">
+                                <h6>Discount codes</h6>
+                                <form action="#">
+                                    <input type="text" placeholder="Enter your coupon code">
+                                    <button type="submit" class="site-btn">Apply</button>
+                                </form>
+                        </div> -->
+                        <div class="cart__total__procced">
+                            <ul>
+                                <li>Subtotal <span>Rs. {{ $total }}</span></li>
+                                <li>Discount <span>-- </span></li>
+                                <li>Total <span class="price-finall">Rs. {{ $total }}</span></li>
+                            </ul>
+
+                            @if(session('beautify_customer'))
+                                <a href="{{url('check-out')}}" class="primary-btn">Proceed to checkout</a>
+                            @else
+                                <a href="{{url('user-login?shop')}}" class="primary-btn">Proceed to checkout</a>
+                            @endif
+
+                            
+                        </div>
                     </div>
                 </div>
-				<div class="col-lg-4">
-                    <!-- <div class="discount__content">
-                            <h6>Discount codes</h6>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">Apply</button>
-                            </form>
-                    </div> -->
-					<div class="cart__total__procced">
-                        <ul>
-                            <li>Subtotal <span>Rs. {{ $total }}</span></li>
-							<li>Discount <span>-- </span></li>
-                            <li>Total <span class="price-finall">Rs. {{ $total }}</span></li>
-                        </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="cart__btn">
+                            <a href="/">Continue Shopping</a>
+                        </div>
                     </div>
-				</div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="cart__btn">
-                        <a href="/">Continue Shopping</a>
-                    </div>
+                    
                 </div>
-                
-            </div>
+            @else
+                Cart is Empty
+            @endif
             
         </div>
     </section>

@@ -37,11 +37,12 @@ Route::POST('/my-account/password-submit',[CustomerController::class,'submitPass
 Route::get('/content/{slug}',[ContentController::class,'content_by_slug'])->name('content');
 
 // Shopping
-Route::POST('/ajax/submit-addcart',[ShoppingController::class,'submitAddCart'])->name('submit-addcart');
-Route::POST('/ajax/submit-editcart',[ShoppingController::class,'submitEditCart'])->name('submit-editcart');
-Route::POST('/ajax/submit-deletecart',[ShoppingController::class,'submitDeleteCart'])->name('submit-deletecart');
+Route::POST('/ajax/submit-addcart',[ShoppingController::class,'submitAddCart'])->name('submit_addcart');
+Route::POST('/ajax/submit-editcart',[ShoppingController::class,'submitEditCart'])->name('submit_editcart');
+Route::POST('/ajax/submit-deletecart',[ShoppingController::class,'submitDeleteCart'])->name('submit_deletecart');
 Route::get('/shopping-cart',[ShoppingController::class,'cart'])->name('shopping_cart');
-Route::get('/check-out',[CustomerController::class,'index'])->name('check_out');
+Route::get('/check-out',[ShoppingController::class,'checkOut'])->name('check_out');
+Route::POST('/checkout-submit-addaddress',[ShoppingController::class,'submitAddAddress'])->name('submit_addaddress');
 Route::get('/thank-you-for-shopping-with-us',[CustomerController::class,'index'])->name('thankyou_shopping');
 
 // Product

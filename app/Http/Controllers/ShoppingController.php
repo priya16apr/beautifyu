@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 
 use App\Models\Cart;
+use App\Models\Address;
 
 class ShoppingController extends Controller
 {
@@ -83,26 +84,53 @@ class ShoppingController extends Controller
         //     $info->delete();
     }
 
-    public function shippingaddress()
+    public function checkOut()
     {
-        
-        return view('shopping.shipping_address');
+        $customerid     = Session::get('beautify_customer')->id;
+        $address        =   Address::where('customer_id',$customerid)->get();
+        $data           =   compact('address');
+
+        return view('shopping.checkout')->with($data);
     }
 
-    public function submitShippingaddress()
+    public function submitAddAddress(Request $request)
     {
-        
-        return redirect('shopping.checkout');
-    }
+        $customerid             =   $request->customerid;
+        $add_pincode            =   $request->add_pincode;
+        $add_name               =   $request->add_name;
+        $add_email              =   $request->add_email;
+        $add_address1           =   $request->add_address1;
+        $add_address2           =   $request->add_address2;
+        $add_city               =   $request->add_city;
+        $add_state              =   $request->add_state;
+        $add_mobile             =   $request->add_mobile;
+        $add_alter_mobile       =   $request->add_alter_mobile;
+        $address_type           =   $request->address_type;
 
-    public function checkout()
-    {
-        return view('shopping.checkout');
-    }
+        if($customerid)
+        {
+            $info                       =   new Address;
+            
+            $info->customer_id          =   $customerid;
+            $info->full_name            =   $add_name;
+            $info->email                =   $add_email;
+            $info->mobile               =   $add_mobile;
+            $info->alter_mobile         =   $add_alter_mobile;
+            $info->pincode              =   $add_pincode;
+            $info->address_line1        =   $add_address1;
+            $info->address_line2        =   $add_address2;
+            $info->city                 =   $add_city;
+            $info->state                =   $add_state;
+            $info->address_type         =   $address_type;
+            
+            $info->save();
 
-    public function submitCheckout()
-    {
-        return view('shopping.checkout');
+            return redirect('/check-out');
+        }
+        else
+        {
+            return redirect('/check-out');
+        }
     }
 
     public function thankyou()
