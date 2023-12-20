@@ -38,13 +38,15 @@
 
                         <div class="col-md-8 col-lg-8 bg-white shadow-lg">
                             <div class="contact__form p-4 pt-4">
-                                <form action="#">
-                                        <input type="text" placeholder="Enter Email/Mobile Number">
-                                        <input type="text" placeholder="Enter Password">
+                                <form name="form2" action="{{route('submit_login')}}" method="post">
+                                    @csrf
+                                        <input type="text" name="user_mobile" id="user_mobile" placeholder="Enter Mobile Number" required />
+                                        <input type="password" name="user_password" id="user_password" placeholder="Enter Password" required />
                                         
                                         <p>By continuing, you agree to <a href="{{url('/content/tttttt')}}" target="_blank">BeautifyU's Terms of Use</a> and 
-                                        <a href="{{url('/content/tttttt')}}" target="_blank">Privacy Policy</a>.</p>
-                                        <button type="submit" class="login-btn">Login</button>  <a href="" class="float-right text-reset pt-2">Forgot Password?</a>
+                                        <a href="{{url('/content/privacy-policy')}}" target="_blank">Privacy Policy</a>.</p>
+                                        <button type="submit" class="login-btn">Login</button>  
+                                        <!-- <a href="" class="float-right text-reset pt-2">Forgot Password?</a> -->
                                 </form>
                             
                                 <div class="text-center pt-5" style="font-weight:600"> <a href="user-signup">New to BeautifyU? Create an account</a> </div>

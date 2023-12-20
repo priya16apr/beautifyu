@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 
 Route::get('/',[HomeController::class,'index'])->name('index');
 
+// Auth
 Route::get('/user-login',[AuthController::class,'login'])->name('login');
 Route::post('/user-login-submit',[AuthController::class,'submitLogin'])->name('submit_login');
 Route::get('/user-logout',[AuthController::class,'logout'])->name('logout');
@@ -36,6 +37,9 @@ Route::POST('/my-account/password-submit',[CustomerController::class,'submitPass
 Route::get('/content/{slug}',[ContentController::class,'content_by_slug'])->name('content');
 
 // Shopping
+Route::POST('/ajax/submit-addcart',[ShoppingController::class,'submitAddCart'])->name('submit-addcart');
+Route::POST('/ajax/submit-editcart',[ShoppingController::class,'submitEditCart'])->name('submit-editcart');
+Route::POST('/ajax/submit-deletecart',[ShoppingController::class,'submitDeleteCart'])->name('submit-deletecart');
 Route::get('/shopping-cart',[ShoppingController::class,'cart'])->name('shopping_cart');
 Route::get('/check-out',[CustomerController::class,'index'])->name('check_out');
 Route::get('/thank-you-for-shopping-with-us',[CustomerController::class,'index'])->name('thankyou_shopping');
@@ -48,5 +52,7 @@ Route::get('/products/deal-of-the-day',[ProductController::class,'products_deal'
 Route::get('products/search',[ProductController::class,'products_search'])->name('products_search');
 Route::get('/products/{slug}',[ProductController::class,'products_ptype'])->name('products_ptype');
 // ?collection=collectionslug&color=1&size=3&plate=gold
-
 Route::get('/product/{slug}',[ProductController::class,'product_detail'])->name('product_detail');
+
+// Other
+Route::get('/404-page-not-found',[ContentController::class,'notFound'])->name('not_found');

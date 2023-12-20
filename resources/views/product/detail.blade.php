@@ -52,63 +52,74 @@
                 <!-- Buttons -->
                 <div class="col-lg-6">
                     <div class="product__details__text">
-                       
-                        <h3>{{$pdetail->title}} 
-                            @if($pdetail->brand)
-                            <span>Brand: {{$pdetail->brand->title}} </span>
-                            @endif
-                        </h3>
+                        <form id="form1" novalidate method="post">
+                            @csrf
+                            <h3>{{$pdetail->title}} 
+                                @if($pdetail->brand)
+                                <span>Brand: {{$pdetail->brand->title}} </span>
+                                @endif
+                            </h3>
 
-                        <!-- <div class="rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span>( 138 reviews )</span>
-                        </div> -->
+                            <!-- <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <span>( 138 reviews )</span>
+                            </div> -->
 
-						<div class="cart__quantity">
-                            <div class="pro-qty">
-                                <input type="text" value="1">
-                            </div>
-						</div>
-
-                        @if($pdetail->variant)
-                            <div class="product__details__price">
-                                Rs. {{ $pdetail->variant->selling_price }}
-                                <span>Rs. {{ $pdetail->variant->mrp_price }}</span>
-                            </div>
-                            @if($pdetail->variant->stock>0)
-                                <div class="product__details__button">
-                                    <a href="#" class="cart-btn">Add to cart</a>
-                                    <a href="#" class="buy-btn">Buy Now</a>
-                                    <input type="button" name="button1" value="Add to cart" onclick="addCart('{{$pdetail->id}}')" />
-                                    <input type="button" name="button1" value="Buy Now" />
+                            <div class="cart__quantity">
+                                <div>
+                                    <select name="product_qty" id="product_qty">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                    <input type="hidden" name="product_id" id="product_id" value="{{$pdetail->id}}" />
+                                    <input type="hidden" name="product_name" id="product_name" value="{{$pdetail->title}}" />
+                                    <input type="hidden" name="product_image" id="product_image" value="{{$pdetail->images[0]->image}}" />
+                                    <input type="hidden" name="product_link" id="product_link" value="{{$pdetail->slug}}" />
+                                    <input type="hidden" name="product_price" id="product_price" value="{{$pdetail->variant->selling_price}}" />
                                 </div>
-                            @else
-                                <div class="product__details__button">
-                                    <a href="javascript:void();" class="cart-btn">Out of Stock</a>
-                                </div>
-                            @endif
-                        @endif
+                            </div>
 
-                        <div class="product__details__widget">
-                            <ul>
-                                <li>
-                                    <span>Availability:</span>
-                                    <p>In Stock</p>
-                                </li>
-                                <li>
-                                    <span>Delivery:</span>
-                                    <p>With in 3-5 working days</p>
-                                </li>
-                                <li>
-                                    <span>Shipping:</span>
-                                    <p style="color:#3C6">Free</p>
-                                </li>
-                            </ul>
-                        </div>
+                            @if($pdetail->variant)
+                                <div class="product__details__price">
+                                    Rs. {{ $pdetail->variant->selling_price }}
+                                    <span>Rs. {{ $pdetail->variant->mrp_price }}</span>
+                                </div>
+                                @if($pdetail->variant->stock>0)
+                                    <div class="product__details__button">
+                                        <!-- <a href="#" class="cart-btn">Add to cart</a>
+                                        <a href="#" class="buy-btn">Buy Now</a> -->
+                                        <input type="button" class="cart-btn" name="button1" value="Add to cart" onclick="addCart('{{$pdetail->id}}')" />
+                                        <input type="button" class="buy-btn" name="button1" value="Buy Now" onclick="addCart('{{$pdetail->id}}')" />
+                                    </div>
+                                @else
+                                    <div class="product__details__button">
+                                        <a href="javascript:void();" class="cart-btn">Out of Stock</a>
+                                    </div>
+                                @endif
+                            @endif
+
+                            <div class="product__details__widget">
+                                <ul>
+                                    <li>
+                                        <span>Availability:</span>
+                                        <p>In Stock</p>
+                                    </li>
+                                    <li>
+                                        <span>Delivery:</span>
+                                        <p>With in 3-5 working days</p>
+                                    </li>
+                                    <li>
+                                        <span>Shipping:</span>
+                                        <p style="color:#3C6">Free</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -200,9 +211,27 @@
     <script>
         function addCart(id)
         {
-            alert(id)
-            
+            jQuery.ajax({
+                url:"/ajax/submit-addcart",
+                type:'POST',
+                data:$('#form1').serialize(),
+                success:function(data)
+                {
+                    var datas = data.split('***');
+
+                    if(datas[0]=='added')
+                    {
+                        window.location.href = '/shopping-cart';
+                    }
+                    else
+                    {
+                        jQuery("#msz").html(datas[0]);
+                    }
+                }
+            });
         }
-        </script>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 @endsection
 

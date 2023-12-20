@@ -18,39 +18,48 @@ class AuthController extends Controller
     public function submitLogin(Request $request)
     {
         $request->validate([
-            'email'      => 'required',
-            'password'   => 'required'
+            'user_mobile'      => 'required',
+            'user_password'    => 'required'
         ]);
         
-        $email      =   $request->email;
-        $password   =   Hash::make($request->password);
+        $mobile     =   $request->user_mobile;
+        $password   =   Hash::make($request->user_password);
         
-        $data       =   Customer::where('email',$email)->where('is_status','Active')->first();
+        $data       =   Customer::where('mobile',$mobile)->where('is_status','Active')->first();
         
         if($data)
         {
-            if(Hash::check(request('password'), $data->password)==1)
+            if(Hash::check(request('user_password'), $data->password)==1)
             {
                 session(['beautify_customer' => $data]);
-                return redirect('/');
+                return redirect('/my-account');
             }
             else
             {
-                session(['message'=> 'email/password is incorrect']);
-                return redirect('login');
+                session(['message'=> 'mobile no/password is incorrect']);
+                return redirect('user-login');
             }
         }
         else
         {
-            session(['message'=> 'email/password is incorrect']);
-            return redirect('login');
+            session(['message'=> 'mobile no is incorrect']);
+            return redirect('user-login');
         }
     }
 
-    public function submitLogout()
+    public function logout()
     {
-        session(['beautify_customer'=> '']);
-        return redirect('login');
+        //session(['beautify_customer'=> '']);
+        //Session::forget('beautify_customer');
+        // echo Session::getId();
+        // echo "<br/>";
+        // Session::flush();
+        // session()->regenerate();
+        // echo Session::getId();
+
+        Session::flush();
+        session()->regenerate();
+        return redirect('user-login');
     }
 
     public function signup()

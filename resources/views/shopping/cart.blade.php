@@ -31,86 +31,49 @@
                                 <tr>
                                     <th>Product</th>
                                     <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Sub Total</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="img/product/product-2.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Chain bucket bag</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-											<div>
-												<label>Qty.</label>
-												<select>
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												</select>
-											</div>
-										</div>
-                                    </td>
-                                    <td class="cart__price">Rs. 150.00</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="img/product/product-1.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Zip-pockets pebbled tote briefcase</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">Rs. 270.00</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="img/product/product-3.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Black jean</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">Rs. 370.00</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="img/product/product-5.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Cotton Shirt</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">Rs. 255.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
+
+                                @if($cart)
+                                    @php $total=0; @endphp
+                                    @foreach($cart as $carts)
+                                        <tr>
+                                            <td class="cart__product__item">
+                                                <img src="{{ $carts->product_image }}" alt="{{ $carts->product_name }}">
+                                                <div class="cart__product__item__title">
+                                                    <h6><a href="{{url('product/'.$carts->product_link)}}">{{ $carts->product_name }}</a></h6>
+                                                    <!-- <div class="rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div> -->
+                                                    
+                                                </div>
+                                            </td>
+                                            <td class="cart__price">Rs. {{ $carts->product_price }}</td>
+                                            <td class="cart__price">
+                                                <div>
+                                                    <select name="product_qty" id="product_qty" onchange="updateCart()">
+                                                        <option value="1" @if($carts->product_qty=='1') selected @endif >1</option>
+                                                        <option value="2" @if($carts->product_qty=='2') selected @endif >2</option>
+                                                        <option value="3" @if($carts->product_qty=='3') selected @endif >3</option>
+                                                    </select>
+                                                </div>
+                                                {{ $carts->quantity }}
+                                            </td>
+                                            <td class="cart__price">Rs. {{ $carts->sub_total }}</td>
+                                            <td class="cart__close"><a href="javascript:void();" onclick="deleteCart()"><span class="icon_close"></span></a></td>
+                                        </tr>
+                                        @php $total+=$carts->sub_total; @endphp
+                                    @endforeach
+                                @endif
+
                             </tbody>
                         </table>
                     </div>
@@ -125,9 +88,9 @@
                     </div> -->
 					<div class="cart__total__procced">
                         <ul>
-                            <li>Subtotal <span>Rs. 750.00</span></li>
+                            <li>Subtotal <span>Rs. {{ $total }}</span></li>
 							<li>Discount <span>-- </span></li>
-                            <li>Total <span class="price-finall">Rs. 650.00</span></li>
+                            <li>Total <span class="price-finall">Rs. {{ $total }}</span></li>
                         </ul>
                         <a href="#" class="primary-btn">Proceed to checkout</a>
                     </div>
@@ -136,7 +99,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn">
-                        <a href="#">Continue Shopping</a>
+                        <a href="/">Continue Shopping</a>
                     </div>
                 </div>
                 

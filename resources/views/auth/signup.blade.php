@@ -37,15 +37,16 @@
                         <div class="col-md-8 col-lg-8 bg-white shadow-lg">
                             <div class="contact__form p-4 pt-4">
                                 <form name="form1" action="{{route('submit_signup')}}" method="post">
-                                        @csrf
-                                        <input type="text" name="name" id="name" placeholder="Enter Name" required />
-                                        <input type="email" name="email" id="email" placeholder="Enter Email Id" required />
-                                        <input type="text" name="mobile" id="mobile" placeholder="Enter Mobile Number" required />
-                                        <input type="password" name="password" id="password" placeholder="Enter Password" required />
-                                        
-                                        <p>By continuing, you agree to <a href="" target="_blank">BeautifyU's Terms of Use</a> and <a href="" target="_blank">Privacy Policy</a>.</p>
-                                        <!-- <button type="submit" class="login-btn">Continue</button> -->
-                                        <input type="submit" />
+                                    @csrf
+                                    <input type="text" name="name" id="name" placeholder="Enter Name" required />
+                                    <input type="email" name="email" id="email" placeholder="Enter Email Id" required />
+                                    <input type="text" name="mobile" id="mobile" placeholder="Enter Mobile Number" required />
+                                    <input type="password" name="password" id="password" placeholder="Enter Password" required />
+                                    
+                                    <p>By continuing, you agree to <a href="" target="_blank">BeautifyU's Terms of Use</a> and 
+                                    <a href="{{url('/content/privacy-policy')}}" target="_blank">Privacy Policy</a>.</p>
+                                    <!-- <button type="submit" class="login-btn">Continue</button> -->
+                                    <input type="submit" />
                                 </form>
                             
                                 <div class="text-center pt-5" style="font-weight:600"> <a href="user-login">Existing User? Log in</a> </div>

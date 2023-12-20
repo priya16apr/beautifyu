@@ -39,8 +39,13 @@
         <div class="offcanvas__logo"><a href="/"><img src="{{$setting['company_logo']}}" alt="{{$setting['company_logo_alt']}}"></a></div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__auth">
-            <a href="#">Login</a>
-            <a href="#">Register</a>
+            @if(session('beautify_customer'))
+                <a href="{{route('myaccount')}}">My Account</a>
+                <a href="{{route('logout')}}">Logout</a>
+            @else
+                <a href="{{route('login')}}">Login</a>
+                <a href="{{route('signup')}}">Register</a>
+            @endif
         </div>
     </div>
     <!-- Offcanvas Menu End -->
@@ -56,22 +61,30 @@
                 <div class="col-xl-7 col-lg-8 text-right"></div>
                 <div class="col-lg-3">
                     <div class="header__right">
-                        <!-- <ul class="header__right__widget">
-                            <li>
+                        <ul class="header__right__widget">
+                            <!-- <li>
                                 <a href="#"><span class="icon_heart_alt"></span>
                                     <div class="tip">2</div>
                                 </a>
-                            </li>
+                            </li> -->
                             <li>
-                                <a href="#"><span class="icon_bag_alt"></span>
-                                    <div class="tip">2</div>
+                                <a href="{{url('/shopping-cart')}}"><span class="icon_bag_alt"></span>
+                                    <!-- <div class="tip">2</div> -->
                                 </a>
                             </li>
-                        </ul> -->
-                        <div class="header__right__auth">
-                            <a href="{{route('login')}}">Login</a>
-                            <a href="{{route('signup')}}">Register</a>
-                        </div>
+                        </ul>
+                        
+                        @if(session('beautify_customer'))
+                            <div class="header__right__auth">
+                                <a href="{{route('myaccount')}}">My Account</a>
+                                <a href="{{route('logout')}}">Logout</a>
+                            </div>
+                        @else
+                            <div class="header__right__auth">
+                                <a href="{{route('login')}}">Login</a>
+                                <a href="{{route('signup')}}">Register</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
