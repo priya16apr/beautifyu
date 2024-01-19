@@ -7,6 +7,8 @@ use Session;
 
 use App\Models\Cart;
 use App\Models\Address;
+use App\Models\Order;
+use App\Models\OrderProduct;
 
 class ShoppingController extends Controller
 {
@@ -86,7 +88,12 @@ class ShoppingController extends Controller
 
     public function checkOut()
     {
-        $customerid     = Session::get('beautify_customer')->id;
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+        
+        $customerid     =   Session::get('beautify_customer')->id;
         $address        =   Address::where('customer_id',$customerid)->get();
         $data           =   compact('address');
 
@@ -133,8 +140,77 @@ class ShoppingController extends Controller
         }
     }
 
-    public function thankyou()
+    public function submitOrder(Request $request)
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+        
+        $customerid             =   Session::get('beautify_customer')->id;
+        $sessionid              =   Session::getId();
+
+        $total_amt              =   $request->total_amt;
+        $saddress               =   $request->saddress;
+        
+        if($customerid!='' && $sessionid!='')
+        {
+            $cart                           =   Cart::where('sessionid',$sessionid)->get();
+            
+            if($cart)
+            {
+                $o_info                      =   new Order;
+            
+                $o_info->orderno             =   $customerid;
+                $o_info->sessionid           =   $sessionid;
+                $o_info->order_date          =   date('Y-m-d');
+                $o_info->customer_id         =   $customerid;
+                $o_info->address_id          =   $saddress;
+                $o_info->payment_method      =   'COD';
+                $o_info->sub_total           =   $total_amt;
+                $o_info->total               =   $total_amt;
+                $o_info->save();
+                
+                $orderinfo                   =   Order::where('sessionid',$sessionid)->first();
+                $orderid                     =   $orderinfo->id;
+    
+                foreach($cart as $carts)
+                {
+                    $op_info                        =   new OrderProduct;
+                
+                    $op_info->order_id              =   $orderid;
+                    $op_info->product_id            =   $carts->product_id;
+                    $op_info->product_title         =   $carts->product_name;
+                    $op_info->product_image         =   $carts->product_image;
+                    $op_info->product_link          =   $carts->product_link;
+                    $op_info->product_price         =   $carts->product_price;
+                    $op_info->product_qty           =   $carts->product_qty;
+                    $op_info->sub_total             =   $carts->sub_total;
+                    
+                    $op_info->save(); 
+                }
+
+                Cart::where('sessionid',$sessionid)->delete();
+                session()->regenerate();
+                
+                return redirect('/thank-you-for-shopping-with-us');  
+            }
+            else
+            {
+                return redirect('/');
+            }
+        }
+        else
+        {
+            return redirect('/');
+        }
+    }
+
+    public function thankYouShopping()
+    {
+        //session()->regenerate();
+        // echo Session::getId();
+        
         return view('shopping.thankyou');
     }
 

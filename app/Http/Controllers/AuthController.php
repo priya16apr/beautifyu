@@ -10,20 +10,43 @@ use App\Models\Customer;
 
 class AuthController extends Controller
 {
-    public function login()
+    public function login(Request $request)
     {
-        return view('auth.login');
+        if(Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+        
+        $page = $request->p;
+
+        if($page)
+        {
+            $info       =   compact('page');
+            return view('auth.login')->with($info);
+        }
+        else
+        {
+            return view('auth.login');
+        }  
     }
 
     public function submitLogin(Request $request)
     {
+        $addurl     =   "";
+        $flow_page  =   $request->flow_page; 
+        
+        if($flow_page)
+        {
+            $addurl = "?p=shop";
+        }
+
         $request->validate([
             'user_mobile'      => 'required',
             'user_password'    => 'required'
         ]);
         
         $mobile     =   $request->user_mobile;
-        $password   =   Hash::make($request->user_password);
+        $password   =   Hash::make($request->user_password);     
         
         $data       =   Customer::where('mobile',$mobile)->where('is_status','Active')->first();
         
@@ -32,18 +55,26 @@ class AuthController extends Controller
             if(Hash::check(request('user_password'), $data->password)==1)
             {
                 session(['beautify_customer' => $data]);
-                return redirect('/my-account');
+                
+                if($flow_page)
+                {
+                    return redirect('check-out');
+                }
+                else
+                {
+                    return redirect('/my-account');
+                }
             }
             else
             {
                 session(['message'=> 'mobile no/password is incorrect']);
-                return redirect('user-login');
+                return redirect('user-login'.$addurl);
             }
         }
         else
         {
             session(['message'=> 'mobile no is incorrect']);
-            return redirect('user-login');
+            return redirect('user-login'.$addurl);
         }
     }
 
@@ -64,6 +95,11 @@ class AuthController extends Controller
 
     public function signup()
     {
+        if(Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+        
         return view('auth.signup');
     }
 

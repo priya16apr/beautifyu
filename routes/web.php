@@ -43,7 +43,8 @@ Route::POST('/ajax/submit-deletecart',[ShoppingController::class,'submitDeleteCa
 Route::get('/shopping-cart',[ShoppingController::class,'cart'])->name('shopping_cart');
 Route::get('/check-out',[ShoppingController::class,'checkOut'])->name('check_out');
 Route::POST('/checkout-submit-addaddress',[ShoppingController::class,'submitAddAddress'])->name('submit_addaddress');
-Route::get('/thank-you-for-shopping-with-us',[CustomerController::class,'index'])->name('thankyou_shopping');
+Route::POST('/submit-order',[ShoppingController::class,'submitOrder'])->name('submit_order');
+Route::get('/thank-you-for-shopping-with-us',[ShoppingController::class,'thankYouShopping'])->name('thankyou_shopping');
 
 // Product
 Route::get('/products/celebrity-special',[ProductController::class,'products_celebrity'])->name('products_celebrity');

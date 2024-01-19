@@ -23,7 +23,7 @@
 
     <section class="shop-cart spad">
         <div class="container">
-            @if($cart)
+            @if(count($cart)>0)
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="shop__cart__table">
@@ -91,11 +91,14 @@
                                 <li>Discount <span>-- </span></li>
                                 <li>Total <span class="price-finall">Rs. {{ $total }}</span></li>
                             </ul>
+                            @php 
+                            session(['cart_total' => $total]);
+                            @endphp
 
                             @if(session('beautify_customer'))
                                 <a href="{{url('check-out')}}" class="primary-btn">Proceed to checkout</a>
                             @else
-                                <a href="{{url('user-login?shop')}}" class="primary-btn">Proceed to checkout</a>
+                                <a href="{{url('user-login?p=shop')}}" class="primary-btn">Proceed to checkout</a>
                             @endif
 
                             

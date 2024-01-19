@@ -35,13 +35,14 @@
                             <p class="text-white pt-4" style="font-size:16px;">Get access to your Profile, Orders, Wishlist and Recommendations</p>
                             </div>
                         </div>
-
+                       
                         <div class="col-md-8 col-lg-8 bg-white shadow-lg">
                             <div class="contact__form p-4 pt-4">
                                 <form name="form2" action="{{route('submit_login')}}" method="post">
                                     @csrf
                                         <input type="text" name="user_mobile" id="user_mobile" placeholder="Enter Mobile Number" required />
                                         <input type="password" name="user_password" id="user_password" placeholder="Enter Password" required />
+                                        <input type="hidden" name="flow_page" id="flow_page" value="{{$page}}" />
                                         
                                         <p>By continuing, you agree to <a href="{{url('/content/tttttt')}}" target="_blank">BeautifyU's Terms of Use</a> and 
                                         <a href="{{url('/content/privacy-policy')}}" target="_blank">Privacy Policy</a>.</p>
