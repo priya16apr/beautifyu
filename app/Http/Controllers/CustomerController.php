@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 
 use App\Models\Customer;
+use App\Models\Address;
 
 class CustomerController extends Controller
 {
@@ -44,12 +45,12 @@ class CustomerController extends Controller
 
     public function myAddress()
     {
-        // $cusid  =   Session::get('beautify_customer')->id;   
+        $cusid          =   Session::get('beautify_customer')['id'];
+        $address        =   Address::where('customer_id',$cusid)->get();
+       
+        $info           =   compact('address');
         
-        // $data   =   Address::where('customer_id',$id)->get();
-        // $info   =   compact('data');
-        
-        return view('myaccount.address');
+        return view('myaccount.address')->with($info);
     }
 
     public function address_by_id($id)

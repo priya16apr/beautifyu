@@ -45,7 +45,24 @@
 
                 <div class="col-lg-9 col-md-9">
                     <div class="row">
-                        Address
+                    @if(count($address)>0)                           
+                            @foreach($address as $addresss)
+                            <div class="col-md-4">
+                                <div class="bdr-1 p-4">
+                                    <h5>{{ $addresss->address_type }}</h5>
+                                    <p>{{ $addresss->full_name }}</p>
+                                    <p>{{ $addresss->address_line1 }}, {{ $addresss->address_line2 }}, {{ $addresss->city }}, {{ $addresss->state }}, {{ $addresss->pincode }}</p>
+                                    <p>Phone: {{ $addresss->mobile }}</p>
+
+                                    <hr />
+                                    <div class="d-flex">
+                                        <a href="" class="ms-auto text-dark text-13">Edit</a>
+                                        <a href="" class="ml-auto text-dark text-13">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach 
+                        @endif
                     </div>
                 </div>
                 
