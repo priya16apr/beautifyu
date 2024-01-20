@@ -39,15 +39,15 @@
                                     <p>{{ $addresss->address_line1 }}, {{ $addresss->address_line2 }}, {{ $addresss->city }}, {{ $addresss->state }}, {{ $addresss->pincode }}</p>
                                     <p>Phone: {{ $addresss->mobile }}</p>
 
-                                    <input type="radio" name="saddress" id="saddress" value="{{ $addresss->id }}"
+                                    <input type="radio" name="selected_address" id="selected_address" value="{{ $addresss->id }}"
                                     @if ($loop->first) checked  @endif />
                                     <!-- <button class="deliver-btn-2">Deliver Here</button> -->
                                     
-                                    <hr />
+                                    <!-- <hr />
                                     <div class="d-flex">
                                         <a href="" class="ms-auto text-dark text-13">Edit</a>
                                         <a href="" class="ml-auto text-dark text-13">Delete</a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             @endforeach 
@@ -57,9 +57,9 @@
                             <button class="btn btn-outline-dark">+ Add New Address</button>
                         </div> -->
 
-                        <div class="col-md-12 mt-5">
+                        <!-- <div class="col-md-12 mt-5">
                             New address
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="checkout__form__input">
                                     <p>Email Address <span>*</span></p>
-                                    <input type="text" name="add_email" id="add_email" required />
+                                    <input type="email" name="add_email" id="add_email" required />
                                 </div>
                             </div>
                             <div class="col-lg-12">

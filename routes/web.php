@@ -25,6 +25,7 @@ Route::get('/my-account/orders',[CustomerController::class,'myOrder'])->name('my
 Route::get('/my-account/order-detail/{$id}',[CustomerController::class,'myOrderDetail'])->name('myaccount_order_detail');
 Route::get('/my-account/wishlist',[CustomerController::class,'myWishlist'])->name('myaccount_wishlist');
 Route::get('/my-account/address',[CustomerController::class,'myAddress'])->name('myaccount_address');
+Route::POST('/my-account/submit-addaddress',[CustomerController::class,'submitAddAddress'])->name('myaccount_submit_addaddress');
 Route::get('/my-account/address-add',[CustomerController::class,'myAddressAdd'])->name('myaccount_address_add');
 Route::get('/my-account/address-edit/$id}',[CustomerController::class,'myAddressEdit'])->name('myaccount_address_edit');
 Route::get('/my-account/address-delete/$id}',[CustomerController::class,'myAddressDelete'])->name('myaccount_address_delete');

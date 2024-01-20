@@ -30,16 +30,7 @@
                         <h4>Edit Profile</h4>
                     </div>
                     <div>
-                        <div>
-                            <div class='card'>
-                                <div class='card-heading'><a href="{{route('myaccount')}}">My Profile</a></div>
-                                <div class='card-heading'><a href="{{route('myaccount_address')}}">My Address</a></div>
-                                <div class='card-heading'><a href="{{route('myaccount_orders')}}">My Orders</a></div>
-                                <div class='card-heading'><a href="{{route('myaccount_wishlist')}}">My Wishlst</a></div>
-                                <div class='card-heading'><a href="{{route('myaccount_password_change')}}">Change Password</a></div>
-                                
-                            </div>
-                        </div>
+                        <x-myaccount-sidebar />
                     </div>
                 </div>
 
@@ -52,8 +43,8 @@
                             <form name="form1" action="{{route('myaccount_profile_submit')}}" method="post">
                                 @csrf
                                 Name : <input type="text" name="name" id="name" value="{{$userinfo->name}}" required /><br/>
-                                Email Id : <input type="email" name="email" id="email" value="{{$userinfo->email}}" required /><br/>
-                                Mobile No : <input type="text" name="mobile" id="mobile" value="{{$userinfo->mobile}}" required /><br/>
+                                Email Id : {{$userinfo->email}}<br/>
+                                Mobile No : {{$userinfo->mobile}}<br/>
                                 <input type="submit" value="Update" />
                             </form>
                             </div>

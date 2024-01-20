@@ -22,12 +22,15 @@ class AuthController extends Controller
         if($page)
         {
             $info       =   compact('page');
-            return view('auth.login')->with($info);
         }
         else
         {
-            return view('auth.login');
+            $page       =   "";
+            $info       =   compact('page');
+            
         }  
+
+        return view('auth.login')->with($info);
     }
 
     public function submitLogin(Request $request)
