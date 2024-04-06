@@ -38,6 +38,18 @@
                             <div class="contact__form p-4 pt-4">
                             
                                 <div class="col-12">
+                                    @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach         
+                                        </ul>
+                                    </div>
+                                    @endif
+                                </div>    
+                                
+                                <div class="col-12">
                                     @if(Session::has('auth_message'))
                                     <div class="alert alert-{{ Session::get('message_class') }}" role="alert">
                                         <span class="alert-inner--text">{{ Session::get('auth_message') }}</span>
@@ -49,9 +61,9 @@
                             
                                 <form name="form1" action="{{route('submit_signup')}}" method="post">
                                     @csrf
-                                    <input type="text" name="name" id="name" placeholder="Enter Name" required />
-                                    <input type="email" name="email" id="email" placeholder="Enter Email Id" required />
-                                    <input type="text" name="mobile" id="mobile" placeholder="Enter Mobile Number" required />
+                                    <input type="text" name="name" id="name" placeholder="Enter Name" value="{{ old('name') }}" required />
+                                    <input type="email" name="email" id="email" placeholder="Enter Email Id" value="{{ old('email') }}" required />
+                                    <input type="text" name="mobile" id="mobile" placeholder="Enter Mobile Number" value="{{ old('mobile') }}" required />
                                     <input type="password" name="password" id="password" placeholder="Enter Password" required />
                                     
                                     <p>By continuing, you agree to <a href="{{url('/content/terms-of-use')}}" target="_blank">BeautifyU's Terms of Use</a> and 

@@ -109,10 +109,10 @@ class AuthController extends Controller
     public function submitSignup(Request $request)
     {
         $request->validate([
-            'name'       => 'required',
-            'email'      => 'required',
-            'mobile'     => 'required',
-            'password'   => 'required'
+            'name'       => 'required|max:120',
+            'email'      => 'required|email|unique:customers',
+            'mobile'     => 'required|digits:10|numeric|unique:customers',
+            'password'   => 'required|min:5|max:50'
         ]);
         
         $password       =   Hash::make($request->password);
@@ -139,7 +139,6 @@ class AuthController extends Controller
             session(['beautify_customer' => $newinfo]);
 
             return redirect('/my-account');
-            //return redirect($this->module);
         }
     }
     

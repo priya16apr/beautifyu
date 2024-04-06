@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Producttype;
 use App\Models\ProductAttribute;
 use App\Models\AttributeValue;
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
@@ -134,7 +135,16 @@ class ProductController extends Controller
          }
       }
 
-      $data          =     compact('pdetail','productAttribute','similar');
+      // Check product in cart
+      $cart          =     '';
+      $productid     =     $pdetail->id;
+      $sessionid     =     Session::getId();
+      $product       =     Cart::where('sessionid',$sessionid)->where('product_id',$productid)->first();
+      if($product)
+      {
+         $cart       =     'exist';
+      }
+      $data          =     compact('pdetail','productAttribute','similar','cart');
 
       return view('product.detail')->with($data);
    }

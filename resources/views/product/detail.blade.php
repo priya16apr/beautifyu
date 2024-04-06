@@ -93,8 +93,12 @@
                                     <div class="product__details__button">
                                         <!-- <a href="#" class="cart-btn">Add to cart</a>
                                         <a href="#" class="buy-btn">Buy Now</a> -->
-                                        <input type="button" class="cart-btn" name="button1" value="Add to cart" onclick="addCart('{{$pdetail->id}}')" />
-                                        <input type="button" class="buy-btn" name="button1" value="Buy Now" onclick="addCart('{{$pdetail->id}}')" />
+                                        @if($cart=='exist')
+                                            <a href="{{url('shopping-cart')}}" class="buy-btn">Already in Cart</a>
+                                        @else
+                                            <input type="button" class="cart-btn" name="button1" value="Add to cart" onclick="addCart('{{$pdetail->id}}')" />
+                                            <input type="button" class="buy-btn" name="button1" value="Buy Now" onclick="addCart('{{$pdetail->id}}')" />
+                                        @endif
                                     </div>
                                 @else
                                     <div class="product__details__button">
