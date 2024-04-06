@@ -44,11 +44,11 @@
                                     <p>{{ $addresss->address_line1 }}, {{ $addresss->address_line2 }}, {{ $addresss->city }}, {{ $addresss->state }}, {{ $addresss->pincode }}</p>
                                     <p>Phone: {{ $addresss->mobile }}</p>
 
-                                    <!-- <hr />
+                                    <hr />
                                     <div class="d-flex">
-                                        <a href="" class="ms-auto text-dark text-13">Edit</a>
-                                        <a href="" class="ml-auto text-dark text-13">Delete</a>
-                                    </div> -->
+                                        <a href="{{route('myaccount_address_edit',$addresss->id)}}" class="ms-auto text-dark text-13">Edit</a>
+                                        <a href="{{route('myaccount_submit_deladdress',$addresss->id)}}" class="ml-auto text-dark text-13">Delete</a>
+                                    </div>
                                 </div>
                             </div>
                             @endforeach 

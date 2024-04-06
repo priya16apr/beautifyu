@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\ProductController;
 
@@ -22,30 +24,40 @@ Route::POST('/user-signup-submit',[AuthController::class,'submitSignup'])->name(
 // My Account
 Route::get('/my-account',[CustomerController::class,'myAccount'])->name('myaccount');
 Route::get('/my-account/orders',[CustomerController::class,'myOrder'])->name('myaccount_orders');
-Route::get('/my-account/order-detail/{$id}',[CustomerController::class,'myOrderDetail'])->name('myaccount_order_detail');
+Route::get('/my-account/order-detail/{id}',[CustomerController::class,'myOrderDetail'])->name('myaccount_order_detail');
 Route::get('/my-account/wishlist',[CustomerController::class,'myWishlist'])->name('myaccount_wishlist');
 Route::get('/my-account/address',[CustomerController::class,'myAddress'])->name('myaccount_address');
-Route::POST('/my-account/submit-addaddress',[CustomerController::class,'submitAddAddress'])->name('myaccount_submit_addaddress');
 Route::get('/my-account/address-add',[CustomerController::class,'myAddressAdd'])->name('myaccount_address_add');
-Route::get('/my-account/address-edit/$id}',[CustomerController::class,'myAddressEdit'])->name('myaccount_address_edit');
-Route::get('/my-account/address-delete/$id}',[CustomerController::class,'myAddressDelete'])->name('myaccount_address_delete');
+Route::get('/my-account/address-edit/{id}',[CustomerController::class,'myAddressEdit'])->name('myaccount_address_edit');
 Route::get('/my-account/profile-edit',[CustomerController::class,'myProfileEdit'])->name('myaccount_profile_edit');
-Route::POST('/my-account/profile-submit',[CustomerController::class,'submitProfile'])->name('myaccount_profile_submit');
 Route::get('/my-account/password-change',[CustomerController::class,'myPasswordChange'])->name('myaccount_password_change');
+Route::GET('/my-account/submit-deladdress/{id}',[CustomerController::class,'submitDelAddress'])->name('myaccount_submit_deladdress');
+
+Route::POST('/my-account/submit-addaddress',[CustomerController::class,'submitAddAddress'])->name('myaccount_submit_addaddress');
+Route::POST('/my-account/submit-editaddress',[CustomerController::class,'submitEditAddress'])->name('myaccount_submit_editaddress');
+
+#Route::get('/my-account/address-delete/{$id}',[CustomerController::class,'myAddressDelete'])->name('myaccount_address_delete');
+Route::POST('/my-account/profile-submit',[CustomerController::class,'submitProfile'])->name('myaccount_profile_submit');
 Route::POST('/my-account/password-submit',[CustomerController::class,'submitPassword'])->name('myaccount_password_submit');
 
 // Content
 Route::get('/content/{slug}',[ContentController::class,'content_by_slug'])->name('content');
 
+// Cart
+Route::GET('/ajax/cart-increaseQuantity',[CartController::class,'increaseQuantity']);
+Route::GET('/ajax/cart-decreaseQuantity',[CartController::class,'decreaseQuantity']);
+Route::GET('/ajax/cart-deleteProduct',[CartController::class,'deleteProduct']);
+Route::GET('/ajax/cart-empty',[CartController::class,'empty']);
+
+// Checkout
+Route::GET('/check-out',[CheckoutController::class,'checkOut'])->name('check_out');
+Route::POST('/checkout-submit-addaddress',[CheckoutController::class,'submitAddAddress'])->name('submit_addaddress');
+Route::POST('/submit-order',[CheckoutController::class,'submitOrder'])->name('submit_order');
+Route::get('/thank-you-for-shopping-with-us',[CheckoutController::class,'thankYouShopping'])->name('thankyou_shopping');
+
 // Shopping
 Route::POST('/ajax/submit-addcart',[ShoppingController::class,'submitAddCart'])->name('submit_addcart');
-Route::POST('/ajax/submit-editcart',[ShoppingController::class,'submitEditCart'])->name('submit_editcart');
-Route::POST('/ajax/submit-deletecart',[ShoppingController::class,'submitDeleteCart'])->name('submit_deletecart');
 Route::get('/shopping-cart',[ShoppingController::class,'cart'])->name('shopping_cart');
-Route::get('/check-out',[ShoppingController::class,'checkOut'])->name('check_out');
-Route::POST('/checkout-submit-addaddress',[ShoppingController::class,'submitAddAddress'])->name('submit_addaddress');
-Route::POST('/submit-order',[ShoppingController::class,'submitOrder'])->name('submit_order');
-Route::get('/thank-you-for-shopping-with-us',[ShoppingController::class,'thankYouShopping'])->name('thankyou_shopping');
 
 // Product
 Route::get('/products/celebrity-special',[ProductController::class,'products_celebrity'])->name('products_celebrity');

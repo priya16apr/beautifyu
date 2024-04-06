@@ -906,6 +906,10 @@ ol {
 	color: #000000;
 	line-height: 30px;
 }
+.footer__widget a {
+	font-size: 12px;
+	color: #000000;
+}
 
 .footer__newslatter {
 	margin-bottom: 30px;

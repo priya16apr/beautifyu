@@ -8,16 +8,22 @@ use Session;
 use App\Models\Customer;
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\OrderProduct;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        
+    }
+    
     public function myAccount()
     {
         if(!Session::get('beautify_customer'))
         {
-            return redirect('/');
+            return redirect('/user-login');
         }
-        
+
         $cusid  =   Session::get('beautify_customer')['id'];  
         
         if(!$cusid)
@@ -33,6 +39,11 @@ class CustomerController extends Controller
 
     public function myProfileEdit()
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
         $userinfo   =   Session::get('beautify_customer');
         $info       =   compact('userinfo');
 
@@ -41,6 +52,11 @@ class CustomerController extends Controller
 
     public function myAddress()
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
         $cusid          =   Session::get('beautify_customer')['id'];
         $address        =   Address::where('customer_id',$cusid)->get();
        
@@ -48,17 +64,27 @@ class CustomerController extends Controller
         
         return view('myaccount.address')->with($info);
     }
-
-    public function address_by_id($id)
+  
+    public function myAddressEdit($id)
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
         $detail     =  Address::where('id',$id)->first();
         $info       =  compact('detail');
         
-        return view('myaccount.detail_address')->with($info);
+        return view('myaccount.editaddress')->with($info);
     }
 
     public function myOrder()
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
         $cusid  =   Session::get('beautify_customer')->id;   
         
         $order  =   Order::where('customer_id',$cusid)->orderBy('id','DESC')->get();
@@ -67,16 +93,28 @@ class CustomerController extends Controller
         return view('myaccount.order')->with($info);
     }
 
-    public function order_by_id($id)
+    public function myOrderDetail($id)
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
         $detail    =  Order::where('id',$id)->first();
-        $info      =  compact('detail');
+        $product   =  OrderProduct::where('order_id',$id)->get();
         
+        $info      =  compact('detail','product');
+
         return view('myaccount.detail_order')->with($info);
     }
 
     public function myWishlist()
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
         // $cusid  =   Session::get('beautify_customer')->id;   
         
         // $data   =   Wishlist::where('customer_id',$id)->get();
@@ -87,11 +125,21 @@ class CustomerController extends Controller
 
     function myPasswordChange()
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
         return view('myaccount.changepassword');
     }
 
     public function submitProfile(Request $request)
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
         $request->validate([
             'name'          => 'required'
         ]);
@@ -113,6 +161,11 @@ class CustomerController extends Controller
 
     public function submitAddAddress(Request $request)
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
         $customerid             =   $request->customerid;
         $add_pincode            =   $request->add_pincode;
         $add_name               =   $request->add_name;
@@ -151,8 +204,78 @@ class CustomerController extends Controller
         }
     }
 
+    public function submitEditAddress(Request $request)
+    {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
+        $address_id              =   $request->address_id;
+        $edit_pincode            =   $request->edit_pincode;
+        $edit_name               =   $request->edit_name;
+        $edit_email              =   $request->edit_email;
+        $edit_address1           =   $request->edit_address1;
+        $edit_address2           =   $request->edit_address2;
+        $edit_city               =   $request->edit_city;
+        $edit_state              =   $request->edit_state;
+        $edit_mobile             =   $request->edit_mobile;
+        $edit_alter_mobile       =   $request->edit_alter_mobile;
+        $address_type            =   $request->address_type;
+
+        if($address_id)
+        {
+            $info                       =   Address::find($address_id);
+            
+            $info->full_name            =   $edit_name;
+            $info->email                =   $edit_email;
+            $info->mobile               =   $edit_mobile;
+            $info->alter_mobile         =   $edit_alter_mobile;
+            $info->pincode              =   $edit_pincode;
+            $info->address_line1        =   $edit_address1;
+            $info->address_line2        =   $edit_address2;
+            $info->city                 =   $edit_city;
+            $info->state                =   $edit_state;
+            $info->address_type         =   $address_type;
+            
+            $info->save();
+
+            return redirect('/my-account/address');
+        }
+        else
+        {
+            return redirect('/');
+        }
+    }
+
+    public function submitDelAddress(Request $request)
+    {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
+        $address_id              =   $request->id;
+        
+        if($address_id)
+        {
+            Address::destroy($address_id);
+
+            return redirect('/my-account/address');
+        }
+        else
+        {
+            return redirect('/');
+        }
+    }
+
     function submitPassword(Request $request)
     {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
         $request->validate([
             'old_password'          => 'required',
             'new_password'          => 'required|different:old_password',

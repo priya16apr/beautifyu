@@ -24,6 +24,8 @@
     <section class="shop-cart spad">
         <div class="container">
             @if(count($cart)>0)
+                <span id="msz"></span>
+            
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="shop__cart__table">
@@ -58,17 +60,22 @@
                                             </td>
                                             <td class="cart__price">Rs. {{ $carts->product_price }}</td>
                                             <td class="cart__price">
-                                                <div>
+                                                <!-- <div>
                                                     <select name="product_qty" id="product_qty" onchange="updateCart()">
                                                         <option value="1" @if($carts->product_qty=='1') selected @endif >1</option>
                                                         <option value="2" @if($carts->product_qty=='2') selected @endif >2</option>
                                                         <option value="3" @if($carts->product_qty=='3') selected @endif >3</option>
                                                     </select>
-                                                </div>
-                                                {{ $carts->quantity }}
+                                                </div> -->
+                                                <button onclick="decreaseQuantity('{{ $carts->id }}')">-</button>
+                                                <input type="text" value="{{ $carts->product_qty }}" size="3" readonly />
+                                                <button onclick="increaseQuantity('{{ $carts->id }}')">+</button>
+
+
                                             </td>
                                             <td class="cart__price">Rs. {{ $carts->sub_total }}</td>
-                                            <td class="cart__close"><a href="javascript:void();" onclick="deleteCart()"><span class="icon_close"></span></a></td>
+                                            <td class="cart__close"><a href="javascript:confirm('Are you sure you want to delete this item')" 
+                                            onclick="deleteProduct('{{ $carts->id }}')"><span class="icon_close"></span></a></td>
                                         </tr>
                                         @php $total+=$carts->sub_total; @endphp
                                     @endforeach                              
@@ -88,7 +95,8 @@
                         <div class="cart__total__procced">
                             <ul>
                                 <li>Subtotal <span>Rs. {{ $total }}</span></li>
-                                <li>Discount <span>-- </span></li>
+                                <!-- <li>Discount <span>-- </span></li> -->
+                                <li>Shipping Charges <span>Free </span></li>
                                 <li>Total <span class="price-finall">Rs. {{ $total }}</span></li>
                             </ul>
                             @php 
@@ -109,6 +117,8 @@
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="cart__btn">
                             <a href="/">Continue Shopping</a>
+      
+                            <a  href="javascript:void();" onclick="empty()">Shopping Cart Empty</a>
                         </div>
                     </div>
                     
@@ -121,4 +131,77 @@
     </section>
 
 @endsection
+
+<script>
+
+    function increaseQuantity(cartid)
+    {
+        jQuery.ajax({
+            url:"/ajax/cart-increaseQuantity",
+            data:"cartid="+cartid,
+            type:'GET',
+            success:function(data)
+            {
+                if(data=='updated')
+                {
+                    window.location.href = '/shopping-cart';
+                }
+                else
+                {
+                    jQuery("#msz").html(data);
+                }
+            }
+        });
+    }
+
+    function decreaseQuantity(cartid)
+    {
+        jQuery.ajax({
+            url:"/ajax/cart-decreaseQuantity",
+            data:"cartid="+cartid,
+            type:'GET',
+            success:function(data)
+            {
+                window.location.href = '/shopping-cart';
+                
+                // if(data=='updated')
+                // {
+                //     window.location.href = '/shopping-cart';
+                // }
+                // else
+                // {
+                //     //jQuery("#msz").html(data);
+                // }
+            }
+        });
+    }
+
+    function deleteProduct(cartid)
+    {
+        jQuery.ajax({
+            url:"/ajax/cart-deleteProduct",
+            data:"cartid="+cartid,
+            type:'GET',
+            success:function(data)
+            {
+                window.location.href = '/shopping-cart';
+            }
+        });
+    }
+
+    function empty()
+    {
+        jQuery.ajax({
+            url:"/ajax/cart-empty",
+            type:'GET',
+            success:function(data)
+            {
+                window.location.href = '/shopping-cart';
+            }
+        });
+    }
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 

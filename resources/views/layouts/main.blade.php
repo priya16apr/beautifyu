@@ -107,6 +107,16 @@
 
     <footer class="footer">
         <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12 col-md-3 col-sm-5">
+                <div class="footer__widget">
+                    <h6>Quick links</h6>
+                    {{ getFooterMenu() }}
+                </div>
+            </div>
+
+            </div>
             <div class="row">
 
                 <div class="col-lg-4 col-md-6 col-sm-7">
@@ -170,16 +180,7 @@
 
             </div>
 
-            <div class="row">
-
-                <div class="col-lg-12 col-md-3 col-sm-5">
-                    <div class="footer__widget">
-                        <h6>Quick links</h6>
-                        {{ getFooterMenu() }}
-                    </div>
-                </div>
-
-            </div>
+           
 
 
 

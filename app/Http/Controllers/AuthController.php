@@ -70,13 +70,13 @@ class AuthController extends Controller
             }
             else
             {
-                session(['message'=> 'mobile no/password is incorrect']);
+                session(['auth_message'=> 'mobile no/password is incorrect']);
                 return redirect('user-login'.$addurl);
             }
         }
         else
         {
-            session(['message'=> 'mobile no is incorrect']);
+            session(['auth_message'=> 'mobile no is incorrect']);
             return redirect('user-login'.$addurl);
         }
     }
@@ -116,11 +116,11 @@ class AuthController extends Controller
         ]);
         
         $password       =   Hash::make($request->password);
-        $exist          =   Customer::where('email',$request->email)->first();
-        
+        $exist          =   Customer::where('email',$request->email)->orWhere('mobile', $request->mobile)->first();
+
         if($exist)
         {
-            session(['message'=> 'email is already exist.']);
+            session(['auth_message'=> 'email id / mobile is already exist.']);
             return redirect('user-signup');
         }
         else

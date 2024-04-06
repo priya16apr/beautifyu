@@ -38,13 +38,24 @@
                        
                         <div class="col-md-8 col-lg-8 bg-white shadow-lg">
                             <div class="contact__form p-4 pt-4">
+
+                                <div class="col-12">
+                                    @if(Session::has('auth_message'))
+                                    <div class="alert alert-{{ Session::get('message_class') }}" role="alert">
+                                        <span class="alert-inner--text">{{ Session::get('auth_message') }}</span>
+                                    </div>
+                                    {{ Session::forget('auth_message') }}
+                                    @endif 
+                                </div>
+
+
                                 <form name="form2" action="{{route('submit_login')}}" method="post">
                                     @csrf
                                         <input type="text" name="user_mobile" id="user_mobile" placeholder="Enter Mobile Number" required />
                                         <input type="password" name="user_password" id="user_password" placeholder="Enter Password" required />
                                         <input type="hidden" name="flow_page" id="flow_page" value="{{$page}}" />
                                         
-                                        <p>By continuing, you agree to <a href="{{url('/content/tttttt')}}" target="_blank">BeautifyU's Terms of Use</a> and 
+                                        <p>By continuing, you agree to <a href="{{url('/content/terms-of-use')}}" target="_blank">BeautifyU's Terms of Use</a> and 
                                         <a href="{{url('/content/privacy-policy')}}" target="_blank">Privacy Policy</a>.</p>
                                         <button type="submit" class="login-btn">Login</button>  
                                         <!-- <a href="" class="float-right text-reset pt-2">Forgot Password?</a> -->

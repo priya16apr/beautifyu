@@ -51,10 +51,10 @@
                             <p>Payment Method: {{ $orders->payment_method }}<br/>
                             Total Amount: {{ $orders->total }}</p>
                             
-                            <!-- <hr />
+                            <hr />
                             <div class="d-flex">
-                                <a href="" class="ms-auto text-dark text-13">Detail</a>
-                            </div> -->
+                                <a href="{{route('myaccount_order_detail',$orders->id)}}" class="ms-auto text-dark text-13">Detail</a>
+                            </div>
                         </div>
                     </div>
                     @endforeach 

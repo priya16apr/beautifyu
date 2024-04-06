@@ -39,8 +39,11 @@
                                     <p>{{ $addresss->address_line1 }}, {{ $addresss->address_line2 }}, {{ $addresss->city }}, {{ $addresss->state }}, {{ $addresss->pincode }}</p>
                                     <p>Phone: {{ $addresss->mobile }}</p>
 
-                                    <input type="radio" name="selected_address" id="selected_address" value="{{ $addresss->id }}"
-                                    @if ($loop->first) checked  @endif />
+                                    <label class="deliver-btn-2">
+                                        <input type="radio" name="selected_address" id="selected_address" value="{{ $addresss->id }}"
+                                        @if ($loop->first) checked  @endif /> Deliver Here
+                                    </label>
+                                    
                                     <!-- <button class="deliver-btn-2">Deliver Here</button> -->
                                     
                                     <!-- <hr />
