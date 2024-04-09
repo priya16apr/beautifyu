@@ -32,8 +32,8 @@
                 <i class="fa fa-star"></i>
             </div> -->
             <div class="product__price">
-                @if($product->variant) ₹ {{ $product->variant->selling_price }} @endif
-                @if($product->variant) <span>₹ {{ $product->variant->mrp_price }}</span> @endif
+                ₹ {{ $product->selling_price }}
+                <span>₹ {{ $product->mrp_price }}</span>
             </div>
         </div>
 

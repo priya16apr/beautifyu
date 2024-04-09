@@ -80,31 +80,29 @@
                                     <input type="hidden" name="product_name" id="product_name" value="{{$pdetail->title}}" />
                                     <input type="hidden" name="product_image" id="product_image" value="{{$pdetail->images[0]->image}}" />
                                     <input type="hidden" name="product_link" id="product_link" value="{{$pdetail->slug}}" />
-                                    <input type="hidden" name="product_price" id="product_price" value="{{$pdetail->variant->selling_price}}" />
+                                    <input type="hidden" name="product_price" id="product_price" value="{{$pdetail->selling_price}}" />
                                 </div>
                             </div>
 
-                            @if($pdetail->variant)
-                                <div class="product__details__price">
-                                    Rs. {{ $pdetail->variant->selling_price }}
-                                    <span>Rs. {{ $pdetail->variant->mrp_price }}</span>
+                            <div class="product__details__price">
+                                Rs. {{ $pdetail->selling_price }}
+                                <span>Rs. {{ $pdetail->mrp_price }}</span>
+                            </div>
+                            @if($pdetail->stock>0)
+                                <div class="product__details__button">
+                                    <!-- <a href="#" class="cart-btn">Add to cart</a>
+                                    <a href="#" class="buy-btn">Buy Now</a> -->
+                                    @if($cart=='exist')
+                                        <a href="{{url('shopping-cart')}}" class="buy-btn">Already in Cart</a>
+                                    @else
+                                        <input type="button" class="cart-btn" name="button1" value="Add to cart" onclick="addCart('{{$pdetail->id}}')" />
+                                        <input type="button" class="buy-btn" name="button1" value="Buy Now" onclick="addCart('{{$pdetail->id}}')" />
+                                    @endif
                                 </div>
-                                @if($pdetail->variant->stock>0)
-                                    <div class="product__details__button">
-                                        <!-- <a href="#" class="cart-btn">Add to cart</a>
-                                        <a href="#" class="buy-btn">Buy Now</a> -->
-                                        @if($cart=='exist')
-                                            <a href="{{url('shopping-cart')}}" class="buy-btn">Already in Cart</a>
-                                        @else
-                                            <input type="button" class="cart-btn" name="button1" value="Add to cart" onclick="addCart('{{$pdetail->id}}')" />
-                                            <input type="button" class="buy-btn" name="button1" value="Buy Now" onclick="addCart('{{$pdetail->id}}')" />
-                                        @endif
-                                    </div>
-                                @else
-                                    <div class="product__details__button">
-                                        <a href="javascript:void();" class="cart-btn">Out of Stock</a>
-                                    </div>
-                                @endif
+                            @else
+                                <div class="product__details__button">
+                                    <a href="javascript:void();" class="cart-btn">Out of Stock</a>
+                                </div>
                             @endif
 
                             <div class="product__details__widget">
