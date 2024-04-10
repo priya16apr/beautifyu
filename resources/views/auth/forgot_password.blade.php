@@ -14,7 +14,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>Login</span>
+                        <span>Forgot Password</span>
                     </div>
                 </div>
             </div>
@@ -31,8 +31,8 @@
 
                         <div class="col-md-4 col-lg-4 bg-info">
                             <div class="p-3 pt-4">
-                            <h4 class="text-white">Login Here</h4>
-                            <p class="text-white pt-4" style="font-size:16px;">Get access to your Profile, Orders, Wishlist and Recommendations</p>
+                            <h4 class="text-white">Forgot Password Here</h4>
+                            <p class="text-white pt-4" style="font-size:16px;">Send Password to your Email Id</p>
                             </div>
                         </div>
                        
@@ -40,25 +40,22 @@
                             <div class="contact__form p-4 pt-4">
 
                                 <div class="col-12">
-                                    @if(Session::has('auth_message'))
+                                    @if(Session::has('forgot_message'))
                                     <div class="alert alert-{{ Session::get('message_class') }}" role="alert">
-                                        <span class="alert-inner--text">{{ Session::get('auth_message') }}</span>
+                                        <span class="alert-inner--text">{{ Session::get('forgot_message') }}</span>
                                     </div>
-                                    {{ Session::forget('auth_message') }}
+                                    {{ Session::forget('forgot_message') }}
                                     @endif 
                                 </div>
 
 
-                                <form name="form2" action="{{route('submit_login')}}" method="post">
+                                <form name="form2" action="{{route('submit_forgot_pass')}}" method="post">
                                     @csrf
-                                        <input type="text" name="user_mobile" id="user_mobile" placeholder="Enter Mobile Number" required />
-                                        <input type="password" name="user_password" id="user_password" placeholder="Enter Password" required />
-                                        <input type="hidden" name="flow_page" id="flow_page" value="{{$page}}" />
+                                        <input type="text" name="user_email" id="user_email" placeholder="Enter Email Id" required />
                                         
                                         <p>By continuing, you agree to <a href="{{url('/content/terms-of-use')}}" target="_blank">BeautifyU's Terms of Use</a> and 
                                         <a href="{{url('/content/privacy-policy')}}" target="_blank">Privacy Policy</a>.</p>
-                                        <button type="submit" class="login-btn">Login</button>  
-                                        <a href="{{route('forgot_password')}}" class="float-right text-reset pt-2">Forgot Password?</a>
+                                        <button type="submit" class="login-btn">Submit</button>  
                                 </form>
                             
                                 <div class="text-center pt-5" style="font-weight:600"> <a href="user-signup">New to BeautifyU? Create an account</a> </div>

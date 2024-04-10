@@ -5,6 +5,7 @@ use App\Models\SubCategory;
 use App\Models\Producttype;
 use App\Models\ProducttypeCollection;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Mail;
 
 if(!function_exists('getMenu'))
 {
@@ -166,6 +167,17 @@ if(!function_exists('getSideBarHierarchy'))
             }
         }
     }
+}
+
+function sendMail($template,$body_param,$header_param)
+{
+    // Mail::send($template,$body_param, function($message) use ($header_param) {
+    //     $message->to($header_param['to']);
+    //     $message->from('beautifyu@gmail.com','Beautify U');
+    //     $message->subject($header_param['subject']);
+    // });
+
+    //echo 'Mail send';
 }
 
 

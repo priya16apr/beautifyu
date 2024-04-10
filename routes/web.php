@@ -20,6 +20,14 @@ Route::post('/user-login-submit',[AuthController::class,'submitLogin'])->name('s
 Route::get('/user-logout',[AuthController::class,'logout'])->name('logout');
 Route::get('/user-signup',[AuthController::class,'signup'])->name('signup');
 Route::POST('/user-signup-submit',[AuthController::class,'submitSignup'])->name('submit_signup');
+Route::get('/user-forgot-password',[AuthController::class,'forgot_password'])->name('forgot_password');
+Route::POST('/user-forgot-submit',[AuthController::class,'submitForgotPassword'])->name('submit_forgot_pass');
+
+// Auth Signup Two Steps
+Route::GET('/user-step1-signup',[AuthController::class,'signup_step1'])->name('signup_step1');
+Route::GET('/ajax/signup-step1',[AuthController::class,'submitSignupStep1'])->name('submit_signup_step1');
+Route::GET('/user-step2-signup',[AuthController::class,'signup_step1'])->name('signup_step2');
+Route::POST('/user-step2-signup-submit',[AuthController::class,'submitSignupStep1'])->name('submit_signup_step2');
 
 // My Account
 Route::get('/my-account',[CustomerController::class,'myAccount'])->name('myaccount');
@@ -53,7 +61,6 @@ Route::GET('/ajax/cart-empty',[CartController::class,'empty']);
 Route::GET('/check-out',[CheckoutController::class,'checkOut'])->name('check_out');
 Route::POST('/checkout-submit-addaddress',[CheckoutController::class,'submitAddAddress'])->name('submit_addaddress');
 Route::POST('/submit-order',[CheckoutController::class,'submitOrder'])->name('submit_order');
-Route::get('/thank-you-for-shopping-with-us',[CheckoutController::class,'thankYouShopping'])->name('thankyou_shopping');
 
 // Shopping
 Route::POST('/ajax/submit-addcart',[ShoppingController::class,'submitAddCart'])->name('submit_addcart');
@@ -69,5 +76,7 @@ Route::get('/products/{slug}',[ProductController::class,'products_ptype'])->name
 // ?collection=collectionslug&color=1&size=3&plate=gold
 Route::get('/product/{slug}',[ProductController::class,'product_detail'])->name('product_detail');
 
-// Other
+// Fixed Content Pages
 Route::get('/404-page-not-found',[ContentController::class,'notFound'])->name('not_found');
+Route::get('/thank-you-for-shopping-with-us',[ContentController::class,'thankForShopping']);
+Route::get('/request-for-forget-password',[ContentController::class,'requestForgotPassword']);

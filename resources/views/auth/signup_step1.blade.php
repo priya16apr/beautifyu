@@ -59,17 +59,15 @@
                                 </div>
                             
                             
-                                <form name="form1" action="{{route('submit_signup')}}" method="post">
+                                <form name="form1"  method="post">
                                     @csrf
-                                    <input type="text" name="name" id="name" placeholder="Enter Name" value="{{ old('name') }}" required />
-                                    <input type="email" name="email" id="email" placeholder="Enter Email Id" value="{{ old('email') }}" required />
                                     <input type="text" name="mobile" id="mobile" class="numberonly" placeholder="Enter Mobile Number" value="{{ old('mobile') }}" required />
-                                    <input type="password" name="password" id="password" placeholder="Enter Password" required />
+                                    <span id="otp_input" style="display:none;">
+                                        <input type="text" name="otp" id="otp" class="numberonly" placeholder="Enter OTP" />
+                                    </span>
                                     
-                                    <p>By continuing, you agree to <a href="{{url('/content/terms-of-use')}}" target="_blank">BeautifyU's Terms of Use</a> and 
-                                    <a href="{{url('/content/privacy-policy')}}" target="_blank">Privacy Policy</a>.</p>
-                                    <!-- <button type="submit" class="login-btn">Continue</button> -->
-                                    <input type="submit" />
+                                    <button type="button" class="login-btn" onclick="step1()" >Continue</button>
+                                    <!-- <input type="submit" value="Submit" /> -->
                                 </form>
                             
                                 <div class="text-center pt-5" style="font-weight:600"> <a href="user-login">Existing User? Log in</a> </div>
@@ -82,6 +80,42 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('footer-js')
+
+<script>
+
+    function step1()
+    {
+        mobile = jQuery('#mobile').val();
+        alert(mobile);
+
+        
+        jQuery.ajax({
+            url     :   "/ajax/signup-step1",
+            data    :   'mobile='+mobile
+            type    :   'GET',
+            success:function(data)
+            {
+                //var datas = data.split('***');
+
+                // if(datas[0]=='otp_ok')
+                // {
+                //     jQuery('#otp_input').show();
+                // }
+                // else
+                // {
+
+                // }
+            }
+        });
+    }
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 @endsection
 

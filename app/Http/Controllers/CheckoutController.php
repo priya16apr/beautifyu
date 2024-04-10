@@ -10,6 +10,8 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\OrderAddress;
+use App\Models\Customer;
+use App\Models\Mail;
 
 class CheckoutController extends Controller
 {
@@ -133,6 +135,14 @@ class CheckoutController extends Controller
 
                 Cart::where('sessionid',$sessionid)->delete();
                 session()->regenerate();
+
+                // Send Mail
+                $custinfo       =   Customer::where('id',$customerid)->first();
+                $mailinfo       =   Mail::find('3');
+                $header_param   =  ['to'   =>  $custinfo->email, 'subject' =>  $mailinfo['subject']];
+                $body_param     =  ['name' =>  $custinfo->name,  'orderid' =>  'orderid', 'total_amt' =>  $total_amt];
+            
+                sendMail('mail.order_confirmed',$body_param,$header_param);
                 
                 return redirect('/thank-you-for-shopping-with-us');  
             }
@@ -145,14 +155,6 @@ class CheckoutController extends Controller
         {
             return redirect('/');
         }
-    }
-
-    public function thankYouShopping()
-    {
-        //session()->regenerate();
-        // echo Session::getId();
-        
-        return view('shopping.thankyou');
     }
 
 }

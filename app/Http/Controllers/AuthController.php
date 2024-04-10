@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Session;
 
 use App\Models\Customer;
+use App\Models\Mail;
 
 class AuthController extends Controller
 {
@@ -126,7 +127,7 @@ class AuthController extends Controller
         else
         {
             $info                       =   new Customer;
-    
+            
             $info->name                 =   $request->name;
             $info->mobile               =   $request->mobile;
             $info->email                =   $request->email;
@@ -134,13 +135,83 @@ class AuthController extends Controller
             $info->is_status            =   'Active';
 
             $info->save();
+
             $newinfo                    =   Customer::where('email',$request->email)->first();
 
             session(['beautify_customer' => $newinfo]);
 
+            // Send Mail
+            $mailinfo       =   Mail::find('1');
+            $header_param   =  ['to'   =>  $request->email, 'subject' =>  $mailinfo['subject']];
+            $body_param     =  ['name' =>  $request->name,  'mobile'  =>  $request->mobile, 'email' =>  $request->email, 'password' =>  $request->password];
+            
+            sendMail('mail.user_registration',$body_param,$header_param);
+
             return redirect('/my-account');
         }
     }
-    
-    
+
+    public function forgot_password ()
+    {
+        return view('auth.forgot_password');
+    }
+
+
+    public function submitForgotPassword (Request $request)
+    {
+        $request->validate([
+            'user_email'   => 'required'
+        ]);
+
+        // Send Mail
+        $exist          =   Customer::where('email',$request->user_email)->first();
+
+        if($exist)
+        {
+            $mailinfo       =   Mail::find('2');
+            $header_param   =  ['to'   =>  $request->user_email, 'subject' =>  $mailinfo['subject']];
+            $body_param     =  ['name' =>  $exist->name,  'mobile'  =>  $exist->mobile, 'email' =>  $exist->email, 'password' =>  $exist->password];
+            
+            sendMail('mail.forgot_password',$body_param,$header_param);
+
+            return redirect('/request-for-forget-password');
+        }
+        else
+        {
+            session(['forgot_message'=> 'Email Id is incorrect']);
+            return redirect('/user-forgot-password');
+        }
+        
+    }
+
+
+    // Registration in two Steps
+
+    public function signup_step1()
+    {
+        if(Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+        
+        return view('auth.signup_step1');
+    }
+
+    public function submitSignupStep1()
+    {
+        $mobile =   @$_REQUEST['mobile'];
+
+        if($mobile)
+        {
+            //
+            echo 'otp_ok';
+        }
+        else
+        {
+
+        }
+
+        echo '***';
+        
+    }
 }
