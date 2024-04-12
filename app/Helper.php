@@ -3,7 +3,7 @@
 use Illuminate\Support\Str;
 use App\Models\SubCategory;
 use App\Models\Producttype;
-use App\Models\ProducttypeCollection;
+use App\Models\ProductTypeCollection;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Mail;
 
@@ -38,7 +38,7 @@ if(!function_exists('getMenu'))
                                     echo "<h6><a href=".$fslug.">".$ptypename."</a></h6>";
                                     echo "<ul class='list-unstyled'>";
 
-                                    $collection             =   ProducttypeCollection::where('is_visible','1')->orderBy('sequence','asc')->where('producttype_id',$ptypeid)->get();
+                                    $collection             =   ProductTypeCollection::where('is_visible','1')->orderBy('sequence','asc')->where('producttype_id',$ptypeid)->get();
                                     if($collection)
                                     { 
                                         foreach($collection as $collections)
@@ -87,7 +87,7 @@ if(!function_exists('getFooterMenu'))
                 
                 echo "<b><a href=".$fslug.">".$ptypename."</a></b> : ";
 
-                $collection             =   ProducttypeCollection::where('is_visible','1')->orderBy('sequence','asc')->where('producttype_id',$ptypeid)->get();
+                $collection             =   ProductTypeCollection::where('is_visible','1')->orderBy('sequence','asc')->where('producttype_id',$ptypeid)->get();
                 if($collection)
                 { 
                     foreach($collection as $collections)

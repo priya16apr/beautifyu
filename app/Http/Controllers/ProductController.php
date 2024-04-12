@@ -11,8 +11,8 @@ use App\Models\Color;
 use App\Models\Attribute;
 use App\Models\ProductCollection;
 use App\Models\ProductColor;
-use App\Models\ProductTypeCollection;
-use App\Models\ProductTypeAttribute;
+use App\Models\ProducttypeCollection;
+use App\Models\ProducttypeAttribute;
 use App\Models\Producttype;
 use App\Models\ProductAttribute;
 use App\Models\AttributeValue;
@@ -190,7 +190,10 @@ class ProductController extends Controller
                   if($attributes->values)
                   {
                      $val     =   AttributeValue::where('id',$attributes->values)->first();
-                     $productAttribute.=$val->value;
+                     if($val)
+                     {
+                        $productAttribute.=$val->value;
+                     }                     
                   }
                }
 

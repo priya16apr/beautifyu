@@ -80,6 +80,11 @@ class CheckoutController extends Controller
         $sessionid              =   Session::getId();
         $total_amt              =   $request->total_amt;
         $selected_address       =   $request->selected_address;
+
+        if(!$selected_address)
+        {
+            return redirect('/check-out');
+        }
         
         if($customerid!='' && $sessionid!='')
         {
