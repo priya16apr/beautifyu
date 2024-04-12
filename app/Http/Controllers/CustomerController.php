@@ -83,6 +83,34 @@ class CustomerController extends Controller
         return view('myaccount.editaddress')->with($info);
     }
 
+    public function myAddressDefault($id)
+    {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/user-login');
+        }
+
+        $customerid         =   Session::get('beautify_customer')['id']; 
+        $info               =   Address::where('customer_id',$customerid)->get();
+        if($info)
+        {
+            foreach($info as $infos)
+            {
+                if($infos->id==$id) 
+                { 
+                    $infos->is_default     =   'Yes';
+                }
+                else
+                {
+                    $infos->is_default     =   'No';
+                }
+                $infos->save();
+            }
+        }  
+
+        return redirect('/my-account/address');
+    }
+
     public function myOrder()
     {
         if(!Session::get('beautify_customer'))

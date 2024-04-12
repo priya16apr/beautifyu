@@ -37,6 +37,7 @@ Route::get('/my-account/wishlist',[CustomerController::class,'myWishlist'])->nam
 Route::get('/my-account/address',[CustomerController::class,'myAddress'])->name('myaccount_address');
 Route::get('/my-account/address-add',[CustomerController::class,'myAddressAdd'])->name('myaccount_address_add');
 Route::get('/my-account/address-edit/{id}',[CustomerController::class,'myAddressEdit'])->name('myaccount_address_edit');
+Route::get('/my-account/address-default/{id}',[CustomerController::class,'myAddressDefault'])->name('myaccount_address_default');    
 Route::get('/my-account/profile-edit',[CustomerController::class,'myProfileEdit'])->name('myaccount_profile_edit');
 Route::get('/my-account/password-change',[CustomerController::class,'myPasswordChange'])->name('myaccount_password_change');
 Route::GET('/my-account/submit-deladdress/{id}',[CustomerController::class,'submitDelAddress'])->name('myaccount_submit_deladdress');

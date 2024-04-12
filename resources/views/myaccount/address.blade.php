@@ -59,10 +59,9 @@
                                     <div class="d-flex position-bottom bdr-top">
                                         <a href="{{route('myaccount_address_edit',$addresss->id)}}" class="ms-auto text-13">Edit</a> | 
                                         <a href="{{route('myaccount_submit_deladdress',$addresss->id)}}" onclick="return confirm('Are you sure, you want to delete this address?')" class="text-13">Remove</a> 
-                                        <!-- @if($addresss->is_default=='No') 
-                                        | <a href="" class="text-13">Set as Default</a>
-                                        <input type="button" class="text-13" value="Set as Default" />
-                                        @endif -->
+                                        @if($addresss->is_default=='No') 
+                                        | <a href="{{route('myaccount_address_default',$addresss->id)}}" class="text-13">Set as Default</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
