@@ -47,7 +47,7 @@ if(!function_exists('getMenu'))
                                             $collectionid       =   $collections['id'];
                                             $collectionslug     =   $collections['slug'];
                                             $collectionname     =   $collections['title'];
-                                            $fcolslug           =   "/products/".$ptypeslug.'?collection='.$collectionslug;
+                                            $fcolslug           =   "/products/".$ptypeslug.'?collection='.$collectionid;
 
                                             echo '<li class="nav-item"><a href='.$fcolslug.' class="nav-link text-small pb-0">'.$collectionname.'</a></li>';
                                         }    

@@ -1447,12 +1447,27 @@ ol {
 .sidebar__filter a {
 	font-size: 14px;
 	color: #0d0d0d;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 	letter-spacing: 2px;
-	font-weight: 700;
+	font-weight: 600;
 	display: inline-block;
-	padding: 5px 16px 5px 24px;
-	border: 2px solid #ff0000;
+	padding: 5px 6px 6px 7px;
+	border: 1px solid #6c56567a;
+	position: relative;
+	right: 0;
+	bottom: -5px;
+	border-radius: 2px;
+}
+
+.sidebar__filter_1 a {
+	font-size: 14px;
+	color: #0d0d0d;
+	/* text-transform: uppercase; */
+	letter-spacing: 1px;
+	font-weight: 500;
+	display: inline-block;
+	padding: 3px 3px 3px 3px;
+	border: 1px solid #6c56567a;
 	position: relative;
 	right: 0;
 	bottom: -5px;

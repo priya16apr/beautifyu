@@ -7,10 +7,17 @@ use Session;
 
 use App\Models\SubCategory;
 use App\Models\Product;
+use App\Models\Color;
+use App\Models\Attribute;
+use App\Models\ProductCollection;
+use App\Models\ProductColor;
+use App\Models\ProductTypeCollection;
+use App\Models\ProductTypeAttribute;
 use App\Models\Producttype;
 use App\Models\ProductAttribute;
 use App\Models\AttributeValue;
 use App\Models\Cart;
+use App\Models\PriceRange;
 
 class ProductController extends Controller
 {
@@ -56,14 +63,101 @@ class ProductController extends Controller
 
    public function products_ptype($slug)
    {
-      $ptype         =  Producttype::where('slug',$slug)->first();
+      $ptype                  =   Producttype::where('slug',$slug)->first();
       if($ptype)
       {
-         $ptypeid    =  $ptype['id'];
-      
-         $product    =  Product::where('producttype_id',$ptypeid)->get();
-         $data       =  compact('ptype','product');
-   
+         $ptypeid             =   $ptype['id'];
+         $filtering           =   'No';
+
+         $req_collection      =   request()->get('collection');         
+         $req_color           =   request()->get('color');
+         $req_price           =   request()->get('price');
+         $req_customname      =   request()->get('custom_name');
+         $req_customname      =   request()->get('custom_value');
+
+         $req_collections     =   @explode(',',$req_collection);
+         $req_colors          =   @explode(',',$req_color);
+         $req_prices          =   @explode('-',$req_price);
+
+         // Make a Side Bar
+         $side['side_collection']     =   ProducttypeCollection::where('producttype_id',$ptypeid)->get();
+         $side['side_color']          =   color::get();
+         $side['side_price']          =   PriceRange::get();
+         $side['side_custom']         =   array();
+
+         $s_attri                     =   ProducttypeAttribute::whereRelation('attribute', 'leftside_filter', '=', 'Yes')
+                                          ->where('producttype_id',$ptypeid)
+                                          ->get();
+         if($s_attri)
+         {
+            foreach($s_attri as $key=>$s_attris)
+            {
+               $s_attvalue            =   AttributeValue::where('attribute_id',$s_attris['attribute_id'])->get();
+               
+               $side['side_custom'][$key]['col'] =   array();
+               
+               if($s_attvalue)
+               {
+                  $side['side_custom'][$key]['label']  =  $s_attris['attribute']['name'];
+                  
+                  foreach($s_attvalue as $key1=>$s_attvalues)
+                  {
+                     $side['side_custom'][$key]['col'][$key1]['id']     =  $s_attvalues['id'];
+                     $side['side_custom'][$key]['col'][$key1]['value']  =  $s_attvalues['value'];
+                  }
+               }
+            }
+         }
+
+         // Get Product Ids By Filtering
+         if(request()->query())
+         {
+            $filtering                 =  'Yes';
+            $product                   =   array();
+            $fetch_product_id          =   array();
+
+            if($req_collection)
+            {
+               $req_productinfo        =   ProductCollection::whereIn('collection_id',$req_collections)->get();
+               if($req_productinfo)
+               {
+                  foreach($req_productinfo as $req_productinfos)
+                  {
+                     $fetch_product_id[]     =  $req_productinfos['product_id'];
+                  }
+               }
+
+               $product    =  Product::whereIn('id',$fetch_product_id)->get();
+            }
+
+            if($req_color)
+            {
+               $req_productinfo        =   ProductColor::whereIn('color_id',$req_colors)->get();
+               if($req_productinfo)
+               {
+                  foreach($req_productinfo as $req_productinfos)
+                  {
+                     $fetch_product_id[]     =  $req_productinfos['product_id'];
+                  }
+               }
+
+               $product    =  Product::whereIn('id',$fetch_product_id)->get();
+            }
+
+            if($req_price)
+            {
+               $product    =   Product::where('selling_price','>',$req_prices[0])->where('selling_price','<',$req_prices[1])->get();
+            }
+
+            $data       =  compact('ptype','side','filtering','product');
+
+         }
+         else
+         {
+            $product    =  Product::where('producttype_id',$ptypeid)->get();
+            $data       =  compact('ptype','side','filtering','product');
+         }
+
          return view('product.ptype')->with($data);
       }
       else

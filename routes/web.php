@@ -71,9 +71,9 @@ Route::get('/products/celebrity-special',[ProductController::class,'products_cel
 Route::get('/products/new-arrival',[ProductController::class,'products_newarrival'])->name('products_newarrival');
 Route::get('/products/festival-special',[ProductController::class,'products_festival'])->name('products_festival');
 Route::get('/products/deal-of-the-day',[ProductController::class,'products_deal'])->name('products_deal');
-Route::get('products/search',[ProductController::class,'products_search'])->name('products_search');
+Route::get('products/search',[ProductController::class,'products_search'])->name('products_search');    // ?s=string
 Route::get('/products/{slug}',[ProductController::class,'products_ptype'])->name('products_ptype');
-// ?collection=collectionslug&color=1&size=3&plate=gold
+// ?collection=1,2&color=1,2&minprice=3&maxprice=3&custom=value
 Route::get('/product/{slug}',[ProductController::class,'product_detail'])->name('product_detail');
 
 // Fixed Content Pages
