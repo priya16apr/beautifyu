@@ -42,6 +42,7 @@ class CheckoutController extends Controller
         $add_mobile             =   $request->add_mobile;
         $add_alter_mobile       =   $request->add_alter_mobile;
         $address_type           =   $request->address_type;
+        $is_default             =   $request->is_default;
 
         if($customerid)
         {
@@ -58,6 +59,7 @@ class CheckoutController extends Controller
             $info->city                 =   $add_city;
             $info->state                =   $add_state;
             $info->address_type         =   $address_type;
+            $info->is_default           =   $is_default;
             
             $info->save();
 

@@ -155,6 +155,11 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="checkout__form__input choosee">
+                                    @if(count($address)>0)
+                                        <input type="hidden" name="is_default" value="No" />
+                                    @else
+                                        <input type="hidden" name="is_default" value="Yes" />
+                                    @endif
                                     <p>Address Type</p>
                                     <label><input type="radio" name="address_type" id="address_type" value="Home" checked /> <span>Home /
                                             Personal</span></label>

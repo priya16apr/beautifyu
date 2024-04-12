@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
+use Hash;
 
 use App\Models\Customer;
 use App\Models\Address;
@@ -60,7 +61,9 @@ class CustomerController extends Controller
         $cusid          =   Session::get('beautify_customer')['id'];
         $address        =   Address::where('customer_id',$cusid)->get();
        
-        $info           =   compact('address');
+        $userinfo       =   Session::get('beautify_customer');
+
+        $info           =   compact('address','userinfo');
         
         return view('myaccount.address')->with($info);
     }
@@ -73,7 +76,9 @@ class CustomerController extends Controller
         }
 
         $detail     =  Address::where('id',$id)->first();
-        $info       =  compact('detail');
+        $userinfo   =   Session::get('beautify_customer');
+        
+        $info       =  compact('detail','userinfo');
         
         return view('myaccount.editaddress')->with($info);
     }
@@ -85,10 +90,11 @@ class CustomerController extends Controller
             return redirect('/user-login');
         }
 
-        $cusid  =   Session::get('beautify_customer')->id;   
-        
-        $order  =   Order::where('customer_id',$cusid)->orderBy('id','DESC')->get();
-        $info   =   compact('order');
+        $cusid      =   Session::get('beautify_customer')->id;   
+        $userinfo   =   Session::get('beautify_customer');
+
+        $order      =   Order::where('customer_id',$cusid)->orderBy('id','DESC')->get();
+        $info       =   compact('order','userinfo');
         
         return view('myaccount.order')->with($info);
     }
@@ -130,7 +136,10 @@ class CustomerController extends Controller
             return redirect('/user-login');
         }
 
-        return view('myaccount.changepassword');
+        $userinfo   =   Session::get('beautify_customer');
+        $info       =   compact('userinfo');
+
+        return view('myaccount.changepassword')->with($info);
     }
 
     public function submitProfile(Request $request)
@@ -150,6 +159,8 @@ class CustomerController extends Controller
         if($info)
         {   
             $info->name     =   $request->name;
+            $info->gender   =   $request->gender;
+            $info->dob      =   $request->dob;
             $info->save();
 
             $data           =   Customer::where('id',$cusid)->first();
@@ -177,6 +188,7 @@ class CustomerController extends Controller
         $add_mobile             =   $request->add_mobile;
         $add_alter_mobile       =   $request->add_alter_mobile;
         $address_type           =   $request->address_type;
+        $is_default             =   $request->is_default; 
 
         if($customerid)
         {
@@ -193,7 +205,7 @@ class CustomerController extends Controller
             $info->city                 =   $add_city;
             $info->state                =   $add_state;
             $info->address_type         =   $address_type;
-            
+            $info->is_default           =   $is_default;
             $info->save();
 
             return redirect('/my-account/address');
@@ -301,7 +313,7 @@ class CustomerController extends Controller
             }
         }
         
-        return redirect('myaccount.changepassword');
+        return redirect('my-account/password-change');
     }
 
 }

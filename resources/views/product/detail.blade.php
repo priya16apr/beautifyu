@@ -78,7 +78,9 @@
                                     </select>
                                     <input type="hidden" name="product_id" id="product_id" value="{{$pdetail->id}}" />
                                     <input type="hidden" name="product_name" id="product_name" value="{{$pdetail->title}}" />
-                                    <input type="hidden" name="product_image" id="product_image" value="{{$pdetail->images[0]->image}}" />
+                                    @if(count($pdetail->images)>0)  
+                                        <input type="hidden" name="product_image" id="product_image" value="{{$pdetail->images[0]->image}}" />
+                                    @endif
                                     <input type="hidden" name="product_link" id="product_link" value="{{$pdetail->slug}}" />
                                     <input type="hidden" name="product_price" id="product_price" value="{{$pdetail->selling_price}}" />
                                 </div>

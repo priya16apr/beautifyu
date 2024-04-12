@@ -24,23 +24,18 @@
         <div class="container">
             <div class="row">   
             
-                <div class="sidebar__categories">
-                    <div class="section-title">
-                        <h4>My Account</h4>
-                    </div>
-                    <div>
-                        <x-myaccount-sidebar />
-                    </div>
-                </div>
+                <x-myaccount-sidebar :userinfo=$userinfo />
 
                 <div class="col-lg-9 col-md-9">
                     <div class="row">
-                        <div class="col-lg-6 col-md-4 col-sm-6">
-                            <div class="product__item">
-                            My Profile <a href="{{route('myaccount_profile_edit')}}">Edit</a><br/>
-                            Name : {{$userinfo->name}}<br/>
-                            Email Id : {{$userinfo->email}}<br/>
-                            Mobile No : {{$userinfo->mobile}}<br/>
+                        <div class="col-lg-12 col-md-12">
+                            <div class="acc-heading">My Profile <span><a href="{{route('myaccount_profile_edit')}}"><i class="fa fa-edit"></i> Edit</a></span></div>
+                            <div class="product__item prof-list">
+                            <div><span>Name :</span> {{$userinfo->name}}</div>
+                            <div><span>Email Id :</span> {{$userinfo->email}}</div>
+                            <div><span>Mobile No :</span> {{$userinfo->mobile}}</div>
+                            @if($userinfo->gender)<div><span>Gender :</span> {{$userinfo->gender}}</div>@endif
+                            @if($userinfo->dob)<div><span>DOB :</span> {{ date('d M, Y',strtotime($userinfo->dob)) }}</div>@endif
                             </div>
                         </div>
                     </div>
