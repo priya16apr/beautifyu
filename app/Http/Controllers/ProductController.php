@@ -23,7 +23,7 @@ class ProductController extends Controller
 {
    public function products_celebrity()
    {
-      $product    =  Product::get();
+      $product    =  Product::where('status','4')->where('is_celeb','Yes')->get();
       $data       =  compact('product');
 
       return view('product.celebrity')->with($data);
@@ -31,7 +31,7 @@ class ProductController extends Controller
 
    public function products_newarrival()
    {
-      $product    =  Product::get();
+      $product    =  Product::where('status','4')->orderby('id','desc')->get();
       $data       =  compact('product');
 
       return view('product.newarrival')->with($data);
@@ -39,7 +39,7 @@ class ProductController extends Controller
 
    public function products_festival()
    {
-      $product    =  Product::get();
+      $product    =  Product::where('status','4')->get();
       $data       =  compact('product');
 
       return view('product.festival')->with($data);
@@ -47,7 +47,7 @@ class ProductController extends Controller
 
    public function products_deal()
    {
-      $product    =  Product::get();
+      $product    =  Product::where('status','4')->get();
       $data       =  compact('product');
 
       return view('product.deal')->with($data);
@@ -75,39 +75,41 @@ class ProductController extends Controller
          $req_customname      =   request()->get('custom_name');
          $req_customname      =   request()->get('custom_value');
 
-         $req_collections     =   @explode(',',$req_collection);
-         $req_colors          =   @explode(',',$req_color);
-         $req_prices          =   @explode('-',$req_price);
-
+         $leftreq['collection']       =   $req_collections     =   @explode(',',$req_collection);
+         $leftreq['color']            =   $req_colors          =   @explode(',',$req_color);
+         $req_prices                  =   @explode('-',$req_price);
+         $leftreq['price']            =   $req_price;
+         
          // Make a Side Bar
          $side['side_collection']     =   ProductTypeCollection::where('producttype_id',$ptypeid)->get();
          $side['side_color']          =   color::get();
          $side['side_price']          =   PriceRange::get();
          $side['side_custom']         =   array();
 
-         $s_attri                     =   ProductTypeAttribute::whereRelation('attribute', 'leftside_filter', '=', 'Yes')
-                                          ->where('producttype_id',$ptypeid)
-                                          ->get();
-         if($s_attri)
-         {
-            foreach($s_attri as $key=>$s_attris)
-            {
-               $s_attvalue            =   AttributeValue::where('attribute_id',$s_attris['attribute_id'])->get();
+         // Custom Attributes
+         // $s_attri                     =   ProductTypeAttribute::whereRelation('attribute', 'leftside_filter', '=', 'Yes')
+         //                                  ->where('producttype_id',$ptypeid)
+         //                                  ->get();
+         // if($s_attri)
+         // {
+         //    foreach($s_attri as $key=>$s_attris)
+         //    {
+         //       $s_attvalue            =   AttributeValue::where('attribute_id',$s_attris['attribute_id'])->get();
                
-               $side['side_custom'][$key]['col'] =   array();
+         //       $side['side_custom'][$key]['col'] =   array();
                
-               if($s_attvalue)
-               {
-                  $side['side_custom'][$key]['label']  =  $s_attris['attribute']['name'];
+         //       if($s_attvalue)
+         //       {
+         //          $side['side_custom'][$key]['label']  =  $s_attris['attribute']['name'];
                   
-                  foreach($s_attvalue as $key1=>$s_attvalues)
-                  {
-                     $side['side_custom'][$key]['col'][$key1]['id']     =  $s_attvalues['id'];
-                     $side['side_custom'][$key]['col'][$key1]['value']  =  $s_attvalues['value'];
-                  }
-               }
-            }
-         }
+         //          foreach($s_attvalue as $key1=>$s_attvalues)
+         //          {
+         //             $side['side_custom'][$key]['col'][$key1]['id']     =  $s_attvalues['id'];
+         //             $side['side_custom'][$key]['col'][$key1]['value']  =  $s_attvalues['value'];
+         //          }
+         //       }
+         //    }
+         // }
 
          // Get Product Ids By Filtering
          if(request()->query())
@@ -115,6 +117,8 @@ class ProductController extends Controller
             $filtering                 =  'Yes';
             $product                   =   array();
             $fetch_product_id          =   array();
+
+            $product                   =   Product::where('producttype_id',$ptypeid);
 
             if($req_collection)
             {
@@ -127,7 +131,7 @@ class ProductController extends Controller
                   }
                }
 
-               $product    =  Product::whereIn('id',$fetch_product_id)->get();
+               $product      =  $product->whereIn('id',$fetch_product_id);
             }
 
             if($req_color)
@@ -141,21 +145,29 @@ class ProductController extends Controller
                   }
                }
 
-               $product    =  Product::whereIn('id',$fetch_product_id)->get();
+               $product      =  $product->whereIn('id',$fetch_product_id);
             }
 
             if($req_price)
             {
-               $product    =   Product::where('selling_price','>',$req_prices[0])->where('selling_price','<',$req_prices[1])->get();
+               $req_prices[0] =  $req_prices[0]-1;
+               $req_prices[1] =  $req_prices[1]+1;
+               $product       =  $product->where('selling_price','>',$req_prices[0])->where('selling_price','<',$req_prices[1]);
             }
 
-            $data       =  compact('ptype','side','filtering','product');
+            $product          =   $product->get();
+
+            $data             =   compact('ptype','side','filtering','leftreq','product');
 
          }
          else
          {
+            $leftreq['collection']       =   array();
+            $leftreq['color']            =   array();
+            $leftreq['price']            =   array();
+            
             $product    =  Product::where('producttype_id',$ptypeid)->get();
-            $data       =  compact('ptype','side','filtering','product');
+            $data       =  compact('ptype','side','filtering','leftreq','product');
          }
 
          return view('product.ptype')->with($data);
@@ -163,6 +175,44 @@ class ProductController extends Controller
       else
       {
          return view('no_found');
+      }
+   }
+
+   public function products_ptype_att_search(Request $request)
+   {
+      // echo '<pre>';
+      // print_r($_REQUEST);
+
+      if($request)
+      {
+         $ptype         = $request->ptype;
+         $collection    = $request->collection;
+         $color         = $request->color;
+         $price         = $request->price;
+         $input_custom  = $request->input_custom;
+
+         $string        =  "products/".$ptype."?";
+         
+         if($collection) 
+         { 
+            $collections = @implode(',',$collection); 
+            $string.= "collection=$collections&";
+         }
+         if($color)      
+         { 
+            $colors      = @implode(',',$color); 
+            $string.= "color=$colors&";
+         }
+         if($price)      
+         { 
+            $string.= "price=$price";
+         }
+
+         return redirect($string);
+      }
+      else
+      {
+         return redirect('/404-page-not-found');
       }
    }
 

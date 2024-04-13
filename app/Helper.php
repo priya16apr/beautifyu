@@ -96,7 +96,7 @@ if(!function_exists('getFooterMenu'))
                         $collectionid       =   $collections['id'];
                         $collectionslug     =   $collections['slug'];
                         $collectionname     =   $collections['title'];
-                        $fcolslug           =   "/products/".$ptypeslug.'?collection='.$collectionslug;
+                        $fcolslug           =   "/products/".$ptypeslug.'?collection='.$collectionid;
 
                         echo '<a href='.$fcolslug.' >'.$collectionname.'</a> | ';
                     }    

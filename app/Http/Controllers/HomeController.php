@@ -16,11 +16,11 @@ class HomeController extends Controller
         $topbanner      =  HomeuiBanner::where('type','Top Banner')->get();
         $usp            =  HomeuiUsp::get();
         
-        $p_arrival      =  Product::paginate('12');
-        $p_trending     =  Product::paginate('12');
-        $p_celeb        =  Product::paginate('4');
-        $p_combo        =  Product::paginate('4');
-        $p_deal         =  Product::paginate('4');
+        $p_arrival      =  Product::where('status','4')->orderby('id','desc')->paginate('12');
+        $p_trending     =  Product::where('status','4')->orderby('id','desc')->paginate('12');
+        $p_celeb        =  Product::where('status','4')->where('is_celeb','Yes')->paginate('4');
+        $p_combo        =  Product::where('status','4')->paginate('4');
+        $p_deal         =  Product::where('status','4')->paginate('4');
        
         $probanner      =  HomeuiBanner::where('type','Promotional Banner')->where('status','Active')->get();
         

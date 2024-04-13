@@ -72,8 +72,13 @@ Route::get('/products/festival-special',[ProductController::class,'products_fest
 Route::get('/products/deal-of-the-day',[ProductController::class,'products_deal'])->name('products_deal');
 Route::get('products/search',[ProductController::class,'products_search'])->name('products_search');    // ?s=string
 Route::get('/products/{slug}',[ProductController::class,'products_ptype'])->name('products_ptype');
-// ?collection=1,2&color=1,2&minprice=3&maxprice=3&custom=value
 Route::get('/product/{slug}',[ProductController::class,'product_detail'])->name('product_detail');
+
+// ?collection=1,2&color=1,2&minprice=3&maxprice=3&custom=value
+Route::POST('/products_ptype_att/search',[ProductController::class,'products_ptype_att_search'])->name('products_ptype_att_search');
+// ?string=value
+Route::POST('/products_string/search',[ProductController::class,'products_string_search'])->name('products_string_search');
+
 
 // Fixed Content Pages
 Route::get('/404-page-not-found',[ContentController::class,'notFound'])->name('not_found');

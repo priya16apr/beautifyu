@@ -32,6 +32,10 @@
                 <!-- Side Bar -->              
                 <div class="col-lg-3 col-md-3">
                     <div class="shop__sidebar">
+                    
+                    <form name="form1" id="form1" method="post" action="{{route('products_ptype_att_search')}}" >
+                        @csrf
+                        <input type="hidden" name="ptype" id="ptype" value="{{ $ptype['slug'] }}" />
 
                         <!-- Category -->
                         <div class="sidebar__categories">
@@ -49,7 +53,13 @@
                                 <div class="section-title"><h4>Collections</h4></div>
                                 <div>
                                     @foreach($side['side_collection'] as $side_collections)
-                                        <input type="checkbox" name="input_collection" id="input_collection" value="{{ $side_collections['id']}}" /> &nbsp;{{ $side_collections['title']}}<br/>
+                                        @php $sel_coll = "";  @endphp
+                                        @if(in_array($side_collections['id'],$leftreq['collection']))
+                                           @php $sel_coll = "checked";  @endphp
+                                        @endif
+                                        <input type="checkbox" name="collection[]" id="collection" 
+                                        value="{{ $side_collections['id']}}" {{ $sel_coll }}
+                                        onclick="formSubmit()" /> &nbsp;{{ $side_collections['title']}}<br/>
                                     @endforeach
                                 </div>
                             </div>
@@ -61,7 +71,11 @@
                                 <div class="section-title"><h4>Colors</h4></div>
                                 <div>
                                     @foreach($side['side_color'] as $side_colors)
-                                        <input type="checkbox" name="input_collection" id="input_collection" value="{{ $side_colors['id']}}" /> &nbsp;{{ $side_colors['name']}}<br/>
+                                        @php $sel_col = "";  @endphp
+                                        @if(in_array($side_colors['id'],$leftreq['color']))
+                                           @php $sel_col = "checked";  @endphp
+                                        @endif
+                                        <input type="checkbox" name="color[]" id="color" value="{{ $side_colors['id']}}" {{ $sel_col }} /> &nbsp;{{ $side_colors['name']}}<br/>
                                     @endforeach
                                 </div>
                             </div>
@@ -73,27 +87,22 @@
                                 <div class="section-title"><h4>Price Range</h4></div>
                                 <div>
                                     @foreach($side['side_price'] as $side_prices)
-                                        <a href="">&nbsp;{{ $side_prices['label']}}</a><br/>
+                                        @php $sel_price = "";                                      
+                                            $heading = $side_prices['pricefrom'].'-'.$side_prices['priceto'];
+                                        @endphp
+                                        @if($heading==$leftreq['price'])
+                                           @php $sel_price = "checked";  @endphp
+                                        @endif
+                                        <input type="radio" name="price" value="{{ $side_prices['pricefrom']}}-{{ $side_prices['priceto']}}" {{ $sel_price }} />
+                                        &nbsp;{{ $side_prices['label']}}<br/>
                                     @endforeach
                                 </div>
                             </div>
                         @endif
 
-                        <!-- Custom -->
-                        @if($side['side_custom'])
-                            @foreach($side['side_custom'] as $side_customs)
-                                <div class="sidebar__categories">
-                                    <div class="section-title"><h4>{{$side_customs['label']}}</h4></div>
-                                    <div>
-                                    @if($side_customs['col'])
-                                        @foreach($side_customs['col'] as $side_customs_cols)
-                                            <input type="checkbox" name="input_custom" id="input_custom" value="{{ $side_customs_cols['id']}}" /> &nbsp;{{ $side_customs_cols['value']}}<br/>
-                                        @endforeach
-                                    @endif
-                                    </div>
-                                </div>
-                            @endforeach
-                        @endif
+                        <input type="submit" name="submit" value="Filter" />
+
+                    </form>
 
                     </div>
                 </div>
@@ -115,3 +124,15 @@
 
 @endsection
 
+
+@section('footer-js')
+<script>
+    function formSubmit() 
+    { 
+        // alert();
+        //document.getElementById("form1").form..submit();
+        // alert();
+        
+   };
+</script>
+@endsection
