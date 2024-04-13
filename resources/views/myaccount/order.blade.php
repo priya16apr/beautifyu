@@ -29,68 +29,59 @@
 
             <div class="col-lg-9 col-md-9">
                 <div class="row">
-                    @if(count($order)>0)                           
-                        @foreach($order as $orders)
+
+                    @if(count($allinfo)>0)                           
+                        @foreach($allinfo as $allinfos)
                             <div class="col-lg-11 col-md-11 bdr-1 bdr-radius mx-3 mb-4">
 
                                 <div class="row acc-order-list">
-                                    <div class="col-md-3"><span>Order No.</span><br/>BU#{{ $orders->id }}</div>
-                                    <div class="col-md-3"><span>Order Date</span><br/>{{ $orders->order_date }}</div>
-                                    <div class="col-md-3"><span>Total Amt</span><br/>Rs {{ $orders->total }}</div>
-                                    @if($orders->orderaddress)
+                                    <div class="col-md-3"><span>Order No.</span><br/>BU#{{ $allinfos['order']->id }}</div>
+                                    <div class="col-md-3"><span>Order Date</span><br/>{{ date('d M, Y',@strtotime($allinfos['order']->order_date)) }}</div>
+                                    <div class="col-md-3"><span>Total Amt</span><br/>Rs {{ $allinfos['order']->total }}</div>
+                                    @if($allinfos['order']->orderaddress)
                                         <div class="col-md-3"><span>Ship to</span><br/>
-                                            <a href="#" class="tooltip11">{{ $orders->orderaddress->full_name }} <i class="fa fa-chevron-down"></i> 
-                                                <span class="tooltiptext">{{ $orders->orderaddress->address_line1 }}, {{ $orders->orderaddress->address_line2 }},
-                                                    {{ $orders->orderaddress->city }}, {{ $orders->orderaddress->state }}, {{ $orders->orderaddress->pincode }}
+                                            <a href="#" class="tooltip11">{{ $allinfos['order']->orderaddress->full_name }} <i class="fa fa-chevron-down"></i> 
+                                                <span class="tooltiptext">{{ $allinfos['order']->orderaddress->address_line1 }}, {{ $allinfos['order']->orderaddress->address_line2 }},
+                                                    {{ $allinfos['order']->orderaddress->city }}, {{ $allinfos['order']->orderaddress->state }}, {{ $allinfos['order']->orderaddress->pincode }}
                                                 </span>
                                             </a>
                                         </div>
                                     @endif
                                 </div>
 
-                                <!-- <div class="shop__cart__table mb-0">
+                                <div class="shop__cart__table mb-0">
                                     <table>
                                         <tr>
                                             <td class="cart__product__item">
-                                                <b>Payment Method: {{ $orders->payment_method }}</b>
-                                                <p>
-                                                Package was handed to resident
-                                                </p>
+                                                <b>Payment Method: {{ $allinfos['order']->payment_method }}</b>
+                                                <p>Package was handed to resident</p>
 
-                                                <div class="mb-2">
-                                                    <img src="http://seller.beautifyu.in/uploads/VGtDVOTTlT.jpg" />
-                                                    <div class="cart__product__item__title">
-                                                        <h6><a href="">Round Kundan Pendant Set with Beads Mala</a> <span>[Qty: 1]</span></h6>
-                                                        <p>Payment Method: {{ $orders->payment_method }} | Product Price: 199</p>
-                                                        <div class="mt-3">
-                                                            <a href="" class="btn btn-warning btn-sm shadow-1">Buy it again</a>
-                                                            <a href="" class="btn btn-light btn-sm shadow-1">View your item</a>
-                                                            <a href="" class="btn btn-light btn-sm shadow-1">Write a product review</a>
+                                                @if($allinfos['product'])
+                                                    @foreach($allinfos['product'] as $key1=>$products)
+                                                        <div class="mb-2">
+                                                            <img src="{{ $products->product_image }}" />
+                                                            <div class="cart__product__item__title">
+                                                                <h6>
+                                                                    <a href="{{ url('product/'.$products->product_link) }}">{{ $products->product_title }}</a> 
+                                                                    <span>[Qty: {{ $products->product_qty }}]</span>
+                                                                </h6>
+                                                                <p>Product Price: Rs {{ $products->product_price }}</p>
+                                                                <div class="mt-3">
+                                                                    <a href="{{ url('product/'.$products->product_link) }}" class="btn btn-warning btn-sm shadow-1">Buy it again</a>
+                                                                    <a href="{{ url('product/'.$products->product_link) }}" class="btn btn-light btn-sm shadow-1">View your item</a>
+                                                                    <a href="{{ url('product/'.$products->product_link) }}" class="btn btn-light btn-sm shadow-1">Write a product review</a>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
 
-                                                <hr />
-
-                                                <div class="mb-2">
-                                                    <img src="http://seller.beautifyu.in/uploads/VGtDVOTTlT.jpg" />
-                                                    <div class="cart__product__item__title">
-                                                        <h6><a href="">Round Kundan Pendant Set with Beads Mala</a> <span>[Qty: 1]</span></h6>
-                                                        <p>Payment Method: {{ $orders->payment_method }} | Product Price: 199</p>
-                                                        <div class="mt-3">
-                                                            <a href="" class="btn btn-warning btn-sm shadow-1">Buy it again</a>
-                                                            <a href="" class="btn btn-light btn-sm shadow-1">View your item</a>
-                                                            <a href="" class="btn btn-light btn-sm shadow-1">Write a product review</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    <hr />
+                                                    @endforeach
+                                                @endif
 
                                             </td>
                                         </tr>
-
-
                                     </table>
-                                </div> -->
+                                </div>
 
                             </div>
                         @endforeach 

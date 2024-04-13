@@ -32,7 +32,6 @@ Route::POST('/user-step2-signup-submit',[AuthController::class,'submitSignupStep
 // My Account
 Route::get('/my-account',[CustomerController::class,'myAccount'])->name('myaccount');
 Route::get('/my-account/orders',[CustomerController::class,'myOrder'])->name('myaccount_orders');
-Route::get('/my-account/order-detail/{id}',[CustomerController::class,'myOrderDetail'])->name('myaccount_order_detail');
 Route::get('/my-account/wishlist',[CustomerController::class,'myWishlist'])->name('myaccount_wishlist');
 Route::get('/my-account/address',[CustomerController::class,'myAddress'])->name('myaccount_address');
 Route::get('/my-account/address-add',[CustomerController::class,'myAddressAdd'])->name('myaccount_address_add');
@@ -45,7 +44,6 @@ Route::GET('/my-account/submit-deladdress/{id}',[CustomerController::class,'subm
 Route::POST('/my-account/submit-addaddress',[CustomerController::class,'submitAddAddress'])->name('myaccount_submit_addaddress');
 Route::POST('/my-account/submit-editaddress',[CustomerController::class,'submitEditAddress'])->name('myaccount_submit_editaddress');
 
-#Route::get('/my-account/address-delete/{$id}',[CustomerController::class,'myAddressDelete'])->name('myaccount_address_delete');
 Route::POST('/my-account/profile-submit',[CustomerController::class,'submitProfile'])->name('myaccount_profile_submit');
 Route::POST('/my-account/password-submit',[CustomerController::class,'submitPassword'])->name('myaccount_password_submit');
 

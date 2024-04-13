@@ -118,11 +118,31 @@ class CustomerController extends Controller
             return redirect('/user-login');
         }
 
+        $allinfo[]['order']       =   array();
+        
         $cusid      =   Session::get('beautify_customer')->id;   
         $userinfo   =   Session::get('beautify_customer');
 
         $order      =   Order::where('customer_id',$cusid)->orderBy('id','DESC')->get();
-        $info       =   compact('order','userinfo');
+        if($order)
+        {
+            foreach($order as $key=>$orders)
+            {
+                $allinfo[$key]["order"]     =   $orders;
+                $allinfo[$key]['product']   =   array();
+                
+                $product   =  OrderProduct::where('order_id',$orders->id)->get();
+                if($product)
+                {
+                    foreach($product as $key1=>$products)
+                    {
+                        $allinfo[$key]['product'][$key1] = $products;
+                    }
+                }
+            }
+        }
+        
+        $info       =   compact('allinfo','userinfo');
         
         return view('myaccount.order')->with($info);
     }

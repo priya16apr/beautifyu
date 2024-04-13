@@ -11,8 +11,8 @@ use App\Models\Color;
 use App\Models\Attribute;
 use App\Models\ProductCollection;
 use App\Models\ProductColor;
-use App\Models\ProducttypeCollection;
-use App\Models\ProducttypeAttribute;
+use App\Models\ProductTypeCollection;
+use App\Models\ProductTypeAttribute;
 use App\Models\Producttype;
 use App\Models\ProductAttribute;
 use App\Models\AttributeValue;
@@ -80,12 +80,12 @@ class ProductController extends Controller
          $req_prices          =   @explode('-',$req_price);
 
          // Make a Side Bar
-         $side['side_collection']     =   ProducttypeCollection::where('producttype_id',$ptypeid)->get();
+         $side['side_collection']     =   ProductTypeCollection::where('producttype_id',$ptypeid)->get();
          $side['side_color']          =   color::get();
          $side['side_price']          =   PriceRange::get();
          $side['side_custom']         =   array();
 
-         $s_attri                     =   ProducttypeAttribute::whereRelation('attribute', 'leftside_filter', '=', 'Yes')
+         $s_attri                     =   ProductTypeAttribute::whereRelation('attribute', 'leftside_filter', '=', 'Yes')
                                           ->where('producttype_id',$ptypeid)
                                           ->get();
          if($s_attri)
