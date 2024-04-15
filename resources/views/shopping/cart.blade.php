@@ -74,7 +74,7 @@
 
                                             </td>
                                             <td class="cart__price">Rs. {{ $carts->sub_total }}</td>
-                                            <td class="cart__close"><a href="javascript:confirm('Are you sure you want to delete this item')" 
+                                            <td class="cart__close"><a href="javascript:void()" 
                                             onclick="deleteProduct('{{ $carts->id }}')"><span class="icon_close"></span></a></td>
                                         </tr>
                                         @php $total+=$carts->sub_total; @endphp
@@ -178,15 +178,26 @@
 
     function deleteProduct(cartid)
     {
-        jQuery.ajax({
-            url:"/ajax/cart-deleteProduct",
-            data:"cartid="+cartid,
-            type:'GET',
-            success:function(data)
-            {
-                window.location.href = '/shopping-cart';
-            }
-        });
+        var x = confirm("Are you sure you want to delete this item.");
+        if (x)
+        {
+            jQuery.ajax({
+                url:"/ajax/cart-deleteProduct",
+                data:"cartid="+cartid,
+                type:'GET',
+                success:function(data)
+                {
+                    window.location.href = '/shopping-cart';
+                }
+            });
+        } 
+        else
+        {
+            return false;  
+        }
+            
+        
+        
     }
 
     function empty()
