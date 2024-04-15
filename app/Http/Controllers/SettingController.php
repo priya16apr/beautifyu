@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 
-use App\Models\SubCategory;
-use App\Models\Producttype;
-use App\Models\ProducttypeCollection;
 use App\Models\Content;
 
 class SettingController extends Controller

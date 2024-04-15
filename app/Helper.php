@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Str;
 use App\Models\SubCategory;
-use App\Models\Producttype;
+use App\Models\ProductType;
 use App\Models\ProductTypeCollection;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Mail;
@@ -24,7 +24,7 @@ if(!function_exists('getMenu'))
                         <div aria-labelledby='megamneu' class='dropdown-menu border-0 p-0 m-0'>
                             <div><div class='row bg-white rounded-0 m-0 shadow-sm'><div class='col-lg-12 col-xl-12'><div class='p-4'><div class='menu-boxx'>";
 
-                            $ptype      =   Producttype::where('is_visible','1')->orderBy('sequence','asc')->where('sub_category_id',$subcatid)->get();
+                            $ptype      =   ProductType::where('is_visible','1')->orderBy('sequence','asc')->where('sub_category_id',$subcatid)->get();
                             if($ptype)
                             {  
                                 foreach($ptype as $ptypes)
@@ -76,7 +76,7 @@ if(!function_exists('getFooterMenu'))
 {
     function getFooterMenu()
     {
-        $ptype      =   Producttype::where('is_visible','1')->orderBy('sequence','asc')->get();
+        $ptype      =   ProductType::where('is_visible','1')->orderBy('sequence','asc')->get();
         if($ptype)
         {  
             foreach($ptype as $ptypes)
@@ -154,7 +154,7 @@ if(!function_exists('getSideBarHierarchy'))
                 echo "<div class='card'>";
                     echo "<div class='card-heading'><a data-toggle='collapse' data-target='#collapse".$scat_id."'>".$scat_name."</a></div>";
                     
-                    $ptype      =   Producttype::where('is_visible','1')->orderBy('sequence','asc')->where('sub_category_id',$scat_id)->get();
+                    $ptype      =   ProductType::where('is_visible','1')->orderBy('sequence','asc')->where('sub_category_id',$scat_id)->get();
                     if($ptype)
                     {
                         echo "<div id='collapse".$scat_id."' class='collapse' data-parent='#accordionExample'><div class='card-body'><ul>";

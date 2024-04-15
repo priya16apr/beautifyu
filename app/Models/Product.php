@@ -16,7 +16,7 @@ class Product extends Model
 
     function collection()
     {
-        return $this->belongsTo(ProducttypeCollection::class);
+        return $this->belongsTo(ProductTypeCollection::class);
     }
 
     function brand()
@@ -36,7 +36,7 @@ class Product extends Model
 
     function producttype()
     {
-        return $this->belongsTo(Producttype::class);
+        return $this->belongsTo(ProductType::class);
     }
 
     function variant()

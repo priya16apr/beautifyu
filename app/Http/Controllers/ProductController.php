@@ -13,7 +13,7 @@ use App\Models\ProductCollection;
 use App\Models\ProductColor;
 use App\Models\ProductTypeCollection;
 use App\Models\ProductTypeAttribute;
-use App\Models\Producttype;
+use App\Models\ProductType;
 use App\Models\ProductAttribute;
 use App\Models\AttributeValue;
 use App\Models\Cart;
@@ -63,7 +63,7 @@ class ProductController extends Controller
 
    public function products_ptype($slug)
    {
-      $ptype                  =   Producttype::where('slug',$slug)->first();
+      $ptype                  =   ProductType::where('slug',$slug)->first();
       if($ptype)
       {
          $ptypeid             =   $ptype['id'];
