@@ -66,8 +66,9 @@ if(!function_exists('getMenu'))
 
         echo '<li class="nav-item"><a href="'.route('products_celebrity').'" class="nav-link">Celebrity Special</a></li>';
         echo '<li class="nav-item"><a href="'.route('products_newarrival').'" class="nav-link">New Arrivals</a></li>';
-        echo '<li class="nav-item"><a href="'.route('products_festival').'" class="nav-link">Festival Special</a></li>';
+        // echo '<li class="nav-item"><a href="'.route('products_festival').'" class="nav-link">Festival Special</a></li>';
         echo '<li class="nav-item"><a href="'.route('products_deal').'" class="nav-link">Deals of the Day</a></li>';
+        echo '<li class="nav-item"><a href="'.route('happy_customer').'" class="nav-link">Happy Customer</a></li>';
     }
 }
 

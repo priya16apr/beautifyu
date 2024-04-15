@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\HappyCustomerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ShoppingController;
@@ -50,6 +51,9 @@ Route::POST('/my-account/password-submit',[CustomerController::class,'submitPass
 // Content
 Route::get('/content/{slug}',[ContentController::class,'content_by_slug'])->name('content');
 
+// Happy Customer
+Route::get('/happy_customer',[HappyCustomerController::class,'index'])->name('happy_customer');
+
 // Cart
 Route::GET('/ajax/cart-increaseQuantity',[CartController::class,'increaseQuantity']);
 Route::GET('/ajax/cart-decreaseQuantity',[CartController::class,'decreaseQuantity']);
@@ -60,6 +64,7 @@ Route::GET('/ajax/cart-empty',[CartController::class,'empty']);
 Route::GET('/check-out',[CheckoutController::class,'checkOut'])->name('check_out');
 Route::POST('/checkout-submit-addaddress',[CheckoutController::class,'submitAddAddress'])->name('submit_addaddress');
 Route::POST('/submit-order',[CheckoutController::class,'submitOrder'])->name('submit_order');
+Route::GET('/thank-you-for-shopping-with-us/{oid}',[CheckoutController::class,'thankForShopping']);
 
 // Shopping
 Route::POST('/ajax/submit-addcart',[ShoppingController::class,'submitAddCart'])->name('submit_addcart');
@@ -74,13 +79,11 @@ Route::get('products/search',[ProductController::class,'products_search'])->name
 Route::get('/products/{slug}',[ProductController::class,'products_ptype'])->name('products_ptype');
 Route::get('/product/{slug}',[ProductController::class,'product_detail'])->name('product_detail');
 
-// ?collection=1,2&color=1,2&minprice=3&maxprice=3&custom=value
 Route::POST('/products_ptype_att/search',[ProductController::class,'products_ptype_att_search'])->name('products_ptype_att_search');
-// ?string=value
+    // ?collection=1,2&color=1,2&minprice=3&maxprice=3&custom=value
 Route::POST('/products_string/search',[ProductController::class,'products_string_search'])->name('products_string_search');
-
+    // ?string=value
 
 // Fixed Content Pages
 Route::get('/404-page-not-found',[ContentController::class,'notFound'])->name('not_found');
-Route::get('/thank-you-for-shopping-with-us',[ContentController::class,'thankForShopping']);
 Route::get('/request-for-forget-password',[ContentController::class,'requestForgotPassword']);

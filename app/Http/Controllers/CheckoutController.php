@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
+use PDF;
 
 use App\Models\Cart;
 use App\Models\Address;
@@ -143,6 +144,13 @@ class CheckoutController extends Controller
                 Cart::where('sessionid',$sessionid)->delete();
                 session()->regenerate();
 
+                // Invoice
+                // $pdfname        =   $orderid.'_invoice.pdf';        
+                // $loadtemplate   =   "mail.invoice";
+                // $pdf            =   PDF::loadView($loadtemplate);
+                // return $pdf->download($pdfname);
+                // return view($loadtemplate)->with(array('name'=>'priyanka'));
+                
                 // Send Mail
                 $custinfo       =   Customer::where('id',$customerid)->first();
                 $mailinfo       =   Mail::find('3');
@@ -151,7 +159,9 @@ class CheckoutController extends Controller
             
                 sendMail('mail.order_confirmed',$body_param,$header_param);
                 
-                return redirect('/thank-you-for-shopping-with-us');  
+                $pass           =   '343-'.$orderid.'-908';
+                
+                return redirect("/thank-you-for-shopping-with-us/$pass");  
             }
             else
             {
@@ -162,6 +172,16 @@ class CheckoutController extends Controller
         {
             return redirect('/');
         }
+    }
+
+    public function thankForShopping($oidd)
+    {
+        $oid        =   @explode('-',$oidd);
+        
+        $detail     =   Order::find($oid[1]);
+        $data       =   compact('detail');
+
+        return view('shopping.thankyforshopping')->with($data);
     }
 
 }

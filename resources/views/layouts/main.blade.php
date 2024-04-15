@@ -64,13 +64,9 @@
                 <div class="col-lg-3">
                     <div class="header__right">
                         <ul class="header__right__widget">
-                            <!-- <li>
-                                <a href="#"><span class="icon_heart_alt"></span>
-                                    <div class="tip">2</div>
-                                </a>
-                            </li> -->
+
                             <li>
-                                <a href="{{url('/shopping-cart')}}"><span class="icon_bag_alt"></span>
+                                <a href="{{url('/shopping-cart')}}" class="shoping-ccart"><img src="{{ url('img/cart.png') }}" style="width:20px"> Cart
                                     <!-- <div class="tip">2</div> -->
                                 </a>
                             </li>
@@ -78,13 +74,13 @@
                         
                         @if(session('beautify_customer'))
                             <div class="header__right__auth">
-                                <a href="{{route('myaccount')}}">My Account</a>
-                                <a href="{{route('logout')}}">Logout</a>
+                                <a href="{{route('myaccount')}}" class="shoping-ccart">My Account</a>
+                                <a href="{{route('logout')}}" class="shoping-ccart">Logout</a>
                             </div>
                         @else
                             <div class="header__right__auth">
-                                <a href="{{route('login')}}">Login</a>
-                                <a href="{{route('signup')}}">Register</a>
+                                <a href="{{route('login')}}" class="shoping-ccart">Login</a>
+                                <a href="{{route('signup')}}" class="shoping-ccart">Register</a>
                             </div>
                         @endif
                     </div>
@@ -109,82 +105,83 @@
 
     <footer class="footer">
         <div class="container">
-        <div class="row">
-
-            <div class="col-lg-12 col-md-3 col-sm-5">
-                <div class="footer__widget">
-                    <h6>Quick links</h6>
-                    {{ getFooterMenu() }}
-                </div>
-            </div>
-
-            </div>
             <div class="row">
-
-                <div class="col-lg-4 col-md-6 col-sm-7">
-                    <div class="footer__about">
-                        <div class="footer__logo">
-                            <a href="/"><img src="{{$setting['company_logo']}}" alt="{{$setting['company_logo_alt']}}"></a>
-                        </div>
-                        <!-- <div class="footer__payment">
-                            <a href="javascript:void();"><img src="/img/payment/payment-1.png" alt=""></a>
-                            <a href="javascript:void();"><img src="/img/payment/payment-2.png" alt=""></a>
-                            <a href="javascript:void();"><img src="/img/payment/payment-3.png" alt=""></a>
-                            <a href="javascript:void();"><img src="/img/payment/payment-4.png" alt=""></a>
-                            <a href="javascript:void();"><img src="/img/payment/payment-5.png" alt=""></a>
-                        </div> -->
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 col-sm-4">
+                <div class="col-lg-12 col-md-3 col-sm-5">
                     <div class="footer__widget">
-                        <h6>Account</h6>
-                        <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Orders Tracking</a></li>
-                            <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Wishlist</a></li>
-                            @php App\Http\Controllers\SettingController::getContentPage(); @endphp
-                        </ul>
+                        <h6>Top Products Categories:</h6>
+                        {{ getFooterMenu() }}
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="col-lg-4 col-md-8 col-sm-8">
-                    <div class="footer__newslatter">
-                        <h6>CONNECT</h6>
-                        <!-- <form action="#">
-                            <input type="text" placeholder="Email">
-                            <button type="submit" class="site-btn">Subscribe</button>
-                        </form> -->
-                        <div class="footer__social">
-                            @if($setting['social_facebook'])
-                                <a target="_blank" href="{{$setting['social_facebook']}}"><i class="fa fa-facebook"></i></a>
-                            @endif
-
-                            @if($setting['social_twitter'])
-                                <a target="_blank" href="{{$setting['social_twitter']}}"><i class="fa fa-twitter"></i></a>
-                            @endif
-
-                            @if($setting['social_youtube'])
-                                <a target="_blank" href="{{$setting['social_youtube']}}"><i class="fa fa-youtube-play"></i></a>
-                            @endif
-
-                            @if($setting['social_instagram'])
-                                <a target="_blank" href="{{$setting['social_instagram']}}"><i class="fa fa-instagram"></i></a>
-                            @endif
-
-                            @if($setting['social_pinterest'])
-                                <a target="_blank" href="{{$setting['social_pinterest']}}"><i class="fa fa-pinterest"></i></a>
-                            @endif
+        <div class="container-fluid bg-dark last-footer">
+            <div class="container">
+                <div class="row pt-4">
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer__about">
+                            <div class="footer__logo">
+                                <a href="/"><img src="{{$setting['company_logo']}}" alt="{{$setting['company_logo_alt']}}"></a>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer__widget">
+                            <h6>Useful Links</h6>
+                            <ul>
+                                @php App\Http\Controllers\SettingController::getContentPage(); @endphp
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer__widget">
+                            <h6>Account</h6>
+                            <ul>
+                                <li><a href="{{ url('my-account') }}">My Account</a></li>
+                                <li><a href="{{ url('shopping-cart') }}">My Cart</a></li>
+                                <li><a href="{{ url('check-out') }}">Checkout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer__widget">
+                            <h6>Need Assisstance?</h6>
+                            <ul>
+                            <li>Email us: <a href="{{$setting['footer_emailid']}}">{{$setting['footer_emailid']}}</a></li>
+                            <li>Whatsapp: <a href="tel:{{$setting['footer_whatsapp']}}">{{$setting['footer_whatsapp']}}</a></li>
+                            <li>Call us on: <a href="tel:{{$setting['footer_callus']}}">{{$setting['footer_callus']}}</a></li>
+                            </ul>
+                            <h6 class="mt-4">CONNECT with us</h6>
+                            <div class="footer__social">
+                                @if($setting['social_facebook'])
+                                    <a target="_blank" href="{{$setting['social_facebook']}}"><i class="fa fa-facebook"></i></a>
+                                @endif
+
+                                @if($setting['social_twitter'])
+                                    <a target="_blank" href="{{$setting['social_twitter']}}"><i class="fa fa-twitter"></i></a>
+                                @endif
+
+                                @if($setting['social_youtube'])
+                                    <a target="_blank" href="{{$setting['social_youtube']}}"><i class="fa fa-youtube-play"></i></a>
+                                @endif
+
+                                @if($setting['social_instagram'])
+                                    <a target="_blank" href="{{$setting['social_instagram']}}"><i class="fa fa-instagram"></i></a>
+                                @endif
+
+                                @if($setting['social_pinterest'])
+                                    <a target="_blank" href="{{$setting['social_pinterest']}}"><i class="fa fa-pinterest"></i></a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-
             </div>
-
-           
-
-
 
             <div class="row">
                 <div class="col-lg-12">

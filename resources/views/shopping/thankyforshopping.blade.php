@@ -25,9 +25,16 @@
         <div class="container">
  
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-lg-12 col-md-6 col-sm-6">
                     <div class="cart__btn">
-                        thank-you-for-shopping-with-us
+                    <div class="row ">
+                        <div class="col-12 col-sm-12">
+                                Thank You for Shopping with us.<br/>
+                                Order: <u>#BU{{ $detail->id }}</u><br/>
+                                Your order details and product info has been sent to your registered email id.
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
