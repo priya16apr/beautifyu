@@ -47,7 +47,14 @@ class ProductController extends Controller
 
    public function products_deal()
    {
-      $product    =  Product::where('status','4')->get();
+      $date       =   date('Y-m-d');
+      
+      $product    =  Product::where('status','4')
+                     ->where('deal_status','Deal')
+                     ->where('deal_start_date','<=',$date)
+                     ->where('deal_end_date','>=',$date)
+                     ->get();
+
       $data       =  compact('product');
 
       return view('product.deal')->with($data);

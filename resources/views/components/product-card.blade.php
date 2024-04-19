@@ -1,11 +1,37 @@
 <div class="col-lg-3 col-md-4 col-sm-6">
     <div class="product__item">
        
+        @php 
+        $sale           =   '';
+        $deal_status    =   $product->deal_status;
+
+        if($deal_status=='Deal')
+        {
+            $date               =   date('Y-m-d');
+            
+            $deal_start_date    =   $product->deal_start_date;
+            $deal_end_date      =   $product->deal_end_date;
+
+            if(($deal_start_date==$date || $deal_start_date<$date) && ($deal_end_date==$date || $deal_end_date>$date))
+            {
+                $sprice             =   $product->deal_selling_price;
+                $sale               =   "Yes"; 
+            }  
+            else
+            {
+                $sprice             =   $product->selling_price;
+            }
+        }
+        else
+        {
+            $sprice                 =   $product->selling_price;
+        }
+        @endphp
+    
+    
         <div class="product__item__pic set-bg" data-setbg="{{ $product->default_img }}" >
-            <!-- 
-            <div class="label new">New</div>
-            <div class="label sale">Sale</div> 
-            -->
+            @if($sale=='Yes') <div class="label sale">Sale</div> @endif
+            <!--  <div class="label new">New</div> -->
             <ul class="product__hover">
                 <li><a href="{{ $product->default_img }}" class="image-popup"><span class="arrow_expand"></span></a></li>
             </ul>
@@ -14,7 +40,7 @@
         <div class="product__item__text">
             <h6><a href="{{url('product/'.$product->slug)}}">{{ $product->title }}</a></h6>
             <div class="product__price">
-                Rs. {{ $product->selling_price }}
+                @php echo "Rs. ".$sprice;  @endphp
                 <span>Rs. {{ $product->mrp_price }}</span>
             </div>
         </div>
