@@ -1,8 +1,9 @@
 @extends('layouts.main')
 
 @section('header-seo')
-    <title>{{$setting['seo_register_title']}}</title>
-    <meta name="description" content="{{$setting['seo_register_description']}}">
+    <title>Cart</title>
+    <meta name="keywords" content="Cel">
+    <meta name="description" content="Cel">
 @endsection
 
 @section('mid-content')
@@ -30,7 +31,7 @@
                         <div class="col-md-4 col-lg-4 bg-info">
                             <div class="p-3 pt-4">
                                 <h4 class="text-white">Looks like you're new here!</h4>
-                                <p class="text-white pt-4" style="font-size:16px;">Sign up Step 1 with your mobile number to get started</p>
+                                <p class="text-white pt-4" style="font-size:16px;">Sign up Step 2 with your mobile number to get started</p>
                             </div>
                         </div>
                         <div class="col-md-8 col-lg-8 bg-white shadow-lg">
@@ -56,21 +57,13 @@
                                     {{ Session::forget('auth_message') }}
                                     @endif 
                                 </div>
-                            
-                            
-                                <form name="form1" action="{{route('submit_signup_step1')}}" method="post">
+
+                                <form name="form1" action="{{route('submit_signup_step2')}}" method="post">
                                     @csrf
-                                    <input type="text" name="name" id="name" placeholder="Enter Name" value="{{ old('name') }}" required />
-                                    <input type="email" name="email" id="email" placeholder="Enter Email Id" value="{{ old('email') }}" required />
-                                    <input type="text" name="mobile" id="mobile" placeholder="Enter Mobile Number" value="{{ old('mobile') }}" required />
-                                    <input type="password" name="password" id="password" placeholder="Enter Password" required />
-                                    
-                                    <p>By continuing, you agree to <a href="{{url('/content/terms-of-use')}}" target="_blank">BeautifyU's Terms of Use</a> and 
-                                    <a href="{{url('/content/privacy-policy')}}" target="_blank">Privacy Policy</a>.</p>
-                                    <input type="submit" />
+                                    <input type="text" name="temp_otp" id="temp_otp" class="numberonly" placeholder="Enter OTP" required />
+                                    <input type="submit"  class="login-btn" value="Submit" />
                                 </form>
                             
-                                <div class="text-center pt-5" style="font-weight:600"> <a href="user-login">Existing User? Log in</a> </div>
                             </div>
                         </div>
                     </div>
@@ -83,10 +76,39 @@
 
 @endsection
 
-
 @section('footer-js')
 
+<script>
+
+    function step1()
+    {
+        mobile = jQuery('#mobile').val();
+        alert(mobile);
+
+        
+        jQuery.ajax({
+            url     :   "/ajax/signup-step1",
+            data    :   'mobile='+mobile
+            type    :   'GET',
+            success:function(data)
+            {
+                //var datas = data.split('***');
+
+                // if(datas[0]=='otp_ok')
+                // {
+                //     jQuery('#otp_input').show();
+                // }
+                // else
+                // {
+
+                // }
+            }
+        });
+    }
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 @endsection
-    
 

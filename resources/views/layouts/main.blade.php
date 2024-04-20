@@ -46,7 +46,8 @@
                 <a href="{{route('logout')}}">Logout</a>
             @else
                 <a href="{{route('login')}}">Login</a>
-                <a href="{{route('signup')}}">Register</a>
+                <!-- <a href="{{route('signup')}}">Register</a> -->
+                <a href="{{route('signup_step1')}}">Register</a>
             @endif
         </div>
     </div>
@@ -80,7 +81,8 @@
                         @else
                             <div class="header__right__auth">
                                 <a href="{{route('login')}}" class="shoping-ccart">Login</a>
-                                <a href="{{route('signup')}}" class="shoping-ccart">Register</a>
+                                <!-- <a href="{{route('signup')}}" class="shoping-ccart">Register</a> -->
+                                <a href="{{route('signup_step1')}}" class="shoping-ccart">Register</a>
                             </div>
                         @endif
                     </div>

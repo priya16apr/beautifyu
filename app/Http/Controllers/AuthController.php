@@ -7,10 +7,13 @@ use Illuminate\Support\Facades\Hash;
 use Session;
 
 use App\Models\Customer;
+use App\Models\CustomerTemp;
 use App\Models\Mail;
 
 class AuthController extends Controller
 {
+    // View Page
+    
     public function login(Request $request)
     {
         $setting        =   getAllSetting();
@@ -35,6 +38,26 @@ class AuthController extends Controller
 
         return view('auth.login')->with($info);
     }
+
+    public function signup()
+    {
+        if(Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+
+        $setting        =   getAllSetting();
+        $info           =   compact('setting');
+
+        return view('auth.signup')->with($info);
+    }
+
+    public function forgot_password()
+    {
+        return view('auth.forgot_password');
+    }
+
+    // After Submission
 
     public function submitLogin(Request $request)
     {
@@ -99,19 +122,6 @@ class AuthController extends Controller
         return redirect('user-login');
     }
 
-    public function signup()
-    {
-        if(Session::get('beautify_customer'))
-        {
-            return redirect('/');
-        }
-
-        $setting        =   getAllSetting();
-        $info           =   compact('setting');
-
-        return view('auth.signup')->with($info);
-    }
-
     public function submitSignup(Request $request)
     {
         $request->validate([
@@ -156,13 +166,7 @@ class AuthController extends Controller
         }
     }
 
-    public function forgot_password ()
-    {
-        return view('auth.forgot_password');
-    }
-
-
-    public function submitForgotPassword (Request $request)
+    public function submitForgotPassword(Request $request)
     {
         $request->validate([
             'user_email'   => 'required'
@@ -198,25 +202,108 @@ class AuthController extends Controller
         {
             return redirect('/');
         }
-        
-        return view('auth.signup_step1');
+
+        $setting        =   getAllSetting();
+        $info           =   compact('setting');
+
+        return view('auth.signup_step1')->with($info);
     }
 
-    public function submitSignupStep1()
+    public function signup_step2()
     {
-        $mobile =   @$_REQUEST['mobile'];
-
-        if($mobile)
+        if(Session::get('beautify_customer'))
         {
-            //
-            echo 'otp_ok';
+            return redirect('/');
+        }
+
+        $setting        =   getAllSetting();
+        $info           =   compact('setting');
+
+        return view('auth.signup_step2')->with($info);
+    }
+
+    public function submitSignupStep1(Request $request)
+    {
+        $request->validate([
+            'name'       => 'required|max:120',
+            'email'      => 'required|email|unique:customers',
+            'mobile'     => 'required|digits:10|numeric|unique:customers',
+            'password'   => 'required|min:5|max:50'
+        ]);
+        
+        $password       =   Hash::make($request->password);
+        $exist          =   Customer::where('email',$request->email)->orWhere('mobile', $request->mobile)->first();
+
+        if($exist)
+        {
+            session(['auth_message'=> 'email id / mobile is already exist.']);
+            return redirect('user-signup');
         }
         else
         {
+            CustomerTemp::where('email',$request->email)->orWhere('mobile', $request->mobile)->delete();
+            
+            // Implement SMS Service
+            $otp                        =   '12345';
+            
+            $info                       =   new CustomerTemp;
+            
+            $info->name                 =   $request->name;
+            $info->mobile               =   $request->mobile;
+            $info->email                =   $request->email;
+            $info->password             =   $password;
+            $info->otp                  =   $otp;
+            $info->save();
 
+            $tempid                     =   $info->id;
+
+            session(['beautify_temp_customer_id' => $tempid]);
+
+            return redirect('/user-otp-signup');
         }
+    }
 
-        echo '***';
+    public function submitSignupStep2(Request $request)
+    {
+        $request->validate([
+            'temp_otp'    => 'required'
+        ]);
+
+        $temp_otp       =   $request->temp_otp;
+        $temp_cusid     =   Session::get('beautify_temp_customer_id');  
         
+        $exist          =   CustomerTemp::where('id',$temp_cusid)->where('otp',$temp_otp)->first();
+
+        if($exist)
+        {
+            $info                       =   new Customer;
+            
+            $info->name                 =   $exist->name;
+            $info->mobile               =   $exist->mobile;
+            $info->email                =   $exist->email;
+            $info->password             =   $exist->password;
+            $info->is_status            =   'Active';
+            $info->save();
+
+            $newinfo                    =   Customer::where('email',$exist->email)->first();
+
+            session(['beautify_customer' => $newinfo]);
+
+            CustomerTemp::where('id',$temp_cusid)->delete();
+            
+            // Send Mail
+            $mailinfo       =   Mail::find('1');
+            $header_param   =  ['to'   =>  $request->email, 'subject' =>  $mailinfo['subject']];
+            $body_param     =  ['name' =>  $request->name,  'mobile'  =>  $request->mobile, 'email' =>  $request->email, 'password' =>  $request->password];
+            
+            sendMail('mail.user_registration',$body_param,$header_param);
+
+            return redirect('/my-account');
+        }
+        else
+        {
+            session(['auth_message'=> 'otp does not match']);
+            return redirect('/user-otp-signup');
+        }
     }
 }

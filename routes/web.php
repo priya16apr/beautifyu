@@ -17,18 +17,19 @@ Route::get('/',[HomeController::class,'index'])->name('index');
 
 // Auth
 Route::get('/user-login',[AuthController::class,'login'])->name('login');
+Route::get('/user-signup',[AuthController::class,'signup'])->name('signup');
+Route::get('/user-forgot-password',[AuthController::class,'forgot_password'])->name('forgot_password');
+
 Route::post('/user-login-submit',[AuthController::class,'submitLogin'])->name('submit_login');
 Route::get('/user-logout',[AuthController::class,'logout'])->name('logout');
-Route::get('/user-signup',[AuthController::class,'signup'])->name('signup');
 Route::POST('/user-signup-submit',[AuthController::class,'submitSignup'])->name('submit_signup');
-Route::get('/user-forgot-password',[AuthController::class,'forgot_password'])->name('forgot_password');
 Route::POST('/user-forgot-submit',[AuthController::class,'submitForgotPassword'])->name('submit_forgot_pass');
 
 // Auth Signup Two Steps
-Route::GET('/user-step1-signup',[AuthController::class,'signup_step1'])->name('signup_step1');
-Route::GET('/ajax/signup-step1',[AuthController::class,'submitSignupStep1'])->name('submit_signup_step1');
-Route::GET('/user-step2-signup',[AuthController::class,'signup_step1'])->name('signup_step2');
-Route::POST('/user-step2-signup-submit',[AuthController::class,'submitSignupStep1'])->name('submit_signup_step2');
+Route::GET('/user-basic-signup',[AuthController::class,'signup_step1'])->name('signup_step1');
+Route::GET('/user-otp-signup',[AuthController::class,'signup_step2'])->name('signup_step2');
+Route::POST('/user-basic-submit',[AuthController::class,'submitSignupStep1'])->name('submit_signup_step1');
+Route::POST('/user-otp-submit',[AuthController::class,'submitSignupStep2'])->name('submit_signup_step2');
 
 // My Account
 Route::get('/my-account',[CustomerController::class,'myAccount'])->name('myaccount');

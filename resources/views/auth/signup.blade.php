@@ -62,7 +62,7 @@
                                     @csrf
                                     <input type="text" name="name" id="name" placeholder="Enter Name" value="{{ old('name') }}" required />
                                     <input type="email" name="email" id="email" placeholder="Enter Email Id" value="{{ old('email') }}" required />
-                                    <input type="text" name="mobile" id="mobile" class="numberonly" placeholder="Enter Mobile Number" value="{{ old('mobile') }}" required />
+                                    <input type="text" name="mobile" id="mobile" placeholder="Enter Mobile Number" value="{{ old('mobile') }}" required />
                                     <input type="password" name="password" id="password" placeholder="Enter Password" required />
                                     
                                     <p>By continuing, you agree to <a href="{{url('/content/terms-of-use')}}" target="_blank">BeautifyU's Terms of Use</a> and 
@@ -83,4 +83,11 @@
     </div>
 
 @endsection
+
+
+@section('footer-js')
+
+
+@endsection
+    
 
