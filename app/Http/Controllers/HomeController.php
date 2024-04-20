@@ -14,6 +14,8 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $setting        =  getAllSetting();
+      
         $date           =   date('Y-m-d');
         
         $topbanner      =  HomeuiBanner::where('type','Top Banner')->get();
@@ -27,7 +29,7 @@ class HomeController extends Controller
        
         $hcustomer      =  HappyCustomer::where('is_visible','Yes')->orderby('id','desc')->get();
         
-        $info           =  compact('topbanner','usp','p_arrival','p_trending','p_celeb','p_combo','p_deal','hcustomer');
+        $info           =  compact('setting','topbanner','usp','p_arrival','p_trending','p_celeb','p_combo','p_deal','hcustomer');
         
         return view('index')->with($info);
     }

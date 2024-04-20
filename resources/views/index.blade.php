@@ -1,13 +1,9 @@
 @extends('layouts.main')
 
-
 @section('header-seo')
-    @php $setting = getAllSetting(); @endphp
     <title>{{$setting['seo_home_title']}}</title>
-    <meta name="keywords" content="{{$setting['seo_home_keyword']}}">
     <meta name="description" content="{{$setting['seo_home_description']}}">
 @endsection
-
 
 @section('mid-content')
    

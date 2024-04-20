@@ -177,10 +177,12 @@ class CheckoutController extends Controller
 
     public function thankForShopping($oidd)
     {
+        $setting    =   getAllSetting();
+        
         $oid        =   @explode('-',$oidd);
         
         $detail     =   Order::find($oid[1]);
-        $data       =   compact('detail');
+        $data       =   compact('setting','detail');
 
         return view('shopping.thankyforshopping')->with($data);
     }

@@ -1,8 +1,10 @@
 @extends('layouts.main')
 
 @section('header-seo')
-    
+    <title>{{$setting['seo_hcustomer_title']}}</title>
+    <meta name="description" content="{{$setting['seo_hcustomer_description']}}">
 @endsection
+
 
 @section('mid-content')
 

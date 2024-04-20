@@ -17,8 +17,9 @@ class ShoppingController extends Controller
     {
         $sessionid      =   Session::getId();
 
+        $setting        =   getAllSetting();
         $cart           =   Cart::where('sessionid',$sessionid)->get();
-        $data           =   compact('cart');
+        $data           =   compact('setting','cart');
 
         return view('shopping.cart')->with($data);
     }

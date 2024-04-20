@@ -23,30 +23,38 @@ class ProductController extends Controller
 {
    public function products_celebrity()
    {
+      $setting    =  getAllSetting();
+      
       $product    =  Product::where('status','4')->where('is_celeb','Yes')->get();
-      $data       =  compact('product');
+      $data       =  compact('setting','product');
 
       return view('product.celebrity')->with($data);
    }
 
    public function products_newarrival()
    {
+      $setting    =  getAllSetting();
+      
       $product    =  Product::where('status','4')->orderby('id','desc')->get();
-      $data       =  compact('product');
+      $data       =  compact('setting','product');
 
       return view('product.newarrival')->with($data);
    }
 
    public function products_festival()
    {
+      $setting    =  getAllSetting();
+      
       $product    =  Product::where('status','4')->get();
-      $data       =  compact('product');
+      $data       =  compact('setting','product');
 
       return view('product.festival')->with($data);
    }
 
    public function products_deal()
    {
+      $setting    =  getAllSetting();
+      
       $date       =   date('Y-m-d');
       
       $product    =  Product::where('status','4')
@@ -55,7 +63,7 @@ class ProductController extends Controller
                      ->where('deal_end_date','>=',$date)
                      ->get();
 
-      $data       =  compact('product');
+      $data       =  compact('setting','product');
 
       return view('product.deal')->with($data);
    }

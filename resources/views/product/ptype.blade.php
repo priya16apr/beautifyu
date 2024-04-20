@@ -1,9 +1,8 @@
 @extends('layouts.main')
 
 @section('header-seo')
-    <title>Cel</title>
-    <meta name="keywords" content="Cel">
-    <meta name="description" content="Cel">
+    <title>{{$ptype->seo_title}} </title>
+    <meta name="description" content="{{$ptype->seo_description}} ">
 @endsection
 
 @section('mid-content')

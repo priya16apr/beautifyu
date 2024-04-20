@@ -13,6 +13,8 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
+        $setting        =   getAllSetting();
+        
         if(Session::get('beautify_customer'))
         {
             return redirect('/');
@@ -22,12 +24,12 @@ class AuthController extends Controller
 
         if($page)
         {
-            $info       =   compact('page');
+            $info       =   compact('setting','page');
         }
         else
         {
             $page       =   "";
-            $info       =   compact('page');
+            $info       =   compact('setting','page');
             
         }  
 
@@ -103,8 +105,11 @@ class AuthController extends Controller
         {
             return redirect('/');
         }
-        
-        return view('auth.signup');
+
+        $setting        =   getAllSetting();
+        $info           =   compact('setting');
+
+        return view('auth.signup')->with($info);
     }
 
     public function submitSignup(Request $request)

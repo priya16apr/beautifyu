@@ -1,7 +1,8 @@
 @extends('layouts.main')
 
 @section('header-seo')
-    
+    <title>{{$pdetail->seo_title}} </title>
+    <meta name="description" content="{{$pdetail->seo_description}} ">
 @endsection
 
 @section('mid-content')

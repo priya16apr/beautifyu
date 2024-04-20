@@ -1,9 +1,8 @@
 @extends('layouts.main')
 
 @section('header-seo')
-    <title>Cart</title>
-    <meta name="keywords" content="Cel">
-    <meta name="description" content="Cel">
+    <title>{{$setting['seo_login_title']}}</title>
+    <meta name="description" content="{{$setting['seo_login_description']}}">
 @endsection
 
 @section('mid-content')
