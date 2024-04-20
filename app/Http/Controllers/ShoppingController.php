@@ -31,8 +31,9 @@ class ShoppingController extends Controller
         $link           =   $request->product_link;
         $price          =   $request->product_price;
         $qty            =   $request->product_qty;
-        
         $subtotal       =   $price*$qty;
+        $cart_info      =   $request->cart_info;
+        
         $sessionid      =   Session::getId();
         
         if($productid)
@@ -47,6 +48,7 @@ class ShoppingController extends Controller
             $info->product_price        =   $price;
             $info->product_qty          =   $qty;
             $info->sub_total            =   $subtotal;
+            $info->cart_info            =   $cart_info;
 
             $info->save();
 

@@ -31,7 +31,6 @@
     
         <div class="product__item__pic set-bg" data-setbg="{{ $product->default_img }}" >
             @if($sale=='Yes') <div class="label sale">Sale</div> @endif
-            <!--  <div class="label new">New</div> -->
             <ul class="product__hover">
                 <li><a href="{{ $product->default_img }}" class="image-popup"><span class="arrow_expand"></span></a></li>
             </ul>
@@ -39,10 +38,23 @@
 
         <div class="product__item__text">
             <h6><a href="{{url('product/'.$product->slug)}}">{{ $product->title }}</a></h6>
-            <div class="product__price">
-                @php echo "Rs. ".$sprice;  @endphp
-                <span>Rs. {{ $product->mrp_price }}</span>
-            </div>
+           
+            @if($sale=='Yes')
+            
+                <div class="product__price">
+                    @php echo "Rs. ".$sprice;  @endphp
+                    <span>Rs. {{ $product->selling_price }}</span> 
+                    <span>Rs. {{ $product->mrp_price }}</span>
+                </div>
+
+            @else
+
+                <div class="product__price">
+                    Rs. {{ $product->selling_price }}
+                    <span>Rs. {{ $product->mrp_price }}</span>
+                </div>
+
+            @endif
         </div>
 
     </div>

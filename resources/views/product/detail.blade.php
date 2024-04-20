@@ -60,15 +60,26 @@
                                 @endif
                             </h3>
 
-                            <!-- <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <span>( 138 reviews )</span>
-                            </div> -->
+                            @php 
+                            $sale           =   '';
+                            $cartinfo       =   "";
+                            $deal_status    =   $pdetail->deal_status;
 
+                            if($deal_status=='Deal')
+                            {
+                                $date               =   date('Y-m-d');
+                                
+                                $deal_start_date    =   $pdetail->deal_start_date;
+                                $deal_end_date      =   $pdetail->deal_end_date;
+
+                                if(($deal_start_date==$date || $deal_start_date<$date) && ($deal_end_date==$date || $deal_end_date>$date))
+                                {
+                                    $sale               =   "Yes"; 
+                                    $cartinfo           =   "Deal: $deal_start_date to $deal_end_date @ Discount: Rs $pdetail->deal_discount @ Old Selling Price: $pdetail->selling_price  @ New Selling Price: $pdetail->deal_selling_price";
+                                }  
+                            }
+                            @endphp
+                            
                             <div class="cart__quantity">
                                 <div>
                                     <select name="product_qty" id="product_qty">
@@ -82,18 +93,32 @@
                                         <input type="hidden" name="product_image" id="product_image" value="{{$pdetail->images[0]->image}}" />
                                     @endif
                                     <input type="hidden" name="product_link" id="product_link" value="{{$pdetail->slug}}" />
-                                    <input type="hidden" name="product_price" id="product_price" value="{{$pdetail->selling_price}}" />
                                 </div>
                             </div>
 
-                            <div class="product__details__price">
-                                Rs. {{ $pdetail->selling_price }}
-                                <span>Rs. {{ $pdetail->mrp_price }}</span>
-                            </div>
+                            @if($sale=='Yes')
+                                
+                                <input type="hidden" name="product_price" id="product_price" value="{{$pdetail->deal_selling_price}}" />
+                                <input type="hidden" name="cart_info" id="cart_info" value="@php echo $cartinfo; @endphp" />
+                                <div class="product__details__price">
+                                    @php echo "Rs. ".$pdetail->deal_selling_price;  @endphp
+                                    <span>Rs. {{ $pdetail->selling_price }}</span> 
+                                    <span>Rs. {{ $pdetail->mrp_price }}</span>
+                                </div>
+
+                            @else
+                                
+                                <input type="hidden" name="product_price" id="product_price" value="{{$pdetail->selling_price}}" />
+                                <input type="hidden" name="cart_info" id="cart_info" value="" />
+                                <div class="product__details__price">
+                                    Rs. {{ $pdetail->selling_price }}
+                                    <span>Rs. {{ $pdetail->mrp_price }}</span>
+                                </div>
+
+                            @endif
+
                             @if($pdetail->stock>0)
                                 <div class="product__details__button">
-                                    <!-- <a href="#" class="cart-btn">Add to cart</a>
-                                    <a href="#" class="buy-btn">Buy Now</a> -->
                                     @if($cart=='exist')
                                         <a href="{{url('shopping-cart')}}" class="buy-btn">Already in Cart</a>
                                     @else

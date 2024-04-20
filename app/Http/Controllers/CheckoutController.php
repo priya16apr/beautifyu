@@ -138,6 +138,7 @@ class CheckoutController extends Controller
                     $op_info->product_price         =   $carts->product_price;
                     $op_info->product_qty           =   $carts->product_qty;
                     $op_info->sub_total             =   $carts->sub_total;
+                    $op_info->info                  =   $carts->cart_info;
                     $op_info->save(); 
                 }
 
