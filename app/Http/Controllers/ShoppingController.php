@@ -53,6 +53,9 @@ class ShoppingController extends Controller
 
             $info->save();
 
+            $sum    =   Cart::where('sessionid','=',$sessionid)->sum('sub_total');
+            session(['cart_total' => $sum]);
+
             echo 'added';
         }
         else

@@ -123,8 +123,8 @@
                                     @if($cart=='exist')
                                         <a href="{{url('shopping-cart')}}" class="buy-btn">Already in Cart</a>
                                     @else
-                                        <input type="button" class="cart-btn" name="button1" value="Add to cart" onclick="addCart('{{$pdetail->id}}')" />
-                                        <input type="button" class="buy-btn" name="button1" value="Buy Now" onclick="addCart('{{$pdetail->id}}')" />
+                                        <input type="button" class="cart-btn" name="button1" value="Add to cart" onclick="addCart('{{$pdetail->id}}','cart')" />
+                                        <input type="button" class="buy-btn" name="button1" value="Buy Now" onclick="addCart('{{$pdetail->id}}','checkout')" />
                                     @endif
                                 </div>
                             @else
@@ -239,7 +239,7 @@
 
 
     <script>
-        function addCart(id)
+        function addCart(id,pagename)
         {
             jQuery.ajax({
                 url:"/ajax/submit-addcart",
@@ -251,7 +251,14 @@
 
                     if(datas[0]=='added')
                     {
-                        window.location.href = '/shopping-cart';
+                        if(pagename=='checkout')
+                        {
+                            window.location.href = '/check-out';
+                        }
+                        else
+                        {
+                            window.location.href = '/shopping-cart';
+                        }
                     }
                     else
                     {

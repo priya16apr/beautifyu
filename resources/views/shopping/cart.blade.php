@@ -47,36 +47,18 @@
                                                 <img src="{{ $carts->product_image }}" alt="{{ $carts->product_name }}">
                                                 <div class="cart__product__item__title">
                                                     <h6><a href="{{url('product/'.$carts->product_link)}}">{{ $carts->product_name }}</a></h6>
-                                                    <!-- <div class="rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div> -->
-                                                    
                                                 </div>
                                             </td>
                                             <td class="cart__price">Rs. {{ $carts->product_price }}</td>
                                             <td class="cart__price">
-                                                <!-- <div>
-                                                    <select name="product_qty" id="product_qty" onchange="updateCart()">
-                                                        <option value="1" @if($carts->product_qty=='1') selected @endif >1</option>
-                                                        <option value="2" @if($carts->product_qty=='2') selected @endif >2</option>
-                                                        <option value="3" @if($carts->product_qty=='3') selected @endif >3</option>
-                                                    </select>
-                                                </div> -->
                                                 <button onclick="decreaseQuantity('{{ $carts->id }}')">-</button>
                                                 <input type="text" value="{{ $carts->product_qty }}" size="3" readonly />
                                                 <button onclick="increaseQuantity('{{ $carts->id }}')">+</button>
-
-
                                             </td>
                                             <td class="cart__price">Rs. {{ $carts->sub_total }}</td>
                                             <td class="cart__close"><a href="javascript:void()" 
                                             onclick="deleteProduct('{{ $carts->id }}')"><span class="icon_close"></span></a></td>
                                         </tr>
-                                        @php $total+=$carts->sub_total; @endphp
                                     @endforeach                              
 
                                 </tbody>
@@ -84,30 +66,18 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <!-- <div class="discount__content">
-                                <h6>Discount codes</h6>
-                                <form action="#">
-                                    <input type="text" placeholder="Enter your coupon code">
-                                    <button type="submit" class="site-btn">Apply</button>
-                                </form>
-                        </div> -->
                         <div class="cart__total__procced">
                             <ul>
-                                <li>Subtotal <span>Rs. {{ $total }}</span></li>
-                                <!-- <li>Discount <span>-- </span></li> -->
+                                <li>Subtotal <span>Rs. {{ Session::get('cart_total') }}</span></li>
                                 <li>Shipping Charges <span>Free </span></li>
-                                <li>Total <span class="price-finall">Rs. {{ $total }}</span></li>
+                                <li>Total <span class="price-finall">Rs. {{ Session::get('cart_total') }}</span></li>
                             </ul>
-                            @php 
-                            session(['cart_total' => $total]);
-                            @endphp
-
+                            
                             @if(session('beautify_customer'))
                                 <a href="{{url('check-out')}}" class="primary-btn">Proceed to checkout</a>
                             @else
                                 <a href="{{url('user-login?p=shop')}}" class="primary-btn">Proceed to checkout</a>
                             @endif
-
                             
                         </div>
                     </div>
