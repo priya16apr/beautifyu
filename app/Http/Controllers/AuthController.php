@@ -16,6 +16,7 @@ class AuthController extends Controller
     
     public function login(Request $request)
     {
+        $handle         =   "";
         $setting        =   getAllSetting();
         
         if(Session::get('beautify_customer'))
@@ -23,18 +24,8 @@ class AuthController extends Controller
             return redirect('/');
         }
         
-        $page = $request->p;
-
-        if($page)
-        {
-            $info       =   compact('setting','page');
-        }
-        else
-        {
-            $page       =   "";
-            $info       =   compact('setting','page');
-            
-        }  
+        $handle     =   $request->handle;
+        $info       =   compact('setting','handle');
 
         return view('auth.login')->with($info);
     }
@@ -62,11 +53,11 @@ class AuthController extends Controller
     public function submitLogin(Request $request)
     {
         $addurl     =   "";
-        $flow_page  =   $request->flow_page; 
+        $handle     =   $request->handle; 
         
-        if($flow_page)
+        if($handle)
         {
-            $addurl = "?p=shop";
+            $addurl = "?handle=$handle";
         }
 
         $request->validate([
@@ -85,9 +76,9 @@ class AuthController extends Controller
             {
                 session(['beautify_customer' => $data]);
                 
-                if($flow_page)
+                if($handle)
                 {
-                    return redirect('check-out');
+                    return redirect('check-out-address-select');
                 }
                 else
                 {
@@ -196,34 +187,50 @@ class AuthController extends Controller
 
     // Registration in two Steps
 
-    public function signup_step1()
+    public function signup_step1(Request $request)
     {
+        $handle         =   "";
+        
         if(Session::get('beautify_customer'))
         {
             return redirect('/');
         }
 
         $setting        =   getAllSetting();
-        $info           =   compact('setting');
+        
+        $handle         =   $request->handle;
+        $info           =   compact('setting','handle');
 
         return view('auth.signup_step1')->with($info);
     }
 
-    public function signup_step2()
+    public function signup_step2(Request $request)
     {
+        $handle         =   "";
+
         if(Session::get('beautify_customer'))
         {
             return redirect('/');
         }
 
         $setting        =   getAllSetting();
-        $info           =   compact('setting');
+
+        $handle         =   $request->handle;
+        $info           =   compact('setting','handle');
 
         return view('auth.signup_step2')->with($info);
     }
 
     public function submitSignupStep1(Request $request)
     {
+        $addurl     =   "";
+        $handle     =   $request->handle; 
+        
+        if($handle)
+        {
+            $addurl = "?handle=$handle";
+        }
+        
         $request->validate([
             'name'       => 'required|max:120',
             'email'      => 'required|email|unique:customers',
@@ -237,7 +244,7 @@ class AuthController extends Controller
         if($exist)
         {
             session(['auth_message'=> 'email id / mobile is already exist.']);
-            return redirect('user-signup');
+            return redirect('user-signup'.$addurl);
         }
         else
         {
@@ -259,12 +266,20 @@ class AuthController extends Controller
 
             session(['beautify_temp_customer_id' => $tempid]);
 
-            return redirect('/user-otp-signup');
+            return redirect('/user-otp-signup'.$addurl);
         }
     }
 
     public function submitSignupStep2(Request $request)
     {
+        $addurl     =   "";
+        $handle     =   $request->handle; 
+        
+        if($handle)
+        {
+            $addurl = "?handle=$handle";
+        }
+        
         $request->validate([
             'temp_otp'    => 'required'
         ]);
@@ -298,12 +313,19 @@ class AuthController extends Controller
             
             sendMail('mail.user_registration',$body_param,$header_param);
 
-            return redirect('/my-account');
+            if($handle)
+            {
+                return redirect('/check-out-address-select');
+            }
+            else
+            {
+                return redirect('/my-account');
+            }
         }
         else
         {
             session(['auth_message'=> 'otp does not match']);
-            return redirect('/user-otp-signup');
+            return redirect('/user-otp-signup'.$addurl);
         }
     }
 }

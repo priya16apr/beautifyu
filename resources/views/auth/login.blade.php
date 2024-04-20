@@ -52,7 +52,7 @@
                                     @csrf
                                         <input type="text" name="user_mobile" id="user_mobile" placeholder="Enter Mobile Number" required />
                                         <input type="password" name="user_password" id="user_password" placeholder="Enter Password" required />
-                                        <input type="hidden" name="flow_page" id="flow_page" value="{{$page}}" />
+                                        <input type="hidden" name="handle" id="handle" value="{{$handle}}" />
                                         
                                         <p>By continuing, you agree to <a href="{{url('/content/terms-of-use')}}" target="_blank">BeautifyU's Terms of Use</a> and 
                                         <a href="{{url('/content/privacy-policy')}}" target="_blank">Privacy Policy</a>.</p>
@@ -60,7 +60,14 @@
                                         <a href="{{route('forgot_password')}}" class="float-right text-reset pt-2">Forgot Password?</a>
                                 </form>
                             
-                                <div class="text-center pt-5" style="font-weight:600"> <a href="user-signup">New to BeautifyU? Create an account</a> </div>
+                                <div class="text-center pt-5" style="font-weight:600"> 
+                                    @if($handle) 
+                                        <a href="user-basic-signup?handle=beautifyu_checkout_in">New to BeautifyU? Create an account</a> 
+                                    @else
+                                        <a href="user-basic-signup">New to BeautifyU? Create an account</a> 
+                                    @endif
+                                </div>
+
                             </div>
                         </div>
 

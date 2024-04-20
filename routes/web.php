@@ -61,15 +61,19 @@ Route::GET('/ajax/cart-decreaseQuantity',[CartController::class,'decreaseQuantit
 Route::GET('/ajax/cart-deleteProduct',[CartController::class,'deleteProduct']);
 Route::GET('/ajax/cart-empty',[CartController::class,'empty']);
 
+// Shopping
+Route::POST('/ajax/submit-addcart',[ShoppingController::class,'submitAddCart'])->name('submit_addcart');
+Route::get('/shopping-cart',[ShoppingController::class,'cart'])->name('shopping_cart');
+
 // Checkout
 Route::GET('/check-out',[CheckoutController::class,'checkOut'])->name('check_out');
 Route::POST('/checkout-submit-addaddress',[CheckoutController::class,'submitAddAddress'])->name('submit_addaddress');
 Route::POST('/submit-order',[CheckoutController::class,'submitOrder'])->name('submit_order');
 Route::GET('/thank-you-for-shopping-with-us/{oid}',[CheckoutController::class,'thankForShopping']);
 
-// Shopping
-Route::POST('/ajax/submit-addcart',[ShoppingController::class,'submitAddCart'])->name('submit_addcart');
-Route::get('/shopping-cart',[ShoppingController::class,'cart'])->name('shopping_cart');
+// Checkout in two steps
+Route::GET('/check-out-address-select',[CheckoutController::class,'checkOutStep1'])->name('check_out_step1');
+Route::GET('/check-out-pay-select',[CheckoutController::class,'checkOutStep2'])->name('check_out_step2');
 
 // Product
 Route::get('/products/celebrity-special',[ProductController::class,'products_celebrity'])->name('products_celebrity');

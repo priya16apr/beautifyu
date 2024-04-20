@@ -74,9 +74,9 @@
                             </ul>
                             
                             @if(session('beautify_customer'))
-                                <a href="{{url('check-out')}}" class="primary-btn">Proceed to checkout</a>
+                                <a href="{{route('check_out_step1')}}" class="primary-btn">Proceed to buy</a>
                             @else
-                                <a href="{{url('user-login?p=shop')}}" class="primary-btn">Proceed to checkout</a>
+                                <a href="{{url('user-login?handle=beautifyu_checkout_in')}}" class="primary-btn">Proceed to buy</a>
                             @endif
                             
                         </div>

@@ -61,6 +61,7 @@
                                 <form name="form1" action="{{route('submit_signup_step2')}}" method="post">
                                     @csrf
                                     <input type="text" name="temp_otp" id="temp_otp" class="numberonly" placeholder="Enter OTP" required />
+                                    <input type="hidden" name="handle" id="handle" value="{{$handle}}" />
                                     <input type="submit"  class="login-btn" value="Submit" />
                                 </form>
                             

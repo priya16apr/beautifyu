@@ -57,20 +57,28 @@
                                     @endif 
                                 </div>
                             
-                            
                                 <form name="form1" action="{{route('submit_signup_step1')}}" method="post">
                                     @csrf
                                     <input type="text" name="name" id="name" placeholder="Enter Name" value="{{ old('name') }}" required />
                                     <input type="email" name="email" id="email" placeholder="Enter Email Id" value="{{ old('email') }}" required />
                                     <input type="text" name="mobile" id="mobile" placeholder="Enter Mobile Number" value="{{ old('mobile') }}" required />
                                     <input type="password" name="password" id="password" placeholder="Enter Password" required />
-                                    
+                                    <input type="hidden" name="handle" id="handle" value="{{$handle}}" />
+
                                     <p>By continuing, you agree to <a href="{{url('/content/terms-of-use')}}" target="_blank">BeautifyU's Terms of Use</a> and 
                                     <a href="{{url('/content/privacy-policy')}}" target="_blank">Privacy Policy</a>.</p>
                                     <input type="submit" />
                                 </form>
                             
-                                <div class="text-center pt-5" style="font-weight:600"> <a href="user-login">Existing User? Log in</a> </div>
+                                <div class="text-center pt-5" style="font-weight:600"> 
+                                    @if($handle) 
+                                        <a href="user-login?handle=beautifyu_checkout_in">New to BeautifyU? Create an account</a> 
+                                    @else
+                                        <a href="user-login">Existing User? Log in</a> 
+                                    @endif
+                                </div>
+
+                                
                             </div>
                         </div>
                     </div>

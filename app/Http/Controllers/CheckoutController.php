@@ -187,4 +187,20 @@ class CheckoutController extends Controller
         return view('shopping.thankyforshopping')->with($data);
     }
 
+    // Checkout in two steps
+    public function checkOutStep1()
+    {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+        
+        $customerid     =   Session::get('beautify_customer')->id;
+        $address        =   Address::where('customer_id',$customerid)->get();
+        $data           =   compact('address');
+
+        return view('shopping.checkout_step1')->with($data);
+    }
+    
+
 }

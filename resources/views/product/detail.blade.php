@@ -237,10 +237,11 @@
         </div>	
     </section>
 
-
     <script>
         function addCart(id,pagename)
         {
+            var userinfo = "{{ Session::get('beautify_customer') }}";
+            
             jQuery.ajax({
                 url:"/ajax/submit-addcart",
                 type:'POST',
@@ -253,7 +254,15 @@
                     {
                         if(pagename=='checkout')
                         {
-                            window.location.href = '/check-out';
+                            // First Check Login
+                            if(userinfo)
+                            {
+                                window.location.href = '/check-out-address-select';
+                            }
+                            else
+                            {
+                                window.location.href = '/user-login?handle=beautifyu_checkout_in';
+                            }
                         }
                         else
                         {
