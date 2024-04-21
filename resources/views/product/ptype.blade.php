@@ -56,9 +56,11 @@
                                         @if(in_array($side_collections['id'],$leftreq['collection']))
                                            @php $sel_coll = "checked";  @endphp
                                         @endif
-                                        <input type="checkbox" name="collection[]" id="collection" 
-                                        value="{{ $side_collections['id']}}" {{ $sel_coll }}
-                                        onclick="formSubmit()" /> &nbsp;{{ $side_collections['title']}}<br/>
+                                        <label>
+                                            <input type="checkbox" name="collection[]" id="collection" 
+                                            value="{{ $side_collections['id']}}" {{ $sel_coll }}
+                                            onclick="formSubmit()" /> &nbsp;{{ $side_collections['title']}}
+                                        </label>
                                     @endforeach
                                 </div>
                             </div>
@@ -68,24 +70,28 @@
                         @if(count($side['side_color'])>0)
                             <div class="sidebar__filter">
                                 <div class="section-title"><h4>Colors</h4></div>
-                                <div>
+
+                                <div class="btn-group color-grop-btt" data-toggle="buttons">
                                     @foreach($side['side_color'] as $side_colors)
+
                                         @php $sel_col = "";  @endphp
+
                                         @if(in_array($side_colors['id'],$leftreq['color']))
                                            @php $sel_col = "checked";  @endphp
                                         @endif
-                                        
-                                        <label 
-                                        @if($side_colors['code'])
-                                            style="background-color:{{ $side_colors['code']}}"
+
+                                        @if($side_colors['type']=='Light')
+                                           @php $type = "#000";  @endphp
                                         @else
-                                            style="background-color:#FFF"
+                                           @php $type = "#fff";  @endphp
                                         @endif
-                                        >
-                                            <input type="checkbox" name="color[]" id="color" value="{{ $side_colors['id']}}" {{ $sel_col }} /> 
-                                            &nbsp;{{ $side_colors['name']}}
+
+                                        <label class="btn" title="{{ $side_colors['name']}}"
+                                        style="background:{{ $side_colors['code']}}; color:{{ $type }}" >
+                                            <input type="checkbox" name="color[]" id="color" value="{{ $side_colors['id']}}" {{ $sel_col }} autocomplete="off"  />
+                                            <span class="fa fa-check"></span>
                                         </label>
-                                        <br/>
+
                                     @endforeach
                                 </div>
                             </div>
@@ -103,14 +109,17 @@
                                         @if($heading==$leftreq['price'])
                                            @php $sel_price = "checked";  @endphp
                                         @endif
-                                        <input type="radio" name="price" value="{{ $side_prices['pricefrom']}}-{{ $side_prices['priceto']}}" {{ $sel_price }} />
-                                        &nbsp;{{ $side_prices['label']}}<br/>
+                                        <label>
+                                            <input type="radio" name="price" value="{{ $side_prices['pricefrom']}}-{{ $side_prices['priceto']}}" {{ $sel_price }} />
+                                            &nbsp;{{ $side_prices['label']}}
+                                        </label>
                                     @endforeach
                                 </div>
                             </div>
                         @endif
 
-                        <input type="submit" name="submit" value="Filter" />
+                        <input type="submit" name="submit" class="filter-sub" value="Filter" />
+                        <input type="reset" name="clear" class="filter-clr" value="Clear" />
 
                     </form>
 

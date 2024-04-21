@@ -184,11 +184,11 @@ ol {
 	font-size: 14px;
 	color: #ffffff;
 	background: #df4578;
-	font-weight: 600;
+	font-weight: 500;
 	border: none;
 	text-transform: uppercase;
 	display: inline-block;
-	padding: 12px 60px;
+	padding: 10px 40px;
 	border-radius: 50px;
 }
 
@@ -1141,6 +1141,9 @@ font-weight: 400 !important;
 	padding: 0 0 3px;
 	display: inline-block;
 }
+.categories__text a:hover {
+	text-decoration: none;
+}
 
 .categories__text a:after {
 	position: absolute;
@@ -1330,6 +1333,12 @@ font-weight: 400 !important;
 .product__item__text h6 a {
 	font-size: 13px;
 	color: #111111;
+	overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+           line-clamp: 2;
+   -webkit-box-orient: vertical;
 }
 
 .product__item__text .rating {
@@ -1373,7 +1382,9 @@ font-weight: 400 !important;
 }
 
 .sidebar__categories {
-	margin-bottom: 50px;
+	margin-bottom: 40px;
+	font-size: 14px !important;
+	font-weight: 500;
 }
 
 .sidebar__categories .section-title {
@@ -1471,9 +1482,13 @@ font-weight: 400 !important;
 
 .sidebar__filter {
 	position: relative;
-	margin-bottom: 60px;
+	margin-bottom: 40px;
+	font-size: 14px;
+	font-weight: 500;
 }
-
+.sidebar__filter label {
+	display: block;
+}
 .sidebar__filter .section-title {
 	margin-bottom: 50px;
 }
@@ -1496,7 +1511,9 @@ font-weight: 400 !important;
 	bottom: -5px;
 	border-radius: 2px;
 }
-
+.sidebar__filter .btn-group {
+	display: ruby-text !important;
+}
 .filter-range-wrap .range-slider .price-input {
 	position: relative;
 }
@@ -3248,34 +3265,33 @@ font-weight: 400 !important;
 }
 
 .contact__form form input {
-	height: 50px;
+	height: 40px;
 	width: 100%;
-	padding-left: 20px;
+	padding-left: 10px;
 	font-size: 14px;
 	color: #444444;
 	border: 1px solid #e1e1e1;
-	border-radius: 10px;
-	margin-bottom: 20px;
+	border-radius: 5px;
 }
 
 .contact__form form input::-webkit-input-placeholder {
-	color: #444444;
+	color: #b0b0b0;
 }
 
 .contact__form form input::-moz-placeholder {
-	color: #444444;
+	color: #b0b0b0;
 }
 
 .contact__form form input:-ms-input-placeholder {
-	color: #444444;
+	color: #b0b0b0;
 }
 
 .contact__form form input::-ms-input-placeholder {
-	color: #444444;
+	color: #b0b0b0;
 }
 
 .contact__form form input::placeholder {
-	color: #444444;
+	color: #b0b0b0;
 }
 
 .contact__form form textarea {
@@ -3965,7 +3981,9 @@ width: 100%;
 max-height: 160px;
 min-height: 160px;
 }
-
+.special-4box a:hover{
+	color: #000;
+}
 .boxes-col h6{
 	font-size: 13px;
 	margin-top: 10px;
@@ -4222,12 +4240,47 @@ min-height: 160px;
 .shoping-ccart img {
 	margin-bottom: 3px;
 }
-
-
-
-
-
-
+.btn span.fa {    			
+	opacity: 0;				
+}
+.btn.active span.fa {				
+	opacity: 1;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+.color-grop-btt input{
+visibility: hidden;
+}
+.color-grop-btt .btn{
+	border-radius: 0px !important;
+	width: 10px;
+	height: 27px;
+	color: #ccc;
+	margin-right: 0px;
+	margin-bottom: 3px;
+	border: 1px solid #eaeaea;
+}
+.color-grop-btt span .fa{	
+	position: absolute;
+	top: 10px;
+}
+.filter-sub {
+	padding: 4px 12px;
+	background: #ef5989;
+	font-size: 14px;
+	text-transform: uppercase;
+	border: none;
+	color: #fff;
+}
+.filter-clr {
+	padding: 4px 12px;
+	background: #d8d8d8;
+	font-size: 14px;
+	text-transform: uppercase;
+	border: none;
+	color: #232323;
+}
 
 
 

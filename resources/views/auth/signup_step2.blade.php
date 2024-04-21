@@ -8,72 +8,59 @@
 
 @section('mid-content')
 
-    <div class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
-                        <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>Signup</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="login">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
-                
-                    <div class="row">
-                        <div class="col-md-4 col-lg-4 bg-info">
-                            <div class="p-3 pt-4">
-                                <h4 class="text-white">Looks like you're new here!</h4>
-                                <p class="text-white pt-4" style="font-size:16px;">Sign up Step 2 with your mobile number to get started</p>
-                            </div>
+<div class="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+            
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 bg-info">
+                        <div class="p-3 pt-4">
+                            <h4 class="text-white">Verify Mobile Number</h4>
+                            <p class="text-white pt-4" style="font-size:16px;">Otp is sent to your mobile number, please submit here to verify your details.</p>
                         </div>
-                        <div class="col-md-8 col-lg-8 bg-white shadow-lg">
-                            <div class="contact__form p-4 pt-4">
-                            
-                                <div class="col-12">
-                                    @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach         
-                                        </ul>
-                                    </div>
-                                    @endif
-                                </div>    
-                                
-                                <div class="col-12">
-                                    @if(Session::has('auth_message'))
-                                    <div class="alert alert-{{ Session::get('message_class') }}" role="alert">
-                                        <span class="alert-inner--text">{{ Session::get('auth_message') }}</span>
-                                    </div>
-                                    {{ Session::forget('auth_message') }}
-                                    @endif 
+                    </div>
+                    <div class="col-md-8 col-lg-8 bg-white shadow-lg">
+                        <div class="contact__form p-4 pt-4">
+                        
+                            <div class="col-12">
+                                @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach         
+                                    </ul>
                                 </div>
-
-                                <form name="form1" action="{{route('submit_signup_step2')}}" method="post">
-                                    @csrf
-                                    <input type="text" name="temp_otp" id="temp_otp" class="numberonly" placeholder="Enter OTP" required />
-                                    <input type="hidden" name="handle" id="handle" value="{{$handle}}" />
-                                    <input type="submit"  class="login-btn" value="Submit" />
-                                </form>
+                                @endif
+                            </div>    
                             
+                            <div class="col-12">
+                                @if(Session::has('auth_message'))
+                                <div class="alert alert-{{ Session::get('message_class') }}" role="alert">
+                                    <span class="alert-inner--text">{{ Session::get('auth_message') }}</span>
+                                </div>
+                                {{ Session::forget('auth_message') }}
+                                @endif 
                             </div>
+
+                            <form name="form1" action="{{route('submit_signup_step2')}}" method="post">
+                                @csrf
+                                <input type="text" name="temp_otp" id="temp_otp" class="numberonly mb-4" placeholder="Enter OTP" required />
+                                <input type="hidden" name="handle" id="handle" value="{{$handle}}" />
+                                <button type="submit" class="login-btn">Verify</button> 
+                            </form>
+                        
                         </div>
                     </div>
-                
                 </div>
-                <div class="col-lg-2"></div>
+            
             </div>
+            <div class="col-lg-2"></div>
         </div>
     </div>
+</div>
 
 @endsection
 
