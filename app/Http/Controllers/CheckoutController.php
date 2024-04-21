@@ -190,7 +190,7 @@ class CheckoutController extends Controller
     // Template - Checkout in three steps
     public function checkOutStep1()
     {
-        if(!Session::get('beautify_customer'))
+        if(!Session::get('beautify_customer') || !Session::get('cart_total'))
         {
             return redirect('/');
         }
@@ -204,7 +204,7 @@ class CheckoutController extends Controller
 
     public function checkOutStep2(Request $request)
     {
-        if(!Session::get('beautify_customer'))
+        if(!Session::get('beautify_customer') || !Session::get('cart_total') || !Session::get('sel_addressid'))
         {
             return redirect('/');
         }
@@ -219,7 +219,7 @@ class CheckoutController extends Controller
 
     public function checkOutStep3(Request $request)
     {
-        if(!Session::get('beautify_customer'))
+        if(!Session::get('beautify_customer') || !Session::get('cart_total') || !Session::get('sel_addressid') || !Session::get('sel_pmethod'))
         {
             return redirect('/');
         }

@@ -74,7 +74,18 @@
                                         @if(in_array($side_colors['id'],$leftreq['color']))
                                            @php $sel_col = "checked";  @endphp
                                         @endif
-                                        <input type="checkbox" name="color[]" id="color" value="{{ $side_colors['id']}}" {{ $sel_col }} /> &nbsp;{{ $side_colors['name']}}<br/>
+                                        
+                                        <label 
+                                        @if($side_colors['code'])
+                                            style="background-color:{{ $side_colors['code']}}"
+                                        @else
+                                            style="background-color:#FFF"
+                                        @endif
+                                        >
+                                            <input type="checkbox" name="color[]" id="color" value="{{ $side_colors['id']}}" {{ $sel_col }} /> 
+                                            &nbsp;{{ $side_colors['name']}}
+                                        </label>
+                                        <br/>
                                     @endforeach
                                 </div>
                             </div>
