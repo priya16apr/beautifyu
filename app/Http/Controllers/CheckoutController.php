@@ -64,11 +64,11 @@ class CheckoutController extends Controller
             
             $info->save();
 
-            return redirect('/check-out');
+            return redirect('/check-out-address-select');
         }
         else
         {
-            return redirect('/check-out');
+            return redirect('/check-out-address-select');
         }
     }
 
