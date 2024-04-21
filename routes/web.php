@@ -74,6 +74,10 @@ Route::GET('/thank-you-for-shopping-with-us/{oid}',[CheckoutController::class,'t
 // Checkout in two steps
 Route::GET('/check-out-address-select',[CheckoutController::class,'checkOutStep1'])->name('check_out_step1');
 Route::GET('/check-out-pay-select',[CheckoutController::class,'checkOutStep2'])->name('check_out_step2');
+Route::GET('/check-out-review',[CheckoutController::class,'checkOutStep3'])->name('check_out_step3');
+Route::POST('/check-out-submit-address-select',[CheckoutController::class,'submitcheckOutStep1'])->name('submit_check_out_step1');
+Route::POST('/checkout-submit-payselect',[CheckoutController::class,'submitcheckOutStep2'])->name('submit_checkout_step2');
+Route::POST('/checkout-submit-review',[CheckoutController::class,'submitcheckOutStep3'])->name('submit_checkout_step3');
 
 // Product
 Route::get('/products/celebrity-special',[ProductController::class,'products_celebrity'])->name('products_celebrity');

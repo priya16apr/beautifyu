@@ -14,7 +14,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
                     <a href="/"><i class="fa fa-home"></i> Home</a>
-                    <span>Checkout Step 2</span>
+                    <span>Checkout Step 3</span>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
 <section class="checkout spad">
     <div class="container">
 
-        <form name="form2" action="{{route('submit_checkout_step2')}}" method="post" class="checkout__form">
+        <form name="form2" action="{{route('submit_checkout_step3')}}" method="post" class="checkout__form">
             @csrf
             <div class="row">
                 <div class="col-lg-9">
@@ -50,29 +50,50 @@
                     </div>
 
                 2. Payment Method 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="p-2">
-                            <label>
-                                <input type="radio" name="pmethod"  value="cod" checked />&nbsp; Cash on Delivery/Pay on Delivery
-                            </label>
-                        </div>
+                    <div class="row">
+                        @if($pMethod)
+                            <div class="col-md-12">
+                                <div class="p-2">
+                                    <label>{{ $pMethod }}</label>
+                                </div>
+                            </div>
+                        @endif
                     </div>
-                    <div class="col-md-12">
-                        <div class="p-2">
-                            <label>
-                                <input type="radio" name="pmethod"  value="upi" />&nbsp; UPI
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <input type="submit" class="deliver-btn" value="use this payment method" />
-                    </div>
-                </div>
 
-                <br/><br/>
-                
                 3. Review items and delivery 
+                    @if(count($cart)>0)
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="shop__cart__table">
+                                    <table>
+                                        <tbody>
+                                        @foreach($cart as $carts)
+                                            <tr>
+                                                <td class="cart__product__item">
+                                                    <img src="{{ $carts->product_image }}" alt="{{ $carts->product_name }}">
+                                                    <div class="cart__product__item__title"><h6>{{ $carts->product_name }}</h6></div>
+                                                </td>
+                                                <td class="cart__price">Rs. {{ $carts->product_price }}</td>
+                                                <td class="cart__price">{{ $carts->product_qty }}</td>
+                                                <td class="cart__price">Rs. {{ $carts->sub_total }}</td>
+                                            </tr>
+                                        @endforeach                              
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="col-md-12">
+                                    <input type="submit" class="deliver-btn" value="Place Order" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                    @else
+                        Cart is Empty
+                    @endif
+
                 
                 </div>
 

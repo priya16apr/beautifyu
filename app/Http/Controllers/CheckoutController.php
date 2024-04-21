@@ -187,7 +187,7 @@ class CheckoutController extends Controller
         return view('shopping.thankyforshopping')->with($data);
     }
 
-    // Checkout in two steps
+    // Template - Checkout in three steps
     public function checkOutStep1()
     {
         if(!Session::get('beautify_customer'))
@@ -201,6 +201,190 @@ class CheckoutController extends Controller
 
         return view('shopping.checkout_step1')->with($data);
     }
-    
+
+    public function checkOutStep2(Request $request)
+    {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+        
+        $addressId      =   Session::get('sel_addressid');
+        $address        =   Address::where('id',$addressId)->first();
+        
+        $data           =   compact('address');
+
+        return view('shopping.checkout_step2')->with($data);
+    }
+
+    public function checkOutStep3(Request $request)
+    {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+
+        $sessionid      =   Session::getId();
+        $addressId      =   Session::get('sel_addressid');
+        $pMethod        =   Session::get('sel_pmethod');
+        
+        $address        =   Address::where('id',$addressId)->first();
+        $cart           =   Cart::where('sessionid',$sessionid)->get();
+
+        $data           =   compact('address','pMethod','cart');
+
+        return view('shopping.checkout_step3')->with($data);
+    }
+
+    // Submission - Checkout in three steps
+    public function submitcheckOutStep1(Request $request)
+    {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+        
+        $customerid             =   Session::get('beautify_customer')->id;
+        $sessionid              =   Session::getId();
+        $total_amt              =   Session::get('cart_total');
+        
+        session(['sel_addressid' => $request->selected_address]);
+        
+        if($customerid!='' && $sessionid!='' && $total_amt!='' && $request->selected_address!='')
+        {
+            return redirect("/check-out-pay-select");
+        }
+        else
+        {
+            return redirect('/');
+        }
+    }
+
+    public function submitcheckOutStep2(Request $request)
+    {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+        
+        $customerid             =   Session::get('beautify_customer')->id;
+        $sessionid              =   Session::getId();
+        $total_amt              =   Session::get('cart_total');
+        $selected_address       =   Session::get('sel_addressid');
+        session(['sel_pmethod' => $request->pmethod]);
+
+        if($customerid=='' || $sessionid=='' || $total_amt=='' || $selected_address=='' ||  $request->pmethod=='')
+        {
+            return redirect("/");
+        }
+        else
+        {
+            return redirect("/check-out-review");
+        }
+    }
+
+    public function submitcheckOutStep3()
+    {
+        if(!Session::get('beautify_customer'))
+        {
+            return redirect('/');
+        }
+        
+        $customerid             =   Session::get('beautify_customer')->id;
+        $sessionid              =   Session::getId();
+        $total_amt              =   Session::get('cart_total');
+        $selected_address       =   Session::get('sel_addressid');
+        $pMethod                =   Session::get('sel_pmethod');
+
+        if(!$customerid || !$sessionid || !$total_amt || !$selected_address)
+        {
+            return redirect('/');
+        }
+        
+        if($customerid!='' && $sessionid!='')
+        {
+            $cart               =   Cart::where('sessionid',$sessionid)->get();
+            $addressinfo        =   Address::where('id',$selected_address)->first();
+            
+            if($cart!='' && $addressinfo!='')
+            {
+                # STEP 1: Insert in Order Address Table
+                $oa_info                        =   new OrderAddress;
+                $oa_info->sessionid             =   $sessionid;
+                $oa_info->full_name             =   $addressinfo->full_name;
+                $oa_info->email                 =   $addressinfo->email;
+                $oa_info->mobile                =   $addressinfo->mobile;
+                $oa_info->alter_mobile          =   $addressinfo->alter_mobile;
+                $oa_info->pincode               =   $addressinfo->pincode;
+                $oa_info->address_line1         =   $addressinfo->address_line1;
+                $oa_info->address_line2         =   $addressinfo->address_line2;
+                $oa_info->city                  =   $addressinfo->city;
+                $oa_info->state                 =   $addressinfo->state;
+                $oa_info->address_type          =   $addressinfo->address_type;
+                $oa_info->save();
+                
+                # STEP 2: Insert in Order Table
+                $oadata                         =   OrderAddress::where('sessionid',$sessionid)->first();
+                $o_info                         =   new Order;
+                $o_info->sessionid              =   $sessionid;
+                $o_info->order_date             =   date('Y-m-d h:i');
+                $o_info->customer_id            =   $customerid;
+                $o_info->order_address_id       =   $oadata->id;
+                $o_info->payment_method         =   $pMethod;
+                $o_info->sub_total              =   $total_amt;
+                $o_info->total                  =   $total_amt;
+                $o_info->save();
+                
+                # STEP 3: Insert in Order Product Table
+                $orderinfo                      =   Order::where('sessionid',$sessionid)->first();
+                $orderid                        =   $orderinfo->id;
+
+                foreach($cart as $carts)
+                {
+                    $op_info                        =   new OrderProduct;
+                    $op_info->order_id              =   $orderid;
+                    $op_info->product_id            =   $carts->product_id;
+                    $op_info->product_title         =   $carts->product_name;
+                    $op_info->product_image         =   $carts->product_image;
+                    $op_info->product_link          =   $carts->product_link;
+                    $op_info->product_price         =   $carts->product_price;
+                    $op_info->product_qty           =   $carts->product_qty;
+                    $op_info->sub_total             =   $carts->sub_total;
+                    $op_info->info                  =   $carts->cart_info;
+                    $op_info->save(); 
+                }
+
+                Cart::where('sessionid',$sessionid)->delete();
+                session()->regenerate();
+
+                // Invoice
+                // $pdfname        =   $orderid.'_invoice.pdf';        
+                // $loadtemplate   =   "mail.invoice";
+                // $pdf            =   PDF::loadView($loadtemplate);
+                // return $pdf->download($pdfname);
+                // return view($loadtemplate)->with(array('name'=>'priyanka'));
+                
+                // Send Mail
+                $custinfo       =   Customer::where('id',$customerid)->first();
+                $mailinfo       =   Mail::find('3');
+                $header_param   =  ['to'   =>  $custinfo->email, 'subject' =>  $mailinfo['subject']];
+                $body_param     =  ['name' =>  $custinfo->name,  'orderid' =>  'orderid', 'total_amt' =>  $total_amt];
+            
+                sendMail('mail.order_confirmed',$body_param,$header_param);
+                
+                $pass           =   '343-'.$orderid.'-908';
+                
+                return redirect("/thank-you-for-shopping-with-us/$pass");  
+            }
+            else
+            {
+                return redirect('/');
+            }
+        }
+        else
+        {
+            return redirect('/');
+        }
+    }
 
 }

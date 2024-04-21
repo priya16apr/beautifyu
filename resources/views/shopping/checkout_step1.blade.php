@@ -24,7 +24,7 @@
 <section class="checkout spad">
     <div class="container">
 
-        <form name="form2" action="{{route('submit_order')}}" method="post" class="checkout__form">
+        <form name="form2" action="{{route('submit_check_out_step1')}}" method="post" class="checkout__form">
             @csrf
             <div class="row">
                 <div class="col-lg-9">
@@ -52,7 +52,8 @@
 
                         <div class="col-md-12">
                             <div class="p-2">
-                                <button class="btn">+ Add New Address</button>
+                                <!-- <button class="btn">+ Add New Address</button> -->
+                                <a href="" class="btn">+ Add New Address</a>
                             </div>
                             <input type="submit" class="deliver-btn" value="use this address" />
                         </div>
@@ -60,7 +61,9 @@
                         
                     </div>
 
-                2. Payment Method    
+                2. Payment Method <br/><br/>
+                
+                3. Review items and delivery
                 </div>
 
                 <div class="col-lg-3">
