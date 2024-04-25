@@ -19,7 +19,8 @@ class ShoppingController extends Controller
 
         $setting        =   getAllSetting();
         $cart           =   Cart::where('sessionid',$sessionid)->get();
-        $data           =   compact('setting','cart');
+        $count_cart     =   count($cart);
+        $data           =   compact('setting','cart','count_cart');
 
         return view('shopping.cart')->with($data);
     }
@@ -30,6 +31,8 @@ class ShoppingController extends Controller
         $name           =   $request->product_name;
         $image          =   $request->product_image;
         $link           =   $request->product_link;
+        $color          =   $request->product_color;
+        $mrp            =   $request->product_mrp;
         $price          =   $request->product_price;
         $qty            =   $request->product_qty;
         $subtotal       =   $price*$qty;
@@ -46,6 +49,8 @@ class ShoppingController extends Controller
             $info->product_name         =   $name;
             $info->product_image        =   $image;
             $info->product_link         =   $link;
+            $info->product_color        =   $color;
+            $info->product_mrp          =   $mrp;
             $info->product_price        =   $price;
             $info->product_qty          =   $qty;
             $info->sub_total            =   $subtotal;

@@ -27,6 +27,10 @@ class CartController extends Controller
             $single_product->product_qty    =   $qty;
             $single_product->sub_total      =   $product_price * $qty;
             $single_product->save();
+
+            $sessionid      =   Session::getId();
+            $sum            =   Cart::where('sessionid','=',$sessionid)->sum('sub_total');
+            session(['cart_total' => $sum]);
     
             echo 'updated';
         }
@@ -52,9 +56,33 @@ class CartController extends Controller
             $single_product->product_qty    =   $qty;
             $single_product->sub_total      =   $product_price * $qty;
             $single_product->save();
+
+            $sessionid      =   Session::getId();
+            $sum            =   Cart::where('sessionid','=',$sessionid)->sum('sub_total');
+            session(['cart_total' => $sum]);
     
             echo 'updated';
         }
+    }
+
+    public function updateQuantity()
+    {
+        $cartid             =   $_GET['cartid'];
+        $qty                =   $_GET['qty'];
+        
+        $single_product     =   Cart::find($cartid);
+
+        $product_price      =   $single_product->product_price; 
+    
+        $single_product->product_qty    =   $qty;
+        $single_product->sub_total      =   $product_price * $qty;
+        $single_product->save();
+
+        $sessionid      =   Session::getId();
+        $sum            =   Cart::where('sessionid','=',$sessionid)->sum('sub_total');
+        session(['cart_total' => $sum]);
+
+        echo 'updated';
     }
 
     public function deleteProduct()
@@ -62,6 +90,10 @@ class CartController extends Controller
         $cartid             =   $_GET['cartid'];
         
         Cart::find($cartid)->delete();
+
+        $sessionid      =   Session::getId();
+        $sum            =   Cart::where('sessionid','=',$sessionid)->sum('sub_total');
+        session(['cart_total' => $sum]);
 
         echo 'removed';
     }

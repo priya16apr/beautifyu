@@ -15,6 +15,7 @@ use App\Models\ProductTypeCollection;
 use App\Models\ProductTypeAttribute;
 use App\Models\ProductType;
 use App\Models\ProductAttribute;
+use App\Models\ProductRating;
 use App\Models\AttributeValue;
 use App\Models\Cart;
 use App\Models\PriceRange;
@@ -233,7 +234,19 @@ class ProductController extends Controller
 
    public function product_detail($slug)
    {
-      $pdetail       =     Product::where('slug',$slug)->first();
+      $pdetail       =     Product::with(['colors'])->where('slug',$slug)->first();
+      $rating        =     ProductRating::where('product_id',$pdetail->id)->orderby('id','desc')->get();
+      
+      if(!$pdetail)
+      {
+         return view('content.notfound');
+      }
+      
+      if($pdetail->status!='4')
+      {
+         return view('content.notfound');
+      }
+
       $similar       =     Product::paginate('12');
       
       $attribute     =     ProductAttribute::where('product_id',$pdetail['id'])->get();
@@ -306,7 +319,7 @@ class ProductController extends Controller
       {
          $cart       =     'exist';
       }
-      $data          =     compact('pdetail','productAttribute','similar','cart');
+      $data          =     compact('pdetail','productAttribute','rating','similar','cart');
 
       return view('product.detail')->with($data);
    }

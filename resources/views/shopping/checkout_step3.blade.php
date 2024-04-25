@@ -8,33 +8,23 @@
 
 @section('mid-content')
 
-<div class="breadcrumb-option">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcrumb__links">
-                    <a href="/"><i class="fa fa-home"></i> Home</a>
-                    <span>Checkout Step 3</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <section class="checkout spad">
     <div class="container">
+
+        <div class="section-title"><h4>Checkout</h4></div>
 
         <form name="form2" action="{{route('submit_checkout_step3')}}" method="post" class="checkout__form">
             @csrf
             <div class="row">
-                <div class="col-lg-9">
-                1. Delivery Address: <a href="{{ url('/check-out-address-select') }}">Change</a><br/>
+                <div class="col-lg-8">
+                    <div class="step-headingss1">1. Delivery Address <span><a href="{{ url('/check-out-address-select') }}">Change</a></span></div>    
+                    
                     <div class="row">
                         
                         @if($address)      
-                                                     
+                                                    
                             <div class="col-md-12">
-                                <div class="p-2">
+                                <div class="p-2 text-13">
                                     <label>
                                         [{{ $address->address_type }}] &nbsp;
                                         <b>{{ $address->full_name }}</b>, 
@@ -48,62 +38,61 @@
                         @endif
                         
                     </div>
+                    <hr>
 
-                2. Payment Method 
+                    <div class="step-headingss1">2. Payment Method  <span><a href="{{ url('/check-out-payment-select') }}">Change</a></span></div>
                     <div class="row">
                         @if($pMethod)
                             <div class="col-md-12">
-                                <div class="p-2">
-                                    <label>{{ $pMethod }}</label>
+                                <div class="p-2 text-13">
+                                    <label>{{ $pMethod }} / Pay on Delivery</label>
                                 </div>
                             </div>
                         @endif
                     </div>
+                    <hr>
 
-                3. Review items and delivery 
-                    @if(count($cart)>0)
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="shop__cart__table">
-                                    <table>
-                                        <tbody>
-                                        @foreach($cart as $carts)
-                                            <tr>
-                                                <td class="cart__product__item">
-                                                    <img src="{{ $carts->product_image }}" alt="{{ $carts->product_name }}">
-                                                    <div class="cart__product__item__title"><h6>{{ $carts->product_name }}</h6></div>
-                                                </td>
-                                                <td class="cart__price">Rs. {{ $carts->product_price }}</td>
-                                                <td class="cart__price">{{ $carts->product_qty }}</td>
-                                                <td class="cart__price">Rs. {{ $carts->sub_total }}</td>
-                                            </tr>
-                                        @endforeach                              
-
-                                        </tbody>
-                                    </table>
+                    <div class="step-headingss">3. Review items and delivery </div>
+                        @if(count($cart)>0)
+                            <div class="row bdr-1 m-3">
+                                <div class="col-lg-12 p-3">
+                                    @foreach($cart as $carts)
+                                        <div class="cart-bag-page">
+                                            <div class="cart-bag-img">
+                                                <img src="{{ $carts->product_image }}" alt="{{ $carts->product_name }}">
+                                            </div>
+                                            <h6>{{ $carts->product_name }}</h6>
+                                            <p class="mt-2">Quantity: {{ $carts->product_qty }}</p>
+                                            <div class="product__details__price">
+                                                <span class="sign">₹</span> {{ $carts->sub_total }} 
+                                                <span>MRP.: ₹ {{ $carts->product_mrp }} </span>
+                                            </div>                
+                                        </div>
+                                    @endforeach                              
                                 </div>
-                            </div>
-                            <div class="col-lg-4">
+
                                 <div class="col-md-12">
-                                    <input type="submit" class="deliver-btn" value="Place Order" />
-                                </div>
+                                    <h6><b>Order Total: ₹ @php echo Session::get('cart_total'); @endphp</b></h6>
+                                    <p>By placing your order, you agree to BeautifyU's privacy notice and conditions of use.</p>
+                                    <input type="submit" class="deliver-btn mb-3 btn-sm" value="Place Your Order" />
+                                </div> 
+
                             </div>
-                        </div>
-                        
-                    @else
-                        Cart is Empty
-                    @endif
+                            
+                        @else
+                            Cart is Empty
+                        @endif
 
                 
                 </div>
 
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="checkout__order">
                         <h5>Order Summary</h5>
 
                         <div class="checkout__order__total">
                             <ul>
-                                <li>Total <span>Rs @php echo Session::get('cart_total'); @endphp</span></li>
+                                <li>Total <span>₹ @php echo Session::get('cart_total'); @endphp</span></li>
                                 <input type="hidden" name="total_amt" id="total_amt" value="@php echo Session::get('cart_total'); @endphp" />
                                 <li>Delivery Charges <span class="freee">Free</span></li>
                             </ul>
@@ -111,12 +100,13 @@
 
                         <div class="checkout__order__youpay">
                             <ul>
-                                <li>You Pay <span>Rs @php echo Session::get('cart_total'); @endphp</span></li>
+                                <li>You Pay <span>₹ @php echo Session::get('cart_total'); @endphp</span></li>
                             </ul>
                         </div>
-                        <!-- <button type="submit" class="site-btn">Place oder</button> -->
+                        
                     </div>
                 </div>
+
             </div>
         </form>
        

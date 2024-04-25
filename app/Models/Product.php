@@ -51,12 +51,12 @@ class Product extends Model
 
     function ratings()
     {
-        return $this->hasMany(Rating::class);
+        return $this->hasMany(ProductRating::class);
     }
 
-    function reviews()
+    function colors()
     {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(ProductColor::class);
     }
 
 }

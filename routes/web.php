@@ -58,6 +58,7 @@ Route::get('/happy_customer',[HappyCustomerController::class,'index'])->name('ha
 // Cart
 Route::GET('/ajax/cart-increaseQuantity',[CartController::class,'increaseQuantity']);
 Route::GET('/ajax/cart-decreaseQuantity',[CartController::class,'decreaseQuantity']);
+Route::GET('/ajax/cart-updateQuantity',[CartController::class,'updateQuantity']);
 Route::GET('/ajax/cart-deleteProduct',[CartController::class,'deleteProduct']);
 Route::GET('/ajax/cart-empty',[CartController::class,'empty']);
 

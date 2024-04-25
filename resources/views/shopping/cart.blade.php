@@ -7,19 +7,6 @@
 
 @section('mid-content')
 
-    <div class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
-                        <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>Shopping Cart</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <section class="shop-cart spad">
         <div class="container">
             @if(count($cart)>0)
@@ -27,50 +14,71 @@
             
                 <div class="row">
                     <div class="col-lg-8">
-                        <div class="shop__cart__table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Sub Total</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                    @php $total=0; @endphp
-                                    @foreach($cart as $carts)
-                                        <tr>
-                                            <td class="cart__product__item">
-                                                <img src="{{ $carts->product_image }}" alt="{{ $carts->product_name }}">
-                                                <div class="cart__product__item__title">
-                                                    <h6><a href="{{url('product/'.$carts->product_link)}}">{{ $carts->product_name }}</a></h6>
-                                                </div>
-                                            </td>
-                                            <td class="cart__price">Rs. {{ $carts->product_price }}</td>
-                                            <td class="cart__price">
-                                                <button onclick="decreaseQuantity('{{ $carts->id }}')">-</button>
-                                                <input type="text" value="{{ $carts->product_qty }}" size="3" readonly />
-                                                <button onclick="increaseQuantity('{{ $carts->id }}')">+</button>
-                                            </td>
-                                            <td class="cart__price">Rs. {{ $carts->sub_total }}</td>
-                                            <td class="cart__close"><a href="javascript:void()" 
-                                            onclick="deleteProduct('{{ $carts->id }}')"><span class="icon_close"></span></a></td>
-                                        </tr>
-                                    @endforeach                              
 
-                                </tbody>
-                            </table>
+                        <div class="section-title">
+                            <h4>Shopping Cart</h4>
                         </div>
+
+                        @php $total=0; @endphp
+                        @foreach($cart as $carts)
+                        <div class="row cart-bag-page">
+                            <div class="col-md-9">
+                                <div class="cart-bag-img">
+                                    <img src="{{ $carts->product_image }}" alt="{{ $carts->product_name }}">
+                                </div>
+                                <a href="{{url('product/'.$carts->product_link)}}">{{ $carts->product_name }}</a>
+                                                            
+                                <div class="row flex mt-2">
+                                    <!-- <div class="col p-0">
+                                        <div class="rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div> -->
+                                    <div class="col">
+                                        <div class="detail-p-color">
+                                            Color : <span style="background:{{ $carts->product_color }}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="cart__quantity">
+                                    <div class="form-group row mb-0">
+                                    <label class="col-form-label m-0" for="product_qty">Qty</label>
+                                        <select name="product_qty" id="product_qty" onchange="updateQuantity('{{ $carts->id }}',this.value)" class="sel-quant">
+                                            <option value="1" @if($carts->product_qty=='1') selected @endif >1</option>
+                                            <option value="2" @if($carts->product_qty=='2') selected @endif >2</option>
+                                            <option value="3" @if($carts->product_qty=='3') selected @endif >3</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3 text-right">
+                                <div class="product__details__price">
+                                    <span class="sign">₹</span> {{ $carts->sub_total }} <br />
+                                    <span>MRP.: ₹ {{ $carts->product_mrp }}</span>
+                                </div>
+                                <a class="text-13" href="javascript:void()" onclick="deleteProduct('{{ $carts->id }}')">Remove</a>
+                            </div>
+                        </div>
+                        @endforeach
+
+                        <div class="text-right">Subtotal ({{$count_cart}} items): ₹ <b>{{ Session::get('cart_total') }}</b></div>
+
                     </div>
+
                     <div class="col-lg-4">
                         <div class="cart__total__procced">
                             <ul>
-                                <li>Subtotal <span>Rs. {{ Session::get('cart_total') }}</span></li>
+                                <li>Items <span>{{$count_cart}} </span></li>
+                                <li>Subtotal <span>₹ {{ Session::get('cart_total') }}</span></li>
                                 <li>Shipping Charges <span>Free </span></li>
-                                <li>Total <span class="price-finall">Rs. {{ Session::get('cart_total') }}</span></li>
+                                <li>Total <span class="price-finall">₹ <b>{{ Session::get('cart_total') }}</b></span></li>
                             </ul>
                             
                             @if(session('beautify_customer'))
@@ -81,7 +89,9 @@
                             
                         </div>
                     </div>
+
                 </div>
+
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="cart__btn">
@@ -141,6 +151,26 @@
                 // {
                 //     //jQuery("#msz").html(data);
                 // }
+            }
+        });
+    }
+
+    function updateQuantity(cartid,qty)
+    {
+        jQuery.ajax({
+            url:"/ajax/cart-updateQuantity",
+            data:"cartid="+cartid+"&qty="+qty,
+            type:'GET',
+            success:function(data)
+            {
+                if(data=='updated')
+                {
+                    window.location.href = '/shopping-cart';
+                }
+                else
+                {
+                    jQuery("#msz").html(data);
+                }
             }
         });
     }

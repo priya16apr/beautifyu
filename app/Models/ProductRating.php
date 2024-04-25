@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductColor extends Model
+class ProductRating extends Model
 {
     use HasFactory;
 
@@ -14,8 +14,8 @@ class ProductColor extends Model
         return $this->belongsTo(Product::class);
     }
 
-    function color()
+    function customer()
     {
-        return $this->belongsTo(Color::class);
+        return $this->belongsTo(Customer::class);
     }
 }

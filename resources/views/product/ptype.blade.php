@@ -119,8 +119,8 @@
                         @endif
 
                         <input type="submit" name="submit" class="filter-sub" value="Filter" />
-                        <input type="reset" name="clear" class="filter-clr" value="Clear" />
-
+                        <a class="filter-clr" href="{{ url('/products/'.$ptype['slug']) }}">Clear</a>
+                        
                     </form>
 
                     </div>
