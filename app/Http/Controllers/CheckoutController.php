@@ -347,6 +347,8 @@ class CheckoutController extends Controller
                     $op_info->product_title         =   $carts->product_name;
                     $op_info->product_image         =   $carts->product_image;
                     $op_info->product_link          =   $carts->product_link;
+                    $op_info->product_color         =   $carts->product_color;
+                    $op_info->product_mrp           =   $carts->product_mrp; 
                     $op_info->product_price         =   $carts->product_price;
                     $op_info->product_qty           =   $carts->product_qty;
                     $op_info->sub_total             =   $carts->sub_total;

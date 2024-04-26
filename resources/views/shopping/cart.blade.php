@@ -60,7 +60,7 @@
 
                             <div class="col-md-3 text-right">
                                 <div class="product__details__price">
-                                    <span class="sign">₹</span> {{ $carts->sub_total }} <br />
+                                    <span class="sign">₹</span> {{ $carts->product_price }} <br />
                                     <span>MRP.: ₹ {{ $carts->product_mrp }}</span>
                                 </div>
                                 <a class="text-13" href="javascript:void()" onclick="deleteProduct('{{ $carts->id }}')">Remove</a>

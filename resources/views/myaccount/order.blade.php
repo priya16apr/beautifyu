@@ -66,6 +66,11 @@
                                                                     <span>[Qty: {{ $products->product_qty }}]</span>
                                                                 </h6>
                                                                 <p>Product Price: Rs {{ $products->product_price }}</p>
+                                                                
+                                                                <p class="detail-p-color">
+                                                                    Color : <span style="background:{{ $products->product_color }}"></span>
+                                                                </p>
+
                                                                 <div class="mt-3">
                                                                     <a href="{{ url('product/'.$products->product_link) }}" class="btn btn-warning btn-sm shadow-1">Buy it again</a>
                                                                     <a href="{{ url('product/'.$products->product_link) }}" class="btn btn-light btn-sm shadow-1">View your item</a>

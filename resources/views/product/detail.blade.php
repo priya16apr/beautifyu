@@ -81,19 +81,19 @@
                             }
                             @endphp
 
-                            <div class="rating">
+                            <!-- <div class="rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <span>( 138 reviews )</span>
-                            </div>
+                            </div> -->
+
                             <div class="detail-p-color">
-                                Color : 
-                                @foreach($pdetail->colors as $col)
-                                    {{ $col->color->name }}  <span style="background:{{ $col->color->code }}"></span><br/>
-                                @endforeach
+                                @if($pdetail->color) Color :   
+                                    <span style="background:{{ $pdetail->color->code }}" title="{{ $pdetail->color->name }}"></span>
+                                @endif   
                             </div>
                             
                             <div class="cart__quantity">
@@ -104,10 +104,11 @@
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                     </select>
+
                                     <input type="hidden" name="product_id" id="product_id" value="{{$pdetail->id}}" />
                                     <input type="hidden" name="product_name" id="product_name" value="{{$pdetail->title}}" />
                                     <input type="hidden" name="product_mrp" id="product_mrp" value="{{$pdetail->mrp_price}}" />
-                                    <input type="hidden" name="product_color" id="product_color" value="#4b8c06" />
+                                    <input type="hidden" name="product_color" id="product_color" value="@if($pdetail->color){{$pdetail->color->code}}@endif" />
                                     
                                     @if(count($pdetail->images)>0)  
                                         <input type="hidden" name="product_image" id="product_image" value="{{$pdetail->images[0]->image}}" />
@@ -140,10 +141,10 @@
                             @if($pdetail->stock>0)
                                 <div class="product__details__button">
                                     @if($cart=='exist')
-                                        <a href="{{url('shopping-cart')}}" class="buy-btn">Already in Cart</a>
+                                        <a href="{{url('shopping-cart')}}" class="cart-btn">Already in Cart</a>
                                     @else
-                                        <input type="button" class="cart-btn" name="button1" value="Add to cart" onclick="addCart('{{$pdetail->id}}','cart')" />
-                                        <input type="button" class="buy-btn" name="button1" value="Buy Now" onclick="addCart('{{$pdetail->id}}','checkout')" />
+                                        <input type="button" class="cart-btn" name="button1" id="button1" value="Add to cart" onclick="addCart('{{$pdetail->id}}','cart')" />
+                                        <input type="button" class="buy-btn" name="button2" id="button2" value="Buy Now" onclick="addCart('{{$pdetail->id}}','checkout')" />
                                     @endif
                                 </div>
                             @else
@@ -197,7 +198,7 @@
                             </div>
 
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-md-5">
                                     <h6>Ratings & Reviews</h6>
                                     
@@ -239,7 +240,7 @@
                                         @endforeach
 
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             
                         </div>
@@ -346,7 +347,10 @@
         {
             var userinfo = "{{ Session::get('beautify_customer') }}";
             
-            jQuery('.product__details__button').html("<a href='/shopping-cart' class='buy-btn'>Added in Cart</a>");
+            //jQuery('.product__details__button').html("<a href='/shopping-cart' class='buy-btn'>Added in Cart</a>");
+
+            jQuery('#button1').attr('disabled', true);
+            jQuery('#button2').attr('disabled', true);
 
             jQuery.ajax({
                 url:"/ajax/submit-addcart",
