@@ -68,9 +68,16 @@
                                                                     </h6>
                                                                     <p>Product Price: Rs {{ $products->product_price }}</p>
                                                                     
-                                                                    <p class="detail-p-color">
-                                                                        Color : <span style="background:{{ $products->product_color }}"></span>
-                                                                    </p>
+                                                                    <div class="row">
+                                                                        <div class="col-md-2">
+                                                                        <x-product-rating :product="$products->product" label="no" />
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="detail-p-color">
+                                                                                Color : <span style="background:{{ $products->product_color }}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
                                                                     <div class="mt-3">
                                                                         <a href="{{ url('product/'.$products->product_link) }}" class="btn btn-warning btn-sm shadow-1">Buy it again</a>

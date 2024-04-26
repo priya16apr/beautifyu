@@ -62,12 +62,17 @@
                                                 <img src="{{ $carts->product_image }}" alt="{{ $carts->product_name }}">
                                             </div>
                                             <h6>{{ $carts->product_name }}</h6>
-                                            <div class="col">
-                                                <div class="detail-p-color">
-                                                    Color : <span style="background:{{ $carts->product_color }}"></span>
+
+                                            <div class="">
+                                                <x-product-rating :product="$carts->product" label="no" />
+                                                <div class="col">
+                                                    <div class="detail-p-color">
+                                                        Color : <span style="background:{{ $carts->product_color }}"></span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <p class="mt-2">Quantity: {{ $carts->product_qty }}</p>
+
+                                            <p>Quantity: {{ $carts->product_qty }}</p>
                                             <div class="product__details__price">
                                                 <span class="sign">₹</span> {{ $carts->product_price }} 
                                                 <span>MRP.: ₹ {{ $carts->product_mrp }} </span>

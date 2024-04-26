@@ -38,7 +38,10 @@
 
         <div class="product__item__text">
             <h6><a href="{{url('product/'.$product->slug)}}">{{ $product->title }}</a></h6>
-           
+            
+            <!-- Rating Component -->
+            <x-product-rating :product=$product label="no" />
+
             @if($sale=='Yes')
             
                 <div class="product__price">

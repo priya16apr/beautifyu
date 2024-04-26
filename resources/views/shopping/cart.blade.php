@@ -28,16 +28,10 @@
                                 </div>
                                 <a href="{{url('product/'.$carts->product_link)}}">{{ $carts->product_name }}</a>
                                                             
-                                <div class="row flex mt-2">
-                                    <!-- <div class="col p-0">
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div> -->
+                                <div class="mt-2">
+                                    <div class="col p-0">
+                                        <x-product-rating :product="$carts->product" label="no" />
+                                    </div>
                                     <div class="col">
                                         <div class="detail-p-color">
                                             Color : <span style="background:{{ $carts->product_color }}"></span>

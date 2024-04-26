@@ -79,7 +79,11 @@
                                     $cartinfo           =   "Deal: $deal_start_date to $deal_end_date @ Discount: Rs $pdetail->deal_discount @ Old Selling Price: $pdetail->selling_price  @ New Selling Price: $pdetail->deal_selling_price";
                                 }  
                             }
+
                             @endphp
+
+                            <!-- Rating Component -->
+                            <x-product-rating :product=$pdetail label="yes" />
 
                             <!-- <div class="rating">
                                 <i class="fa fa-star"></i>
