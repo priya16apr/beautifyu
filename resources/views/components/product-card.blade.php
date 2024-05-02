@@ -30,7 +30,7 @@
     
     
         <div class="product__item__pic set-bg" data-setbg="{{ $product->default_img }}" >
-            @if($sale=='Yes') <div class="label sale">Sale</div> @endif
+            @if($sale=='Yes') <div class="label sale">Deal of the Day</div> @endif
             <ul class="product__hover">
                 <li><a href="{{ $product->default_img }}" class="image-popup"><span class="arrow_expand"></span></a></li>
             </ul>
@@ -44,9 +44,9 @@
 
             @if($sale=='Yes')
             
+                <div class="badge badge-danger">Special discount ₹ {{ $product->deal_discount }}</div>
                 <div class="product__price">
                     @php echo "Rs. ".$sprice;  @endphp
-                    <span>Rs. {{ $product->selling_price }}</span> 
                     <span>Rs. {{ $product->mrp_price }}</span>
                 </div>
 

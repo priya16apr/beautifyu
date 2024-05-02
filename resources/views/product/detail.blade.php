@@ -125,9 +125,9 @@
                                 
                                 <input type="hidden" name="product_price" id="product_price" value="{{$pdetail->deal_selling_price}}" />
                                 <input type="hidden" name="cart_info" id="cart_info" value="@php echo $cartinfo; @endphp" />
+                                <div class="badge badge-danger">Special discount ₹ {{ $pdetail->deal_discount }}</div>
                                 <div class="product__details__price">
                                     @php echo "₹ ".$pdetail->deal_selling_price;  @endphp
-                                    <span>₹ {{ $pdetail->selling_price }}</span> 
                                     <span>₹ {{ $pdetail->mrp_price }}</span>
                                 </div>
 
