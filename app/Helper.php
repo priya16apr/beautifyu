@@ -170,6 +170,37 @@ if(!function_exists('getSideBarHierarchy'))
     }
 }
 
+if(!function_exists('getSideBarHierarchyMob'))
+{
+    function getSideBarHierarchyMob($selattribute=null)
+    {
+        $subcat     =     SubCategory::where('is_visible','1')->orderBy('sequence','asc')->get();
+        if($subcat)
+        {
+            foreach($subcat as $subcats)
+            {
+                $scat_id    = $subcats['id'];
+                $scat_name  = $subcats['title'];
+                
+                echo "<div class='card'>";
+                    echo "<div class='card-heading'><a data-toggle='collapse' data-target='#collapse".$scat_id."'>".$scat_name."</a></div>";
+                    
+                    $ptype      =   ProductType::where('is_visible','1')->orderBy('sequence','asc')->where('sub_category_id',$scat_id)->get();
+                    if($ptype)
+                    {
+                        echo "<div id='collapse".$scat_id."' class='collapse' data-parent='#accordionExample'><div class='card-body'><ul>";
+                        foreach($ptype as $ptypes)
+                        {
+                            echo "<li><a href='/products/".$ptypes['slug']."'>".$ptypes['title']."</a></li>";
+                        }
+                        echo "</ul></div></div>";
+                    }
+                echo "</div>";
+            }
+        }
+    }
+}
+
 function sendMail($template,$body_param,$header_param)
 {
     // Mail::send($template,$body_param, function($message) use ($header_param) {

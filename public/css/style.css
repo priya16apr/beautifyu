@@ -768,7 +768,7 @@ ol {
 .services {
 	padding-top: 50px;
 	padding-bottom: 30px;
-	background: aliceblue;
+	background:#f8e9ec;
 }
 
 .services__item {
@@ -2174,18 +2174,18 @@ font-weight: 400 !important;
 }
 
 .nav-item .nav-link {
-	font-size: 18px;
+	font-size: 13px;
 	color: #b7b7b7;
 	border: none;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
-	padding: 0;
+	padding: 10px 20px;
 }
 
 .nav-item .nav-link.active {
-	color: #111111;
+	color: #fff;
 	padding-bottom:10px;
-	border-bottom:4px solid #e1e1e1;
+	width: 100%;
 }
 
 .tab-content .tab-pane h6 {
@@ -3647,6 +3647,32 @@ font-weight: 400 !important;
 /* Wide Mobile = 480px */
 
 @media only screen and (max-width: 767px) {
+	.product .col-sm-6 {
+		position: relative;
+		width: 50%;
+		padding-right: 10px;
+        padding-left: 10px;
+	}
+	.product .product__item__pic {
+		height: 180px;
+	}
+	.boxes-col {
+		margin-bottom: 30px;
+	}
+	.boxes-col .col-md-6 {
+		width: 50%;
+	}
+	.p-3 {
+		padding: .5rem !important;
+	}
+	.instagram .col-sm-4 {
+		width: 33%;
+	}
+	.instagram__item {
+		height: 200px;
+		max-height: 200px;
+		min-height: 200px;
+	}
 	.canvas__open {
 		display: block;
 		font-size: 22px;
@@ -3685,7 +3711,7 @@ font-weight: 400 !important;
 		width: 300px;
 		height: 100%;
 		background: #ffffff;
-		padding: 90px 20px 30px 20px;
+		padding: 20px 20px 30px 20px;
 		display: block;
 		z-index: 99;
 		overflow-y: auto;
@@ -3702,8 +3728,8 @@ font-weight: 400 !important;
 		position: absolute;
 		width: 40px;
 		height: 40px;
-		right: 30px;
-		top: 25px;
+		right: 10px;
+		top: 10px;
 		border: 1px solid #ddd;
 		border-radius: 50%;
 		font-size: 26px;
@@ -3810,6 +3836,25 @@ font-weight: 400 !important;
 	.header__right {
 		display: none;
 	}
+	.nav-item .nav-link {
+		font-size: 15px;
+		color: #b7b7b7;
+		border: none;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		padding: 10px 20px;
+		text-align: center;
+		background: #fafafa !important;
+		text-transform: uppercase;
+	}
+	
+	.nav-item .nav-link.active {
+		color: #fff;
+		padding-bottom:10px;
+		border-bottom:4px solid #e1e1e1;
+		background: #f3598b !important;
+		width: 100%;
+	}
 	.filter__controls {
 		text-align: left;
 		margin-bottom: 40px;
@@ -3876,6 +3921,16 @@ font-weight: 400 !important;
 @media only screen and (max-width: 479px) {
 	.categories__item.categories__large__item {
 		padding-left: 30px;
+		height: 195px;
+	}
+	.categories__item.categories__large__item h1{
+		font-size: 18px;
+		font-family: "Montserrat", sans-serif;
+		font-weight: 600;
+	}
+	.categories__item h4{
+		font-size: 18px;
+		font-weight: 600;
 	}
 	.banner__text h1 {
 		font-size: 45px;
@@ -3932,7 +3987,10 @@ font-weight: 400 !important;
 		font-size: 24px;
 	}
 }
-
+.mobb-vieww .nav-item{
+ margin-right: 0px !important;
+ background: #fafafa ;
+}
 
 
 
@@ -3983,13 +4041,10 @@ font-weight: 400 !important;
 }
 
 
-
-
-
 .megamenu {
   position: static;
 }
-.main-menu {}
+
 .megamenu .dropdown-menu {
   background: none;
   border: none;
@@ -4254,6 +4309,8 @@ min-height: 160px;
 	font-size: 13px;
 	text-transform: uppercase;
 	margin-bottom: 10px;
+	line-height: 30px;
+    border-bottom: 1px solid #e6e6e6;
 }
 .card-heading-1 a{
  color:#4d4d4d;
@@ -4369,6 +4426,35 @@ font-size: 14px;
 	margin-right: 20px;
 	float: left;
 }
+
+ /* makes the dropdown full width  */
+ .navbar .dropdown {position:static;}
+ 
+ .navbar .dropdown-menu {
+   width:100%;
+   left:0;
+   right:0;
+ /*  height of nav-item  */
+   top:50px;
+ }
+   
+   /* shows the dropdown menu on hover */
+ .navbar .dropdown:hover .dropdown-menu, .navbar .dropdown .dropdown-menu:hover {
+   display:block!important;
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

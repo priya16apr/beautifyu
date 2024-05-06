@@ -64,7 +64,7 @@ Created: Colorib
     /*------------------
 		Navigation
 	--------------------*/
-    $(".header__menu").slicknav({
+    $(".mob_mobi_view").slicknav({
         prependTo: '#mobile-menu-wrap',
         allowParentLinks: true
     });

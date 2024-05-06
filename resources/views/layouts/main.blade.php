@@ -38,18 +38,68 @@
             <li><a href="#"><span class="icon_heart_alt"></span><div class="tip">2</div></a></li>
             <li><a href="#"><span class="icon_bag_alt"></span><div class="tip">2</div></a></li>
         </ul> -->
-        <div class="offcanvas__logo"><a href="/"><img src="{{$setting['company_logo']}}" alt="{{$setting['company_logo_alt']}}"></a></div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__auth">
-            @if(session('beautify_customer'))
-                <a href="{{route('myaccount')}}">My Account</a>
-                <a href="{{route('logout')}}">Logout</a>
-            @else
-                <a href="{{route('login')}}">Login</a>
-                <!-- <a href="{{route('signup')}}">Register</a> -->
-                <a href="{{route('signup_step1')}}">Register</a>
-            @endif
+        <div class="offcanvas__logo">
+            <a href="/"><img src="{{$setting['company_logo']}}" alt="{{$setting['company_logo_alt']}}" width="200"></a>
         </div>
+        <div class="mobb-vieww"> 
+            <ul class="nav nav-pills mb-3 flex row" id="pills-tab" role="tablist">
+                <li class="nav-item col p-0">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Menu</a>
+                </li>
+                <li class="nav-item col p-0">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Account</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="sidebar__categories">
+                        <div class="categories__accordion">
+                            <div class="accordion" id="accordionExample">
+
+                                {{getSideBarHierarchyMob()}}
+
+                                <div class='card'>
+                                    <div class='card-body'><a style="color:#000;" href="{{ route('products_celebrity') }}">Celebrity Special</a></div>
+                                </div>
+
+                                <div class='card'>
+                                    <div class='card-body'><a style="color:#000;" href="{{ route('products_newarrival') }}">New Arrivals</a></div>
+                                </div>
+
+                                <div class='card'>
+                                    <div class='card-body'><a style="color:#000;" href="{{ route('products_deal') }}">Deals of the Day</a></div>
+                                </div>
+
+                                <div class='card'>
+                                    <div class='card-body'><a style="color:#000;" href="{{ route('happy_customer') }}">Happy Customer</a></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    @if(session('beautify_customer'))
+                        <div class='col-12 mx-0 p-0'>
+                            <div class='card-heading-1'><a href="{{route('myaccount')}}"><i class="fa fa-user"></i> My Profile</a></div>
+                            <div class='card-heading-1'><a href="{{route('myaccount_address')}}"><i class="fa fa-map"></i> My Address</a></div>
+                            <div class='card-heading-1'><a href="{{route('myaccount_orders')}}"><i class="fa fa-file"></i> My Orders</a></div>
+                            <div class='card-heading-1'><a href="{{route('myaccount_password_change')}}"><i class="fa fa-lock"></i> Change Password</a></div>
+                            <div class='card-heading-1'><a href="{{route('logout')}}"><i class="fa fa-lock"></i> Logout</a></div>
+                        </div>
+                    @else
+                        <div class='col-12 mx-0 p-0'>
+                            <div class='card-heading-1'><a href="{{route('login')}}"><i class="fa fa-user"></i> Login</a></div>
+                            <div class='card-heading-1'><a href="{{route('signup_step1')}}"><i class="fa fa-lock"></i> Register</a></div>
+                        </div>
+                    @endif
+                </div>
+            
+            </div>
+        </div>
+
     </div>
     <!-- Offcanvas Menu End -->
 
@@ -215,7 +265,7 @@
         })
 
         $('.carousel .carousel-item').each(function () {
-            var minPerSlide = 4;
+            var minPerSlide = 5;
             var next = $(this).next();
             if (!next.length) {
                 next = $(this).siblings(':first');

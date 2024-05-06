@@ -99,7 +99,7 @@
     <!-- Top Trending -->
     <section>
         <div class="container">
-            <div class="row">
+            <div class="row" style="width:100%; display:block;">
                 <div class="col-lg-12">
                     <div class="section-title">
                         <h4>Top Trending Products</h4>
