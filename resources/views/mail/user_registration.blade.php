@@ -1,13 +1,7 @@
 @php
 
-//$data  =   App\Http\Controllers\MailController::getContent();
+$data  =   App\Http\Controllers\MailTemplateController::getContent('1');
 
-//echo $data['body'];
+echo $data['body'];
 
 @endphp
-
-
-<p>Customer Registration</p>
-
-<h1>Hi, {{ $name }}</h1>
-<p>Sending Mail from Laravel.</p>

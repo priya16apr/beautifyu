@@ -10,10 +10,24 @@ use App\Models\HomeuiUsp;
 use App\Models\Product;
 use App\Models\HappyCustomer;
 
+use Illuminate\Support\Facades\Mail;
+use App\Models\MailTemplate;
+
 class HomeController extends Controller
 {
     public function index()
     {
+        // $mailinfo       =   MailTemplate::find('1');
+        // $header_param   =  ['to'   =>  'priya.16apr@gmail.com', 'subject' =>  $mailinfo['subject']];
+        // $body_param     =  ['name' =>  'Priyanka'];
+            
+        // Mail::send('mail.user_registration',$body_param, function($message) use ($header_param) {
+        //     $message->to($header_param['to']);
+        //     $message->from('beautifyu.live@gmail.com','Beautify U');
+        //     $message->subject($header_param['subject']);
+        // });
+    
+        
         $setting        =  getAllSetting();
       
         $date           =   date('Y-m-d');

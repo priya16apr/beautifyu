@@ -198,7 +198,7 @@
     <section>
         <div class="instagram">
             <div class="container-fluid">
-                <h3>Our Happy Customers</h3><br />
+                <h3>Our Happy Customers <i class="fa fa-heart" style="font-size:30px;color:#e999b4"></i></h3><br />
                 <div class="row">
                     @if(count($hcustomer)>0)
                         @foreach($hcustomer as $key=>$hcustomers)

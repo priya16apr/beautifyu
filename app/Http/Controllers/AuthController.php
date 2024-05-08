@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Session;
 
 use App\Models\Customer;
 use App\Models\CustomerTemp;
-use App\Models\Mail;
+use App\Models\MailTemplate;
+
 
 class AuthController extends Controller
 {
@@ -307,11 +309,15 @@ class AuthController extends Controller
             CustomerTemp::where('id',$temp_cusid)->delete();
             
             // Send Mail
-            $mailinfo       =   Mail::find('1');
-            $header_param   =  ['to'   =>  $request->email, 'subject' =>  $mailinfo['subject']];
-            $body_param     =  ['name' =>  $request->name,  'mobile'  =>  $request->mobile, 'email' =>  $request->email, 'password' =>  $request->password];
-            
-            sendMail('mail.user_registration',$body_param,$header_param);
+            $mailinfo       =   MailTemplate::find('1');
+            $header_param   =  ['to'   =>  'priya.16apr@gmail.com', 'subject' =>  $mailinfo['subject']];
+            $body_param     =  ['name' =>  'Priyanka'];
+                
+            Mail::send('mail.user_registration',$body_param, function($message) use ($header_param) {
+                $message->to($header_param['to']);
+                $message->from('beautifyu.live@gmail.com','Beautify U');
+                $message->subject($header_param['subject']);
+            });
 
             if($handle)
             {

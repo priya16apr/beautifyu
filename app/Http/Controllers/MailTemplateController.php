@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 
-use App\Models\mail;
+use App\Models\MailTemplate;
 
-class MailController extends Controller
+class MailTemplateController extends Controller
 {
     public static function getContent($id)
     {
-        $content        =   Mail::where('id',$id)->first();
+        $content        =   MailTemplate::where('id',$id)->first();
         return $content;
     }
 

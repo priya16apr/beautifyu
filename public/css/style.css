@@ -799,7 +799,7 @@ ol {
 -----------------------*/
 
 .instagram {
-	margin-top: 100px;
+	margin-top: 50px;
 	display: block;
 	width: 100%;
 }
@@ -1160,8 +1160,8 @@ font-weight: 400 !important;
 -----------------------*/
 
 .product {
-	padding-top: 60px;
-	padding-bottom: 50px;
+	padding-top: 40px;
+	padding-bottom: 30px;
 }
 
 .filter__controls {
@@ -2212,7 +2212,7 @@ font-weight: 400 !important;
 
 .shop-cart {
 	padding-top: 70px;
-	padding-bottom: 90px;
+	padding-bottom: 50px;
 }
 
 .shop__cart__table {
@@ -3659,6 +3659,9 @@ font-weight: 400 !important;
 	.boxes-col {
 		margin-bottom: 30px;
 	}
+	.services {
+		display: none;
+	}
 	.boxes-col .col-md-6 {
 		width: 50%;
 	}
@@ -3672,6 +3675,19 @@ font-weight: 400 !important;
 		height: 200px;
 		max-height: 200px;
 		min-height: 200px;
+	}
+	.owl-carousel .owl-item img {
+		min-height: 350px;
+		max-height: 350px;
+	}
+	.product__details__pic__left .pt img {
+		max-height: 100px;
+		min-height: 100px;
+	}
+	.list-highlights li {
+		width: 48%;
+		font-size: 12px;
+		color: #000;
 	}
 	.canvas__open {
 		display: block;
@@ -3741,6 +3757,16 @@ font-weight: 400 !important;
 	}
 	.offcanvas__menu {
 		display: none;
+	}
+	.instagram {
+		margin-top: 20px;
+	}
+	.mb-5{
+		margin-bottom: 1rem !important;
+	}
+	.instagram h3 {
+		font-size: 18px;
+		font-weight: 600;
 	}
 	.slicknav_btn {
 		display: none;
@@ -3847,11 +3873,25 @@ font-weight: 400 !important;
 		background: #fafafa !important;
 		text-transform: uppercase;
 	}
-	
+	.slide{
+		overflow: hidden;
+	}
+	.cart__btn a {
+		font-size: 13px;
+		text-transform:capitalize;
+		padding: 14px 20px 12px;
+		margin-top: 20px;
+	}
+	#recipeCarousel {
+		width: 100%;
+		display: block;
+	}
+	.product__item__pic {
+		height: 400px;
+	}
 	.nav-item .nav-link.active {
 		color: #fff;
 		padding-bottom:10px;
-		border-bottom:4px solid #e1e1e1;
 		background: #f3598b !important;
 		width: 100%;
 	}

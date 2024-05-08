@@ -203,13 +203,13 @@ if(!function_exists('getSideBarHierarchyMob'))
 
 function sendMail($template,$body_param,$header_param)
 {
-    // Mail::send($template,$body_param, function($message) use ($header_param) {
-    //     $message->to($header_param['to']);
-    //     $message->from('beautifyu@gmail.com','Beautify U');
-    //     $message->subject($header_param['subject']);
-    // });
+    Mail::send($template,$body_param, function($message) use ($header_param) {
+        $message->to($header_param['to']);
+        $message->from('beautifyu.live@gmail.com','Beautify U');
+        $message->subject($header_param['subject']);
+    });
 
-    //echo 'Mail send';
+    echo 'Mail send';
 }
 
 
