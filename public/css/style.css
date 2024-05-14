@@ -4482,9 +4482,30 @@ font-size: 14px;
  .navbar .dropdown:hover .dropdown-menu, .navbar .dropdown .dropdown-menu:hover {
    display:block!important;
  }
-
-
-
+.cont-pagess {
+	margin-top:30px;
+	margin-bottom: 30px;
+	font-size: 16px;
+}
+.cont-pagess .section-title h4 {
+	font-size: 24px !important;
+}
+.cont-pagess .content-detailsss p {
+	font-size: 16px !important;
+}
+.cont-pagess .content-detailsss {
+	font-size: 16px !important;
+	color: #000;
+}
+.cont-pagess .content-detailsss ul {
+	padding-left: 20px;
+}
+.cont-pagess .content-detailsss ul li{
+	list-style: circle !important;
+	padding-left: 5px;
+	margin-bottom: 20px;
+	font-size: 16px;
+}
 
 
 

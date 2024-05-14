@@ -71,9 +71,9 @@
 
                             <div class="text-center pt-5" style="font-weight:600"> 
                                 @if($handle) 
-                                    <a href="user-basic-signup?handle=beautifyu_checkout_in">New to BeautifyU? Create an account</a> 
+                                    <a href="user-signup?handle=beautifyu_checkout_in">New to BeautifyU? Create an account</a> 
                                 @else
-                                    <a href="user-basic-signup">New to BeautifyU? Create an account</a> 
+                                    <a href="user-signup">New to BeautifyU? Create an account</a> 
                                 @endif
                             </div>
 

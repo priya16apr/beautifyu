@@ -61,6 +61,7 @@ Route::GET('/ajax/cart-decreaseQuantity',[CartController::class,'decreaseQuantit
 Route::GET('/ajax/cart-updateQuantity',[CartController::class,'updateQuantity']);
 Route::GET('/ajax/cart-deleteProduct',[CartController::class,'deleteProduct']);
 Route::GET('/ajax/cart-empty',[CartController::class,'empty']);
+Route::POST('/ajax/cart-applyCoupon',[CartController::class,'applyCoupon']);
 
 // Shopping
 Route::POST('/ajax/submit-addcart',[ShoppingController::class,'submitAddCart'])->name('submit_addcart');

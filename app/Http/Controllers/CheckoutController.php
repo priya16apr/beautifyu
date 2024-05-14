@@ -12,7 +12,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\OrderAddress;
 use App\Models\Customer;
-use App\Models\Mail;
+use App\Models\MailTemplate;
 
 class CheckoutController extends Controller
 {
@@ -154,11 +154,11 @@ class CheckoutController extends Controller
                 
                 // Send Mail
                 $custinfo       =   Customer::where('id',$customerid)->first();
-                $mailinfo       =   Mail::find('3');
+                $mailinfo       =   MailTemplate::find('3');
                 $header_param   =  ['to'   =>  $custinfo->email, 'subject' =>  $mailinfo['subject']];
                 $body_param     =  ['name' =>  $custinfo->name,  'orderid' =>  'orderid', 'total_amt' =>  $total_amt];
             
-                sendMail('mail.order_confirmed',$body_param,$header_param);
+                //sendMail('mail.order_confirmed',$body_param,$header_param);
                 
                 $pass           =   '343-'.$orderid.'-908';
                 
@@ -368,11 +368,11 @@ class CheckoutController extends Controller
                 
                 // Send Mail
                 $custinfo       =   Customer::where('id',$customerid)->first();
-                $mailinfo       =   Mail::find('3');
+                $mailinfo       =   MailTemplate::find('3');
                 $header_param   =  ['to'   =>  $custinfo->email, 'subject' =>  $mailinfo['subject']];
                 $body_param     =  ['name' =>  $custinfo->name,  'orderid' =>  'orderid', 'total_amt' =>  $total_amt];
             
-                sendMail('mail.order_confirmed',$body_param,$header_param);
+                //sendMail('mail.order_confirmed',$body_param,$header_param);
                 
                 $pass           =   '343-'.$orderid.'-908';
                 

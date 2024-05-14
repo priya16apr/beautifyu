@@ -73,6 +73,14 @@
                                 <li>Subtotal <span>₹ {{ Session::get('cart_total') }}</span></li>
                                 <li>Shipping Charges <span>Free </span></li>
                                 <li>Total <span class="price-finall">₹ <b>{{ Session::get('cart_total') }}</b></span></li>
+                                <li>
+                                    <form>
+                                        @csrf
+                                        Apply Coupon 
+                                        <input type="text" placeholder="Code" name="coupon_code" id="coupon_code" /> 
+                                        <input type="button" value="Apply" onclick="apply_coupon()" />
+                                    </form>
+                                </li>
                             </ul>
                             
                             @if(session('beautify_customer'))
@@ -203,6 +211,28 @@
                 window.location.href = '/shopping-cart';
             }
         });
+    }
+
+    function apply_coupon()
+    {
+        coupon_code = jQuery('#coupon_code').val();
+
+        if(coupon_code=='')
+        {
+            alert("please enter copuon code first.")
+        }
+        else
+        {
+            jQuery.ajax({
+                url:"/ajax/cart-applyCoupon",
+                data:"coupon_code="+coupon_code,
+                type:'POST',
+                success:function(data)
+                {
+                    alert(data);
+                }
+            });
+        }
     }
 
 </script>

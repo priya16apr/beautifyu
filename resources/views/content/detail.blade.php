@@ -7,10 +7,19 @@
 @endsection
 
 @section('mid-content')
-
-    {{$content->title}}
-    <br/>
-    {!!$content->description!!}
-
+<div class="container cont-pagess">
+    <div class="row ">
+        <div class="col-md-12 ">
+            <div class="cont-pagess">
+                <div class="section-title">
+                    <h4>{{$content->title}}</h4>
+                </div>
+                <div class="content-detailsss">
+                    {!!$content->description!!}
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 

@@ -92,7 +92,7 @@
                     @else
                         <div class='col-12 mx-0 p-0'>
                             <div class='card-heading-1'><a href="{{route('login')}}"><i class="fa fa-user"></i> Login</a></div>
-                            <div class='card-heading-1'><a href="{{route('signup_step1')}}"><i class="fa fa-lock"></i> Register</a></div>
+                            <div class='card-heading-1'><a href="{{route('signup')}}"><i class="fa fa-lock"></i> Register</a></div>
                         </div>
                     @endif
                 </div>
@@ -131,8 +131,7 @@
                         @else
                             <div class="header__right__auth">
                                 <a href="{{route('login')}}" class="shoping-ccart">Login</a>
-                                <!-- <a href="{{route('signup')}}" class="shoping-ccart">Register</a> -->
-                                <a href="{{route('signup_step1')}}" class="shoping-ccart">Register</a>
+                                <a href="{{route('signup')}}" class="shoping-ccart">Register</a>
                             </div>
                         @endif
                     </div>

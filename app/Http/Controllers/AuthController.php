@@ -14,8 +14,6 @@ use App\Models\MailTemplate;
 
 class AuthController extends Controller
 {
-    // View Page
-    
     public function login(Request $request)
     {
         $handle         =   "";
@@ -32,15 +30,19 @@ class AuthController extends Controller
         return view('auth.login')->with($info);
     }
 
-    public function signup()
+    public function signup(Request $request)
     {
+        $handle         =   "";
+        
         if(Session::get('beautify_customer'))
         {
             return redirect('/');
         }
 
         $setting        =   getAllSetting();
-        $info           =   compact('setting');
+
+        $handle         =   $request->handle;
+        $info           =   compact('setting','handle');
 
         return view('auth.signup')->with($info);
     }
@@ -117,11 +119,20 @@ class AuthController extends Controller
 
     public function submitSignup(Request $request)
     {
+        $addurl     =   "";
+        $handle     =   $request->handle; 
+        
+        if($handle)
+        {
+            $addurl = "?handle=$handle";
+        }
+        
         $request->validate([
-            'name'       => 'required|max:120',
-            'email'      => 'required|email|unique:customers',
-            'mobile'     => 'required|digits:10|numeric|unique:customers',
-            'password'   => 'required|min:5|max:50'
+            'name'          => 'required|max:120',
+            'email'         => 'required|email|unique:customers',
+            'mobile'        => 'required|digits:10|numeric|unique:customers',
+            'password'      => 'required|min:5|max:50',
+            'con_password'  => 'required_with:password|same:password|min:5',
         ]);
         
         $password       =   Hash::make($request->password);
@@ -139,9 +150,8 @@ class AuthController extends Controller
             $info->name                 =   $request->name;
             $info->mobile               =   $request->mobile;
             $info->email                =   $request->email;
-            $info->password             =   $password;
+            $info->password             =   $request->password;
             $info->is_status            =   'Active';
-
             $info->save();
 
             $newinfo                    =   Customer::where('email',$request->email)->first();
@@ -153,9 +163,16 @@ class AuthController extends Controller
             $header_param   =  ['to'   =>  $request->email, 'subject' =>  $mailinfo['subject']];
             $body_param     =  ['name' =>  $request->name,  'mobile'  =>  $request->mobile, 'email' =>  $request->email, 'password' =>  $request->password];
             
-            sendMail('mail.user_registration',$body_param,$header_param);
+            // sendMail('mail.user_registration',$body_param,$header_param);
 
-            return redirect('/my-account');
+            if($handle)
+            {
+                return redirect('/check-out-address-select');
+            }
+            else
+            {
+                return redirect('/my-account');
+            }
         }
     }
 
@@ -225,6 +242,7 @@ class AuthController extends Controller
 
     public function submitSignupStep1(Request $request)
     {
+        die;
         $addurl     =   "";
         $handle     =   $request->handle; 
         
@@ -253,6 +271,25 @@ class AuthController extends Controller
             CustomerTemp::where('email',$request->email)->orWhere('mobile', $request->mobile)->delete();
             
             // Implement SMS Service
+            /*
+            $code       =   rand (11111,99999);
+            $user       =   "mybeauty";
+            $apikey     =   "LJuky1qwhnWKQsdlDdSA"; 
+            $senderid   =   "MYTEXT"; 
+            $mobile     =   "9773621838"; 
+            $message    =   "Your BeautifyU verification code is ".$code; 
+            $message    =   urlencode($message);
+            $type       =  "txt";
+            
+            $ch         =   curl_init("http://smshorizon.co.in/api/sendsms.php?user=".$user."&apikey=".$apikey."&mobile=".$mobile."&senderid=".$senderid."&message=".$message."&type=".$type.""); 
+                            curl_setopt($ch, CURLOPT_HEADER, 0);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                            $output = curl_exec($ch);      
+                            curl_close($ch); 
+            //echo $output;
+
+            //$otp                        =   $code;*/
+
             $otp                        =   '12345';
             
             $info                       =   new CustomerTemp;

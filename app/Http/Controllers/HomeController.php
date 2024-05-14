@@ -26,7 +26,6 @@ class HomeController extends Controller
         //     $message->from('beautifyu.live@gmail.com','Beautify U');
         //     $message->subject($header_param['subject']);
         // });
-    
         
         $setting        =  getAllSetting();
       

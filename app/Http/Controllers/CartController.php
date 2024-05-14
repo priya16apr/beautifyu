@@ -106,4 +106,14 @@ class CartController extends Controller
         echo 'empty';
     }
 
+    public function applyCoupon()
+    {
+        //echo $coupon_code     =   $_GET['coupon_code'];
+        echo $coupon_code     =   $_POST['coupon_code'];
+
+        
+        
+        
+    }
+
 }
