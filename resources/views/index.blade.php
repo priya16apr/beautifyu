@@ -205,9 +205,11 @@
                             <div class="col-lg-2 col-md-4 col-sm-4 p-0">
                                 <div class="instagram__item set-bg" data-setbg="{{$hcustomers->image}}">
                                     <div class="instagram__text">
-                                        <img src="{{$hcustomers->product->default_img}}">
-                                        <p>Rs. {{$hcustomers->product->selling_price}}</p>
-                                        <a href="product/{{$hcustomers->product->slug}}">View product</a>
+                                        @if($hcustomers->product)
+                                            <img src="{{$hcustomers->product->default_img}}">
+                                            <p>Rs. {{$hcustomers->product->selling_price}}</p>
+                                            <a href="product/{{$hcustomers->product->slug}}">View product</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

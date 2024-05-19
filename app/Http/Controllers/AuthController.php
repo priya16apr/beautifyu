@@ -150,7 +150,7 @@ class AuthController extends Controller
             $info->name                 =   $request->name;
             $info->mobile               =   $request->mobile;
             $info->email                =   $request->email;
-            $info->password             =   $request->password;
+            $info->password             =   $password;
             $info->is_status            =   'Active';
             $info->save();
 
@@ -159,11 +159,27 @@ class AuthController extends Controller
             session(['beautify_customer' => $newinfo]);
 
             // Send Mail
-            $mailinfo       =   Mail::find('1');
-            $header_param   =  ['to'   =>  $request->email, 'subject' =>  $mailinfo['subject']];
-            $body_param     =  ['name' =>  $request->name,  'mobile'  =>  $request->mobile, 'email' =>  $request->email, 'password' =>  $request->password];
+            $mailinfo       =   MailTemplate::find('1');
+
+            $to             =   $request->email;
+            $subject        =   $mailinfo['subject'];
+            $message        =   $mailinfo['body'];
             
-            // sendMail('mail.user_registration',$body_param,$header_param);
+            $user_name 		= 	$request->name;
+            $user_email 	= 	$request->email;
+            $user_password 	= 	$request->password;
+
+            $message        =   @str_replace('$name',$user_name,$message);
+            $message        =   @str_replace('$email',$user_email,$message);
+            $message        =   @str_replace('$password',$user_password,$message);
+
+            $ch             =   curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://mailer.beautifyu.in/mail.php");
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS,"to=".$to."&subject=".$subject."&message=".$message."");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $json           =   curl_exec($ch);
+            curl_close ($ch);
 
             if($handle)
             {

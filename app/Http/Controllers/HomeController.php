@@ -17,7 +17,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // $mailinfo       =   MailTemplate::find('1');
+        //$url = "http://mailer.beautifyu.in/mail.php?type=1";
+        
+        // $mailinfo       =   MailTemplate::find(1);
         // $header_param   =  ['to'   =>  'priya.16apr@gmail.com', 'subject' =>  $mailinfo['subject']];
         // $body_param     =  ['name' =>  'Priyanka'];
             

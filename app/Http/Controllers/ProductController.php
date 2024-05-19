@@ -213,7 +213,7 @@ class ProductController extends Controller
          return view('content.notfound');
       }
 
-      $similar       =     Product::paginate('12');
+      $similar       =     Product::where('status','4')->paginate('12');
       
       $attribute     =     ProductAttribute::where('product_id',$pdetail['id'])->get();
       if($attribute)

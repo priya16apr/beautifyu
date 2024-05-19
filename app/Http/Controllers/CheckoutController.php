@@ -367,13 +367,29 @@ class CheckoutController extends Controller
                 // return view($loadtemplate)->with(array('name'=>'priyanka'));
                 
                 // Send Mail
-                $custinfo       =   Customer::where('id',$customerid)->first();
                 $mailinfo       =   MailTemplate::find('3');
-                $header_param   =  ['to'   =>  $custinfo->email, 'subject' =>  $mailinfo['subject']];
-                $body_param     =  ['name' =>  $custinfo->name,  'orderid' =>  'orderid', 'total_amt' =>  $total_amt];
-            
-                //sendMail('mail.order_confirmed',$body_param,$header_param);
+                $custinfo       =   Customer::where('id',$customerid)->first();
+
+                $to             =   $custinfo->email;
+                $subject        =   $mailinfo['subject'];
+                $message        =   $mailinfo['body'];
                 
+                $user_name 		= 	$custinfo->name;
+                $user_total_amt = 	$total_amt;
+                $user_orderid 	= 	$orderid;
+
+                $message        =   @str_replace('$name',$user_name,$message);
+                $message        =   @str_replace('$orderid','BU#'.$user_orderid,$message);
+                $message        =   @str_replace('$total_amt',"₹ ".$user_total_amt,$message);
+
+                $ch             =   curl_init();
+                curl_setopt($ch, CURLOPT_URL, "https://mailer.beautifyu.in/mail.php");
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS,"to=".$to."&subject=".$subject."&message=".$message."");
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $json           =   curl_exec($ch);
+                curl_close ($ch);
+
                 $pass           =   '343-'.$orderid.'-908';
                 
                 return redirect("/thank-you-for-shopping-with-us/$pass");  

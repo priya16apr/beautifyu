@@ -16,7 +16,7 @@
                     <div class="row ">
                         <div class="col-12 col-sm-12 text-center">
                                <h4>Thank You for Shopping with us.</h4>
-                                <p class="mt-3">Order Id: <u>#BU{{ $detail->id }}</u></p>
+                                <p class="mt-3">Order Id: <u>BU#{{ $detail->id }}</u></p>
                                 Your order details and product info has been sent to your registered email id.
                                 
                             </div>
