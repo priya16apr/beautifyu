@@ -14,6 +14,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
+                        <a href="/products/{{$pdetail->producttype->slug}}"> {{$pdetail->producttype->title}}</a>
                         <span>{{$pdetail->title}}</span>
                     </div>
                 </div>
