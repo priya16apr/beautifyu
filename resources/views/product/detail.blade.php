@@ -186,9 +186,9 @@
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Item Details</a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Ratings & Reviews</a>
-                            </li>
+                            </li> -->
                         </ul>
 
                         <div class="tab-content">

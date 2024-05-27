@@ -73,14 +73,6 @@
                                 <li>Subtotal <span>₹ {{ Session::get('cart_total') }}</span></li>
                                 <li>Shipping Charges <span>Free </span></li>
                                 <li>Total <span class="price-finall">₹ <b>{{ Session::get('cart_total') }}</b></span></li>
-                                <li>
-                                    <form>
-                                        @csrf
-                                        Apply Coupon 
-                                        <input type="text" placeholder="Code" name="coupon_code" id="coupon_code" /> 
-                                        <input type="button" value="Apply" onclick="apply_coupon()" />
-                                    </form>
-                                </li>
                             </ul>
                             
                             @if(session('beautify_customer'))

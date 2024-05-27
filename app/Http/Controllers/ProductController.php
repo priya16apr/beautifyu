@@ -261,6 +261,7 @@ class ProductController extends Controller
                                  $productAttribute.=", ";
                               }
                            }
+                           $productAttribute = @substr($productAttribute,0,@strlen($productAttribute)-2);
                      }
                      else
                      {

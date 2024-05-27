@@ -40,7 +40,7 @@
                     </div>
                     <hr>
 
-                    <div class="step-headingss1">2. Payment Method  <span><a href="{{ url('/check-out-payment-select') }}">Change</a></span></div>
+                    <div class="step-headingss1">2. Payment Method  <span><a href="{{ url('/check-out-pay-select') }}">Change</a></span></div>
                     <div class="row">
                         @if($pMethod)
                             <div class="col-md-12">
@@ -96,26 +96,7 @@
                 
                 </div>
 
-                <div class="col-lg-4">
-                    <div class="checkout__order">
-                        <h5>Order Summary</h5>
-
-                        <div class="checkout__order__total">
-                            <ul>
-                                <li>Total <span>₹ @php echo Session::get('cart_total'); @endphp</span></li>
-                                <input type="hidden" name="total_amt" id="total_amt" value="@php echo Session::get('cart_total'); @endphp" />
-                                <li>Delivery Charges <span class="freee">Free</span></li>
-                            </ul>
-                        </div>
-
-                        <div class="checkout__order__youpay">
-                            <ul>
-                                <li>You Pay <span>₹ @php echo Session::get('cart_total'); @endphp</span></li>
-                            </ul>
-                        </div>
-                        
-                    </div>
-                </div>
+                <x-checkout-order-summary />
 
             </div>
         </form>

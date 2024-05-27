@@ -55,27 +55,10 @@
 
                     <div class="step-headingss1">2. Payment Method </div>
                     <div class="step-headingss1">3. Review items and delivery </div>
-
                 </div>
 
-                <div class="col-lg-4">
-                    <div class="checkout__order">
-                        <h5>Order Summary</h5>
+                <x-checkout-order-summary />
 
-                        <div class="checkout__order__total">
-                            <ul>
-                                <li>Total <span>₹ @php echo Session::get('cart_total'); @endphp</span></li>
-                                <input type="hidden" name="total_amt" id="total_amt" value="@php echo Session::get('cart_total'); @endphp" />
-                                <li>Delivery Charges <span class="freee">Free</span></li>
-                            </ul>
-                        </div>
-                        <div class="checkout__order__youpay">
-                            <ul>
-                                <li>You Pay Total<span>₹ @php echo Session::get('cart_total'); @endphp</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         </form>
        
