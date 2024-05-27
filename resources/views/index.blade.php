@@ -105,25 +105,25 @@
                         <h4>Top Trending Products</h4>
                     </div>
                 </div>
-                <div id="recipeCarousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner" role="listbox">
-                        @if(count($p_trending)>0)
-                            @foreach($p_trending as $key=>$p_trendings)
-                                <div class="carousel-item @if($key=='0') active @endif">
-                                    <x-product-card :product=$p_trendings />
-                                </div>
-                            @endforeach
-                        @endif
-                    </div>
-                    <a class="carousel-control-prev bg-dark w-auto" href="#recipeCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next bg-dark w-auto" href="#recipeCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+            </div>    
+            <div id="recipeCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner" role="listbox">
+                    @if(count($p_trending)>0)
+                        @foreach($p_trending as $key=>$p_trendings)
+                            <div class="carousel-item @if($key=='0') active @endif">
+                                <x-product-card :product=$p_trendings />
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
+                <a class="carousel-control-prev bg-dark w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next bg-dark w-auto" href="#recipeCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
     </section>

@@ -24,12 +24,12 @@
         </div>
     </div>
 
-    <section class="shop spad">
+    <section class="shop">
         <div class="container">
             <div class="row">
 
                 <!-- Side Bar -->              
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-3 mobile_side_nav col-md-3">
                     <div class="shop__sidebar">
                     
                     <form name="form1" id="form1" method="post" action="{{route('products_ptype_att_search')}}" >
@@ -37,7 +37,7 @@
                         <input type="hidden" name="ptype" id="ptype" value="{{ $ptype['slug'] }}" />
 
                         <!-- Category -->
-                        <div class="sidebar__categories">
+                        <div class="sidebar__categories mob_dis_none">
                             <div class="section-title"><h4>Categories</h4></div>
                             <div class="categories__accordion">
                                 <div class="accordion" id="accordionExample">
@@ -48,7 +48,7 @@
 
                         <!-- Collection -->
                         @if(count($side['side_collection'])>0)
-                            <div class="sidebar__categories">
+                            <div class="sidebar__categories colllleec">
                                 <div class="section-title"><h4>Collections</h4></div>
                                 <div>
                                     @foreach($side['side_collection'] as $side_collections)
@@ -128,7 +128,9 @@
 
                 <!-- Show Prodcuts -->
                 <div class="col-lg-9 col-md-9">
-                    <div class="row">
+                    
+                    <button type="button" class="open_sidemenu_button btn btn-xs btn-primary"><i class="fa fa-bars"></i> Filters</button>
+                    <div class="row product">
                         @if($product)
                             @foreach($product as $products)
                                 <x-product-card :product=$products  />
@@ -145,6 +147,26 @@
 
 
 @section('footer-js')
+<script>
+    $('.open_sidemenu_button').click(function(e)
+    {
+        $('.mobile_side_nav').toggleClass('menu_open');
+        $('body').toggleClass('back_drop');
+        e.stopPropagation();
+    });
+
+    $('.mobile_side_nav').click(function(e){
+        e.stopPropagation();
+    });
+
+    $('body').click(function(){
+        $('.mobile_side_nav').removeClass('menu_open');
+        $('body').removeClass('back_drop');
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
 <script>
     function formSubmit() 
     { 

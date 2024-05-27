@@ -36,7 +36,7 @@ class ProductController extends Controller
    {
       $setting    =  getAllSetting();
       
-      $product    =  Product::where('status','4')->orderby('id','desc')->get();
+      $product    =  Product::where('status','4')->where('is_newarrival','Yes')->get();
       $data       =  compact('setting','product');
 
       return view('product.newarrival')->with($data);
@@ -137,7 +137,7 @@ class ProductController extends Controller
                $product       =  $product->where('selling_price','>',$req_prices[0])->where('selling_price','<',$req_prices[1]);
             }
 
-            $product          =   $product->get();
+            $product          =   $product->where('status','4')->get();
 
             $data             =   compact('ptype','side','filtering','leftreq','product');
 
@@ -148,7 +148,7 @@ class ProductController extends Controller
             $leftreq['color']            =   array();
             $leftreq['price']            =   array();
             
-            $product    =  Product::where('producttype_id',$ptypeid)->get();
+            $product    =  Product::where('producttype_id',$ptypeid)->where('status','4')->get();
             $data       =  compact('ptype','side','filtering','leftreq','product');
          }
 
@@ -213,7 +213,8 @@ class ProductController extends Controller
          return view('content.notfound');
       }
 
-      $similar       =     Product::where('status','4')->paginate('12');
+      
+      $similar       =     Product::where('producttype_id',$pdetail->producttype_id)->where('status','4')->paginate('12');
       
       $attribute     =     ProductAttribute::where('product_id',$pdetail['id'])->get();
       if($attribute)
