@@ -43,9 +43,10 @@
                     <div class="step-headingss1">2. Payment Method  <span><a href="{{ url('/check-out-pay-select') }}">Change</a></span></div>
                     <div class="row">
                         @if($pMethod)
+                            <input type="hidden" name="pMethod" value="{{ $pMethod }}" />
                             <div class="col-md-12">
                                 <div class="p-2 text-13">
-                                    <label>{{ $pMethod }} / Pay on Delivery</label>
+                                    <label>{{ $pMethod }}</label>
                                 </div>
                             </div>
                         @endif

@@ -44,14 +44,14 @@
                         <div class="col-md-12 mt-3">
                             <div class="p-2">
                                 <label>
-                                    <input type="radio" name="pmethod"  value="cod" checked />&nbsp; Cash on Delivery/Pay on Delivery
+                                    <input type="radio" name="pmethod"  value="COD" checked />&nbsp; Cash on Delivery/Pay on Delivery
                                 </label>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="p-2">
                                 <label>
-                                    <input type="radio" name="pmethod"  value="upi" />&nbsp; UPI
+                                    <input type="radio" name="pmethod"  value="UPI" />&nbsp; UPI
                                 </label>
                             </div>
                         </div>

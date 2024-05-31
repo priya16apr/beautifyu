@@ -1,9 +1,9 @@
 @extends('layouts.main')
 
 @section('header-seo')
-    <title>404 Not Found</title>
-    <meta name="keywords" content="404 Not Found">
-    <meta name="description" content="404 Not Found">
+    <title>Order Error Page</title>
+    <meta name="keywords" content="Order Error Page">
+    <meta name="description" content="Order Error Page">
 @endsection
 
 @section('mid-content')
@@ -14,7 +14,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <span>Not Found page</span>
+                        <span>Payment Issue</span>
                     </div>
                 </div>
             </div>
@@ -25,9 +25,10 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-9 col-md-9">
+                <div class="col-lg-12 col-md-9" style="margin-top:40px;">
                     <div class="row">
-                            Data is Not Found...
+                    <p>something went wrong with your order.. <br/>
+                        If you want to try order again then. <a href="{{ url('check-out-review') }}">click here</a> </p>
                     </div>
                 </div>
 

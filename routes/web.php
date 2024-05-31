@@ -96,5 +96,8 @@ Route::POST('/products_string/search',[ProductController::class,'products_string
     // ?string=value
 
 // Fixed Content Pages
-Route::get('/404-page-not-found',[ContentController::class,'notFound'])->name('not_found');
 Route::get('/request-for-forget-password',[ContentController::class,'requestForgotPassword']);
+
+Route::get('/404-page-not-found',[ContentController::class,'notFound'])->name('not_found');
+Route::get('/payment-error-page',[ContentController::class,'paymentError'])->name('payment_error');
+Route::get('/something-went-wrong-with-order',[ContentController::class,'orderError'])->name('orde_error');

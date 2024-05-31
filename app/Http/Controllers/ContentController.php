@@ -26,6 +26,16 @@ class ContentController extends Controller
         return view('content.notfound');
     }
 
+    public function paymentError()
+    {
+        return view('content.paymentError');
+    }
+    
+    public function orderError()
+    {
+        return view('content.orderError');
+    }
+
     public function requestForgotPassword()
     {
         return view('content.requestforgotpassword');
